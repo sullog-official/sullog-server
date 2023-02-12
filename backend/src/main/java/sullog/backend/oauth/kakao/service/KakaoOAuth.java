@@ -10,6 +10,7 @@ import sullog.backend.oauth.kakao.dto.AccessTokenRequest;
 import sullog.backend.oauth.kakao.dto.AccessTokenResponse;
 import sullog.backend.oauth.kakao.dto.UserInfoResponse;
 
+@Service
 public class KakaoOAuth {
 
     //https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
