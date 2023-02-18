@@ -1,0 +1,5 @@
+jwt:
+  header: Authorization
+  secret: 915477D9D5ABDEAEC488791BF997A9E8FAA23948331808F6F6DFCD0379F5312C
+  access-token-validity-in-seconds: 86400 #1일
+  refresh-token-validity-in-seconds: 1209600 #2주
