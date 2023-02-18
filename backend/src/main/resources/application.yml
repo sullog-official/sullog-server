@@ -1,1 +1,10 @@
+spring:
+  datasource:
+    hikari:
+      max-lifetime: 600
+#      connection-timeout: 1000
+  profiles:
+    active: alpha   # alpha, live
+server:
+  port: 8877
 
