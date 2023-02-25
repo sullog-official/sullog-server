@@ -1,4 +1,4 @@
-package sullog.backend.member.config;
+package sullog.backend.member.config.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +26,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         this.objectMapper = objectMapper;
     }
 
-    // oauth 서버에서 accessToken으로
+    // oauth 서버에서 accessToken, refreshToekn 생성
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
@@ -38,10 +38,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private void makeTokenResponse(HttpServletResponse response, Token token) throws IOException {
-        response.setContentType("text/html;charset=UTF-8");
         response.addHeader(HttpHeaders.AUTHORIZATION, token.getAccessToken());
         response.addHeader("Refresh", token.getRefreshToken());
-        response.setContentType("application/json;charset=UTF-8");
 
         PrintWriter writer = response.getWriter();
         writer.println(objectMapper.writeValueAsString(token));
