@@ -40,11 +40,7 @@ class SecurityConfigTest {
     @Test
     void kakao로그인_시도하면_OAuth로그인창이_등장한다() {
         given(this.documentSpec)
-                .filter(document("oauth2/request-kakao-login"
-//                        ,
-//                        preprocessRequest(prettyPrint()),
-//                        preprocessResponse(prettyPrint())
-                ))
+                .filter(document("oauth2/request-kakao-login"))
                 .when()
                     .redirects().follow(false)
                     .get("/oauth2/authorization/kakao")
