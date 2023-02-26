@@ -1,7 +1,6 @@
 package sullog.backend.alcohol.entity;
 
 import lombok.Builder;
-import lombok.Getter;
 import lombok.ToString;
 import sullog.backend.common.entity.BaseEntity;
 
@@ -24,7 +23,39 @@ public class Alcohol extends BaseEntity {
 
     private String alcoholTag;
 
-    private AlcoholBrand alcoholBrand;
+    private int brandId;
+
+    public int getAlcoholId() {
+        return alcoholId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getAlcoholPercent() {
+        return alcoholPercent;
+    }
+
+    public String getProductionLocation() {
+        return productionLocation;
+    }
+
+    public double getProductionLatitude() {
+        return productionLatitude;
+    }
+
+    public double getProductionLongitude() {
+        return productionLongitude;
+    }
+
+    public String getAlcoholTag() {
+        return alcoholTag;
+    }
+
+    public int getBrandId() {
+        return brandId;
+    }
 
     @Builder
     public Alcohol(
@@ -35,7 +66,7 @@ public class Alcohol extends BaseEntity {
             double productionLatitude,
             double productionLongitude,
             String alcoholTag,
-            AlcoholBrand alcoholBrand,
+            int brandId,
             Instant createdAt,
             Instant updatedAt,
             Instant deletedAt) {
@@ -47,7 +78,7 @@ public class Alcohol extends BaseEntity {
         this.productionLatitude = productionLatitude;
         this.productionLongitude = productionLongitude;
         this.alcoholTag = alcoholTag;
-        this.alcoholBrand = alcoholBrand;
+        this.brandId = brandId;
     }
 
 }

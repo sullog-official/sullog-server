@@ -1,26 +1,25 @@
 package sullog.backend.record.entity;
 
 import lombok.Builder;
-import lombok.Getter;
 import lombok.ToString;
-import sullog.backend.alcohol.entity.Alcohol;
 import sullog.backend.common.entity.BaseEntity;
-import sullog.backend.member.entity.Member;
 
 import java.time.Instant;
 
 @ToString(callSuper = true)
 public class Record extends BaseEntity {
 
-    private double recordId;
+    private int recordId;
 
     private String title;
 
-    private String photoPath;
+    private String photoPathList;
 
     private String alcoholPercentFeeling;
 
     private String flavorTagList;
+
+    private int scentScore;
 
     private int tasteScore;
 
@@ -28,51 +27,41 @@ public class Record extends BaseEntity {
 
     private String description;
 
-    private Member member;
+    private int memberId;
 
-    private Alcohol alcohol;
-
-    private String imagePath1;
-
-    private String imagePath2;
-
-    private String imagePath3;
+    private int alcoholId;
 
     @Builder
     public Record(
-            double recordId,
-            String title,
-            String photoPath,
-            String alcoholPercentFeeling,
-            String flavorTagList,
-            int tasteScore,
-            int textureScore,
-            String description,
-            Member member,
-            Alcohol alcohol,
             Instant createdAt,
             Instant updatedAt,
             Instant deletedAt,
-            String imagePath1,
-            String imagePath2,
-            String imagePath3) {
+            int recordId,
+            String title,
+            String photoPathList,
+            String alcoholPercentFeeling,
+            String flavorTagList,
+            int scentScore,
+            int tasteScore,
+            int textureScore,
+            String description,
+            int memberId,
+            int alcoholId) {
         super(createdAt, updatedAt, deletedAt);
         this.recordId = recordId;
         this.title = title;
-        this.photoPath = photoPath;
+        this.photoPathList = photoPathList;
         this.alcoholPercentFeeling = alcoholPercentFeeling;
         this.flavorTagList = flavorTagList;
+        this.scentScore = scentScore;
         this.tasteScore = tasteScore;
         this.textureScore = textureScore;
         this.description = description;
-        this.member = member;
-        this.alcohol = alcohol;
-        this.imagePath1 = imagePath1;
-        this.imagePath2 = imagePath2;
-        this.imagePath3 = imagePath3;
+        this.memberId = memberId;
+        this.alcoholId = alcoholId;
     }
 
-    public double getRecordId() {
+    public int getRecordId() {
         return recordId;
     }
 
@@ -80,8 +69,8 @@ public class Record extends BaseEntity {
         return title;
     }
 
-    public String getPhotoPath() {
-        return photoPath;
+    public String getPhotoPathList() {
+        return photoPathList;
     }
 
     public String getAlcoholPercentFeeling() {
@@ -90,6 +79,10 @@ public class Record extends BaseEntity {
 
     public String getFlavorTagList() {
         return flavorTagList;
+    }
+
+    public int getScentScore() {
+        return scentScore;
     }
 
     public int getTasteScore() {
@@ -104,23 +97,11 @@ public class Record extends BaseEntity {
         return description;
     }
 
-    public Member getMember() {
-        return member;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public Alcohol getAlcohol() {
-        return alcohol;
-    }
-
-    public String getImagePath1() {
-        return imagePath1;
-    }
-
-    public String getImagePath2() {
-        return imagePath2;
-    }
-
-    public String getImagePath3() {
-        return imagePath3;
+    public int getAlcoholId() {
+        return alcoholId;
     }
 }
