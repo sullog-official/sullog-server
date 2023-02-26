@@ -9,7 +9,9 @@ import java.time.Instant;
 @ToString(callSuper = true)
 public class Member extends BaseEntity {
 
-    private final String memberId;
+    private final int memberId;
+
+    private final String email;
 
     private final String nickname;
 
@@ -17,7 +19,8 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(
-            String memberId,
+            int memberId,
+            String email,
             String nickname,
             String searchWordList,
             Instant createdAt,
@@ -25,12 +28,17 @@ public class Member extends BaseEntity {
             Instant deletedAt) {
         super(createdAt, updatedAt, deletedAt);
         this.memberId = memberId;
+        this.email = email;
         this.nickname = nickname;
         this.searchWordList = searchWordList;
     }
 
-    public String getMemberId() {
+    public int getMemberId() {
         return memberId;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getNickname() {

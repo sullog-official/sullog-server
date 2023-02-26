@@ -8,7 +8,9 @@ import java.time.Instant;
 public class BaseEntity {
 
     private final Instant createdAt;
+
     private final Instant updatedAt;
+
     private final Instant deletedAt;
 
     public BaseEntity(
