@@ -5,7 +5,7 @@
 <mapper namespace="sullog.backend.member.mapper.MemberMapper">
 
     <insert id="insertMember">
-        INSERT INTO sullog_alpha.member
+        INSERT INTO member
         (
             member_id,
             nickname,
