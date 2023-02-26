@@ -9,17 +9,13 @@
         (
             member_id,
             nickname,
-            created_at,
-            updated_at,
             search_word_list
         )
         VALUES (
             #{memberId},
             #{nickname},
-            NOW(),
-            NOW(),
             #{searchWordListJson}
-        );
+        )
     </insert>
 
 
