@@ -3,10 +3,15 @@ spring:
     hikari:
       max-lifetime: 600
 #      connection-timeout: 1000
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
   profiles:
     include:
       - oauth
       - jwt
+      - aws
     active: alpha   # alpha, live
 server:
   port: 8877
