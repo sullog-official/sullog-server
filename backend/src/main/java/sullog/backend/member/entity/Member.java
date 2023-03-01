@@ -1,24 +1,38 @@
 package sullog.backend.member.entity;
 
+import lombok.Builder;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import sullog.backend.common.entity.BaseEntity;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
+@ToString(callSuper = true)
 public class Member extends BaseEntity implements UserDetails {
 
+    private final int memberId;
     private final String email;
-    private String nickName;
-    private List<String> searchWordList;
+    private final String nickName;
+    private final List<String> searchWordList;
 
-    public Member(String email, String nickName) {
+    @Builder
+    public Member(
+            int memberId,
+            String email,
+            String nickName,
+            List<String> searchWordList,
+            Instant createdAt,
+            Instant updatedAt,
+            Instant deletedAt) {
+        super(createdAt, updatedAt, deletedAt);
+        this.memberId = memberId;
         this.email = email;
         this.nickName = nickName;
+        this.searchWordList = searchWordList;
     }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
