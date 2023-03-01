@@ -28,4 +28,8 @@ public class MemberService {
     public Member findMemberByEmail(String email) {
         return memberMapper.selectMemberByEmail(email);
     }
+
+    public void deleteMember(int memberId) {
+        memberMapper.deleteMemberById(memberId);
+    }
 }

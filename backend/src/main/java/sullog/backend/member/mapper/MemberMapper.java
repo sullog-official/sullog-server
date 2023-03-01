@@ -9,4 +9,5 @@ public interface MemberMapper {
 
     void insertMember(Member member) throws RuntimeException;
     Member selectMemberByEmail(@Param("email") String email);
+    void deleteMemberById(@Param("memberId") int memberId);
 }
