@@ -1,6 +1,7 @@
 package sullog.backend.common.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -10,6 +11,10 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import sullog.backend.common.mapper.typehandler.StringListTypeHandler;
+import sullog.backend.record.entity.AlcoholPercentFeeling;
+import sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler;
+import sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler;
 
 import javax.sql.DataSource;
 
@@ -29,7 +34,11 @@ public class MybatisConfig {
         sqlSessionFactory.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/**/*.xml"));
-
+        sqlSessionFactory.setTypeHandlers(new TypeHandler[] {
+                new StringListTypeHandler(),
+                new AlcoholPercentFeelingTypeHandler(AlcoholPercentFeeling.class),
+                new FlavorTagListTypeHandler()
+        });
         return sqlSessionFactory.getObject();
     }
 

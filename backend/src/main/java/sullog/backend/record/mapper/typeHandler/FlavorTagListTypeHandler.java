@@ -1,4 +1,4 @@
-package sullog.backend.record.mapper.typeHandler;
+package sullog.backend.record.mapper.typehandler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -43,7 +43,8 @@ public class FlavorTagListTypeHandler extends BaseTypeHandler<List<FlavorDetail>
 
     private List<FlavorDetail> jsonToFlavorTagMap(String jsonString) {
         try {
-            return objectMapper.readValue(jsonString, new TypeReference<List<FlavorDetail>>() {});
+            return objectMapper.readValue(jsonString, new TypeReference<>() {
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
