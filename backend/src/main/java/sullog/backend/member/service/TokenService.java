@@ -10,7 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
-import sullog.backend.member.dto.MemberDto;
+import sullog.backend.member.entity.Member;
 import sullog.backend.member.entity.Token;
 
 import java.security.Key;
@@ -27,13 +27,17 @@ public class TokenService implements InitializingBean {
     private final long refreshTokenValidityInMilliseconds;
     private Key key;
 
+    private final MemberService memberService;
+
     public TokenService(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInMilliseconds,
-            @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInMilliseconds) {
+            @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInMilliseconds,
+            MemberService memberService) {
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliseconds * 1000;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds * 1000;
+        this.memberService = memberService;
     }
 
     @Override
@@ -84,12 +88,8 @@ public class TokenService implements InitializingBean {
 
     public Authentication getAuthentication(String token) {
         String email = getEmail(token);
-        MemberDto memberDto = MemberDto.builder()
-                .email(email)
-                //TODO: DB에서 데이터 읽어와 나머지 필드 셋팅
-                .build();
-
-        return new UsernamePasswordAuthenticationToken(memberDto, "",
+        Member findMember = memberService.findMemberByEmail(email);
+        return new UsernamePasswordAuthenticationToken(findMember, "",
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
