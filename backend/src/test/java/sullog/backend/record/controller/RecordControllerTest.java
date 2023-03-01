@@ -19,17 +19,17 @@ import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.service.TokenService;
 import sullog.backend.record.entity.FlavorDetail;
 import sullog.backend.record.dto.RecordSaveRequestDto;
-import sullog.backend.record.entity.AlcoholIntensity;
-import sullog.backend.record.entity.Record;
+import sullog.backend.record.entity.AlcoholPercentFeeling;
 import sullog.backend.record.service.ImageUploadService;
 import sullog.backend.record.service.RecordService;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -75,11 +75,12 @@ class RecordControllerTest {
         // given
         List<FlavorDetail> flavorDetailList = Arrays.asList(FlavorDetail.of("FLOWER", "CHRYSANTHEMUM"), FlavorDetail.of("DAIRY", "BUTTER"));
         RecordSaveRequestDto requestDto = RecordSaveRequestDto.builder()
-                .memberId(1L)
-                .alcoholId(1L)
+                .memberId(1)
+                .alcoholId(1)
                 .title("Test record")
-                .alcoholIntensity(AlcoholIntensity.STRONG)
+                .alcoholPercentFeeling(AlcoholPercentFeeling.STRONG)
                 .flavorTagList(flavorDetailList)
+                .scentScore(3)
                 .tasteScore(4)
                 .textureScore(5)
                 .description("This is a test record.")
@@ -90,6 +91,8 @@ class RecordControllerTest {
                 new MockMultipartFile("photoList", "test1.jpg", "image/jpeg", "test1".getBytes()),
                 new MockMultipartFile("photoList", "test2.jpg", "image/jpeg", "test2".getBytes()));
 
+        when(imageUploadService.uploadImageList(any())).thenReturn(List.of("test1.jpg", "test2.jpg"));
+
 
         // when, then
         mockMvc.perform(multipart("/records")
@@ -97,7 +100,7 @@ class RecordControllerTest {
                         .file(mockMultipartFiles.get(1))
                         .file(new MockMultipartFile("recordInfo", "", "application/json",  objectMapper.writeValueAsString(requestDto).getBytes(StandardCharsets.UTF_8))))
                 .andExpect(status().isCreated())
-                .andDo(document("save-record",
+                .andDo(document("record/save-record",
                         requestParts(List.of(
                                 partWithName("photoList").description("사용자가 업로드한 이미지 리스트(0 ~ 3장)").optional(),
                                 partWithName("recordInfo").description("사용자가 작성한 전통주 경험")
@@ -106,10 +109,11 @@ class RecordControllerTest {
                                 fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("작성자 id"),
                                 fieldWithPath("alcoholId").type(JsonFieldType.NUMBER).description("술 id"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                fieldWithPath("alcoholIntensity").type(JsonFieldType.STRING).description("도수 느낌"),
+                                fieldWithPath("alcoholPercentFeeling").type(JsonFieldType.STRING).description("도수 느낌"),
                                 fieldWithPath("flavorTagList").type(JsonFieldType.ARRAY).description("상세 플레이버(optional)").optional(),
                                 fieldWithPath("flavorTagList[0].majorTag").type(JsonFieldType.STRING).description("2분류").optional(),
                                 fieldWithPath("flavorTagList[0].detailTag").type(JsonFieldType.STRING).description("3분류").optional(),
+                                fieldWithPath("scentScore").type(JsonFieldType.NUMBER).description("향점수 (1~5)"),
                                 fieldWithPath("tasteScore").type(JsonFieldType.NUMBER).description("맛점수 (1~5)"),
                                 fieldWithPath("textureScore").type(JsonFieldType.NUMBER).description("감촉점수 (1~5)"),
                                 fieldWithPath("description").type(JsonFieldType.STRING).description("상세 내용"),
