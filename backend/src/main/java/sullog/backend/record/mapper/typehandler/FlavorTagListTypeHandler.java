@@ -43,9 +43,11 @@ public class FlavorTagListTypeHandler extends BaseTypeHandler<List<FlavorDetail>
 
     private List<FlavorDetail> jsonToFlavorTagMap(String jsonString) {
         try {
+            System.out.println("flavorTag = " + jsonString);
             return objectMapper.readValue(jsonString, new TypeReference<>() {
             });
         } catch (JsonProcessingException e) {
+            System.out.println("flavorTag = " + jsonString);
             throw new RuntimeException(e);
         }
     }

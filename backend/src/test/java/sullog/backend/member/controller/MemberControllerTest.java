@@ -14,8 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 import sullog.backend.member.service.MemberService;
+import sullog.backend.member.service.TokenService;
 
 import java.util.List;
 
@@ -34,6 +36,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
+
+    @MockBean
+    private TokenService tokenService;
 
     @MockBean
     private MemberService memberService;
