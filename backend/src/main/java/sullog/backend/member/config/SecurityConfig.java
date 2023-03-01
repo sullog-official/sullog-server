@@ -7,7 +7,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import sullog.backend.member.config.jwt.JwtAccessDeniedHandler;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.config.jwt.JwtAuthenticationEntryPoint;
@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .csrf().disable() // Rest API 서버이기때문에 CSRF 처리를 해제
                 .formLogin().disable()
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) // Custom Jwt 토큰 필터를 filter chain에 추가
+                .addFilterBefore(jwtAuthFilter, BasicAuthenticationFilter.class) // Custom Jwt 토큰 필터를 filter chain에 추가
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
