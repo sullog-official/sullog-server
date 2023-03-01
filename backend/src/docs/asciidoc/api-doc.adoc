@@ -38,6 +38,7 @@ include::{snippets}/token-refresh/http-request.adoc[]
 include::{snippets}/token-refresh/http-response.adoc[]
 include::{snippets}/token-refresh/response-headers.adoc[]
 
+
 ==== 회원 탈퇴
 ===== Request
 include::{snippets}/member/delete-member/http-request.adoc[]
@@ -45,3 +46,31 @@ include::{snippets}/member/delete-member/request-headers.adoc[]
 
 ===== Response
 include::{snippets}/member/delete-member/http-response.adoc[]
+
+== 3. 전통주 경험
+==== 전통주 경험 저장
+===== Request
+include::{snippets}/record/save-record/http-request.adoc[]
+include::{snippets}/record/save-record/request-parts.adoc[]
+include::{snippets}/record/save-record/request-part-recordInfo-fields.adoc[]
+
+===== Response
+include::{snippets}/record/save-record/http-response.adoc[]
+
+== 4. 전통주 조회
+==== 전통주 검색
+===== Request
+include::{snippets}/alcohol-search/http-request.adoc[]
+include::{snippets}/alcohol-search/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/alcohol-search/http-response.adoc[]
+
+
+==== 전통주 조회
+===== Request
+include::{snippets}/alcohol-get/http-request.adoc[]
+include::{snippets}/alcohol-get/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/alcohol-get/http-response.adoc[]

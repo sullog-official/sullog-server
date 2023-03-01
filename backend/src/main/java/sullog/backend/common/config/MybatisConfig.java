@@ -11,7 +11,10 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import sullog.backend.member.mapper.typehandler.SearchWordListTypeHandler;
+import sullog.backend.common.mapper.typehandler.StringListTypeHandler;
+import sullog.backend.record.entity.AlcoholPercentFeeling;
+import sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler;
+import sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler;
 
 import javax.sql.DataSource;
 
@@ -32,9 +35,10 @@ public class MybatisConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/**/*.xml"));
         sqlSessionFactory.setTypeHandlers(new TypeHandler[] {
-                new SearchWordListTypeHandler(),
+                new StringListTypeHandler(),
+                new AlcoholPercentFeelingTypeHandler(AlcoholPercentFeeling.class),
+                new FlavorTagListTypeHandler()
         });
-
         return sqlSessionFactory.getObject();
     }
 

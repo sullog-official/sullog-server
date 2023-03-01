@@ -1,62 +1,53 @@
-package sullog.backend.record.entity;
+package sullog.backend.record.dto;
 
 import lombok.Builder;
-import lombok.ToString;
-import sullog.backend.common.entity.BaseEntity;
+import sullog.backend.record.entity.AlcoholPercentFeeling;
+import sullog.backend.record.entity.FlavorDetail;
+import sullog.backend.record.entity.Record;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
-@ToString(callSuper = true)
-public class Record extends BaseEntity {
+@Builder
+public class RecordSaveRequestDto {
 
-    private int memberId;
-    private int alcoholId;
+    private Integer memberId; // 작성자 id
 
-    private int recordId; //auto increment
+    private Integer alcoholId; // 술 id
 
     private String title; // 제목
-
-    private List<String> photoPathList; // 사진 경로(3장까지)
 
     private AlcoholPercentFeeling alcoholPercentFeeling; // 도수 느낌
 
     private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
 
-    private int scentScore; // 향 점수(1~5)
+    private Integer scentScore; //향점수(1~5)
 
-    private int tasteScore; // 맛점수 (1~5)
+    private Integer tasteScore; // 맛점수 (1~5)
 
-    private int textureScore; // 감촉점수 (1~5)
+    private Integer textureScore; // 감촉점수 (1~5)
 
     private String description; // 상세 내용
 
     private LocalDate experienceDate; // 경험 날짜
 
-    @Builder
-    public Record(
-            Instant createdAt,
-            Instant updatedAt,
-            Instant deletedAt,
-            int memberId,
-            int alcoholId,
-            int recordId,
+    public RecordSaveRequestDto() {
+    }
+
+    public RecordSaveRequestDto(
+            Integer memberId,
+            Integer alcoholId,
             String title,
-            List<String> photoPathList,
             AlcoholPercentFeeling alcoholPercentFeeling,
             List<FlavorDetail> flavorTagList,
-            int scentScore,
-            int tasteScore,
-            int textureScore,
+            Integer scentScore,
+            Integer tasteScore,
+            Integer textureScore,
             String description,
             LocalDate experienceDate) {
-        super(createdAt, updatedAt, deletedAt);
         this.memberId = memberId;
         this.alcoholId = alcoholId;
-        this.recordId = recordId;
         this.title = title;
-        this.photoPathList = photoPathList;
         this.alcoholPercentFeeling = alcoholPercentFeeling;
         this.flavorTagList = flavorTagList;
         this.scentScore = scentScore;
@@ -74,16 +65,8 @@ public class Record extends BaseEntity {
         return alcoholId;
     }
 
-    public int getRecordId() {
-        return recordId;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public List<String> getPhotoPathList() {
-        return photoPathList;
     }
 
     public AlcoholPercentFeeling getAlcoholPercentFeeling() {
@@ -94,15 +77,15 @@ public class Record extends BaseEntity {
         return flavorTagList;
     }
 
-    public int getScentScore() {
+    public Integer getScentScore() {
         return scentScore;
     }
 
-    public int getTasteScore() {
+    public Integer getTasteScore() {
         return tasteScore;
     }
 
-    public int getTextureScore() {
+    public Integer getTextureScore() {
         return textureScore;
     }
 
@@ -112,5 +95,21 @@ public class Record extends BaseEntity {
 
     public LocalDate getExperienceDate() {
         return experienceDate;
+    }
+
+    public Record toEntity(List<String> photoPathList) {
+        return Record.builder()
+                .memberId(memberId)
+                .alcoholId(alcoholId)
+                .title(title)
+                .photoPathList(photoPathList)
+                .alcoholPercentFeeling(alcoholPercentFeeling)
+                .flavorTagList(flavorTagList)
+                .scentScore(scentScore)
+                .tasteScore(tasteScore)
+                .textureScore(textureScore)
+                .description(description)
+                .experienceDate(experienceDate)
+                .build();
     }
 }
