@@ -1,0 +1,37 @@
+= SULLOG API
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 1. 개요
+술로그 서비스 API 명세입니다.
+
+=== Domain
+
+|===
+| 환경 | domain
+
+| 개발서버
+| `TBD`
+
+| 운영서버
+| `TBD`
+|===
+
+== 4. 전통주 조회
+==== 전통주 검색
+===== Request
+include::{snippets}/alcohol-search/http-request.adoc[]
+include::{snippets}/alcohol-search/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/alcohol-search/http-response.adoc[]
+
+
+==== 전통주 조회
+===== Request
+include::{snippets}/alcohol-get/http-request.adoc[]
+include::{snippets}/alcohol-get/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/alcohol-get/http-response.adoc[]
