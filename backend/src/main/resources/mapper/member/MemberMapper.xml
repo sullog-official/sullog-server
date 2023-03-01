@@ -4,19 +4,10 @@
 
 <mapper namespace="sullog.backend.member.mapper.MemberMapper">
 
-    <insert id="insertMember">
-        INSERT INTO member
-        (
-            member_id,
-            nickname,
-            search_word_list
-        )
-        VALUES (
-            #{memberId},
-            #{nickname},
-            #{searchWordListJson}
-        )
-    </insert>
-
+    <select id="selectRecentSearchHistory" resultType="String">
+        SELECT search_word_list
+        FROM member
+        WHERE member_id = #{memberId}
+    </select>
 
 </mapper>

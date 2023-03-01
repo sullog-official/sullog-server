@@ -2,14 +2,12 @@ package sullog.backend.member.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import sullog.backend.alcohol.service.MemberService;
-import sullog.backend.member.dto.request.MemberRegisterDto;
+import org.springframework.web.bind.annotation.*;
+import sullog.backend.member.dto.response.RecentSearchHistoryDto;
+import sullog.backend.member.service.MemberService;
 
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/api/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -18,11 +16,11 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> registerNewMember(MemberRegisterDto memberRegisterDto) {
 
-        memberService.registerNewMember(memberRegisterDto);
+    @GetMapping("/{memberId}/recent-search-history")
+    public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(
+            @PathVariable int memberId) {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
     }
 }

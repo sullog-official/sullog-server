@@ -6,9 +6,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MemberMapper {
 
-    void insertMember(
-            @Param("memberId") String memberId,
-            @Param("nickname") String nickname,
-            @Param("searchWordListJson") String searchWordListJson
-    ) throws RuntimeException;
+    String selectRecentSearchHistory(@Param("memberId") int memberId) throws RuntimeException;
 }
