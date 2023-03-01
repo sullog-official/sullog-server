@@ -4,6 +4,24 @@
 
 <mapper namespace="sullog.backend.member.mapper.MemberMapper">
 
+    <insert id="insertMember" parameterType="sullog.backend.member.entity.Member">
+        INSERT INTO member
+        (
+            email,
+            nickname,
+            search_word_list
+        )
+        VALUES (
+            #{email},
+            #{nickName},
+            #{searchWordList, typeHandler=sullog.backend.member.mapper.typehandler.SearchWordListTypeHandler}
+        )
+    </insert>
+
+    <select id="selectMemberByEmail" resultType="sullog.backend.member.entity.Member">
+        SELECT * FROM member WHERE email = #{email}
+    </select>
+
     <select id="selectRecentSearchHistory" resultType="String">
         SELECT search_word_list
         FROM member

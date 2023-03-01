@@ -11,6 +11,8 @@ public class Alcohol extends BaseEntity {
 
     private int alcoholId;
 
+    private int brandId;
+
     private String name;
 
     private double alcoholPercent;
@@ -22,8 +24,6 @@ public class Alcohol extends BaseEntity {
     private double productionLongitude;
 
     private String alcoholTag;
-
-    private int brandId;
 
     public int getAlcoholId() {
         return alcoholId;
@@ -60,25 +60,25 @@ public class Alcohol extends BaseEntity {
     @Builder
     public Alcohol(
             int alcoholId,
+            int brandId,
             String name,
             double alcoholPercent,
             String productionLocation,
             double productionLatitude,
             double productionLongitude,
             String alcoholTag,
-            int brandId,
             Instant createdAt,
             Instant updatedAt,
             Instant deletedAt) {
         super(createdAt, updatedAt, deletedAt);
         this.alcoholId = alcoholId;
+        this.brandId = brandId;
         this.name = name;
         this.alcoholPercent = alcoholPercent;
         this.productionLocation = productionLocation;
         this.productionLatitude = productionLatitude;
         this.productionLongitude = productionLongitude;
         this.alcoholTag = alcoholTag;
-        this.brandId = brandId;
     }
 
 }

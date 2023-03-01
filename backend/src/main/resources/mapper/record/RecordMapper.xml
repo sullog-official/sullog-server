@@ -4,4 +4,33 @@
 
 <mapper namespace="sullog.backend.record.mapper.RecordMapper">
 
+    <insert id="insertRecord" parameterType="sullog.backend.record.entity.Record">
+        INSERT INTO record
+        (
+            member_id,
+            alcohol_id,
+            title,
+            photo_path,
+            alcohol_percent_feeling,
+            flavor_tag_list,
+            scent_score,
+            taste_score,
+            texture_score,
+            description,
+            experience_date
+        )
+        VALUES (
+                   #{memberId},
+                   #{alcoholId},
+                   #{title},
+                   #{photoPathList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler},
+                   #{alcoholPercentFeeling, typeHandler=sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler},
+                   #{flavorTagList, typeHandler=sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler},
+                   #{scentScore},
+                   #{tasteScore},
+                   #{textureScore},
+                   #{description},
+                   #{experienceDate}
+               );
+    </insert>
 </mapper>
