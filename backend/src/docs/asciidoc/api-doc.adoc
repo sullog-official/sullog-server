@@ -41,12 +41,12 @@ include::{snippets}/token-refresh/response-headers.adoc[]
 == 3. 전통주 경험
 ==== 전통주 경험 저장
 ===== Request
-include::{snippets}/save-record/http-request.adoc[]
-include::{snippets}/save-record/request-parts.adoc[]
-include::{snippets}/save-record/request-part-recordInfo-fields.adoc[]
+include::{snippets}/record/save-record/http-request.adoc[]
+include::{snippets}/record/save-record/request-parts.adoc[]
+include::{snippets}/record/save-record/request-part-recordInfo-fields.adoc[]
 
 ===== Response
-include::{snippets}/save-record/http-response.adoc[]
+include::{snippets}/record/save-record/http-response.adoc[]
 
 == 4. 전통주 조회
 ==== 전통주 검색

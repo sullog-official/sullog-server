@@ -1,7 +1,7 @@
 package sullog.backend.record.dto;
 
 import lombok.Builder;
-import sullog.backend.record.entity.AlcoholIntensity;
+import sullog.backend.record.entity.AlcoholPercentFeeling;
 import sullog.backend.record.entity.FlavorDetail;
 import sullog.backend.record.entity.Record;
 
@@ -11,39 +11,57 @@ import java.util.List;
 @Builder
 public class RecordSaveRequestDto {
 
-    private Long memberId; // 작성자 id
+    private Integer memberId; // 작성자 id
 
-    private Long alcoholId; // 술 id
+    private Integer alcoholId; // 술 id
 
     private String title; // 제목
 
-    private AlcoholIntensity alcoholIntensity; // 도수 느낌
+    private AlcoholPercentFeeling alcoholPercentFeeling; // 도수 느낌
+
     private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
+
+    private Integer scentScore; //향점수(1~5)
+
     private Integer tasteScore; // 맛점수 (1~5)
+
     private Integer textureScore; // 감촉점수 (1~5)
+
     private String description; // 상세 내용
+
     private LocalDate experienceDate; // 경험 날짜
 
     public RecordSaveRequestDto() {
     }
 
-    public RecordSaveRequestDto(Long memberId, Long alcoholId, String title, AlcoholIntensity alcoholIntensity, List<FlavorDetail> flavorTagList, Integer tasteScore, Integer textureScore, String description, LocalDate experienceDate) {
+    public RecordSaveRequestDto(
+            Integer memberId,
+            Integer alcoholId,
+            String title,
+            AlcoholPercentFeeling alcoholPercentFeeling,
+            List<FlavorDetail> flavorTagList,
+            Integer scentScore,
+            Integer tasteScore,
+            Integer textureScore,
+            String description,
+            LocalDate experienceDate) {
         this.memberId = memberId;
         this.alcoholId = alcoholId;
         this.title = title;
-        this.alcoholIntensity = alcoholIntensity;
+        this.alcoholPercentFeeling = alcoholPercentFeeling;
         this.flavorTagList = flavorTagList;
+        this.scentScore = scentScore;
         this.tasteScore = tasteScore;
         this.textureScore = textureScore;
         this.description = description;
         this.experienceDate = experienceDate;
     }
 
-    public Long getMemberId() {
+    public int getMemberId() {
         return memberId;
     }
 
-    public Long getAlcoholId() {
+    public int getAlcoholId() {
         return alcoholId;
     }
 
@@ -51,12 +69,16 @@ public class RecordSaveRequestDto {
         return title;
     }
 
-    public AlcoholIntensity getAlcoholIntensity() {
-        return alcoholIntensity;
+    public AlcoholPercentFeeling getAlcoholPercentFeeling() {
+        return alcoholPercentFeeling;
     }
 
     public List<FlavorDetail> getFlavorTagList() {
         return flavorTagList;
+    }
+
+    public Integer getScentScore() {
+        return scentScore;
     }
 
     public Integer getTasteScore() {
@@ -81,8 +103,9 @@ public class RecordSaveRequestDto {
                 .alcoholId(alcoholId)
                 .title(title)
                 .photoPathList(photoPathList)
-                .alcoholIntensity(alcoholIntensity)
+                .alcoholPercentFeeling(alcoholPercentFeeling)
                 .flavorTagList(flavorTagList)
+                .scentScore(scentScore)
                 .tasteScore(tasteScore)
                 .textureScore(textureScore)
                 .description(description)
