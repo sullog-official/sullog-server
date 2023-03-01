@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import sullog.backend.alcohol.error.exception.AlcoholException;
+import sullog.backend.common.error.ErrorCode;
 
 @RestControllerAdvice
 public class AlcoholControllerAdvice {
