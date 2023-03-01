@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import sullog.backend.member.config.jwt.JwtAccessDeniedHandler;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.config.jwt.JwtAuthenticationEntryPoint;
+import sullog.backend.member.config.oauth.OAuth2SuccessHandler;
 import sullog.backend.member.service.CustomOAuth2UserService;
 
 @EnableWebSecurity
@@ -49,12 +50,12 @@ public class SecurityConfig {
                     .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/token/expired").permitAll() //token
+                    .antMatchers("/login/oauth2/code/**", //kakao oauth redirect url
+                            "/favicon.ico").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .oauth2Login()
                     .successHandler(successHandler)
-                    .loginPage("/token/expired")
                     .userInfoEndpoint().userService(oAuth2UserService)
                     .and()
                 .and()

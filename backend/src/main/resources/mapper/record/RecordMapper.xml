@@ -29,6 +29,4 @@
                    #{record.description}
                );
     </insert>
-
-
 </mapper>

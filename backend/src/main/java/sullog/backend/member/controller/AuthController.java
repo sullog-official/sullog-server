@@ -26,6 +26,5 @@ public class AuthController {
 
         response.addHeader(HttpHeaders.AUTHORIZATION, newToken.getAccessToken());
         response.addHeader("Refresh", newToken.getRefreshToken());
-        response.setContentType("application/json;charset=UTF-8");
     }
 }

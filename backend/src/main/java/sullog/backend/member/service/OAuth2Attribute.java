@@ -47,7 +47,10 @@ public class OAuth2Attribute {
     }
 
     public Member toMember() {
-        return new Member(email, name);
+        return Member.builder()
+                .email(email)
+                .nickName(name)
+                .build();
     }
 
     @Override
