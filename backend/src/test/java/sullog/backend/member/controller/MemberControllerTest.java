@@ -17,12 +17,11 @@ import sullog.backend.member.service.MemberService;
 import sullog.backend.member.service.TokenService;
 
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete; // MockMvcBuilders 사용하면 pathParameters 이용 시 에러발생
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
@@ -52,21 +51,19 @@ class MemberControllerTest {
     @Test
     void memberId값을_바탕으로_회원탈퇴를_진행한다() throws Exception {
         // given
-        int memberId = 0;
+        String email = "test@test.com";
         String accessToken = "sample_token";
 
         // when
-        doNothing().when(memberService).deleteMember(memberId);
+        doReturn(email).when(tokenService).getEmail(accessToken);
+        doNothing().when(memberService).deleteMember(email);
 
         // then
-        this.mockMvc.perform(delete("/members/{memberId}", memberId)
+        this.mockMvc.perform(delete("/members/me")
                         .header(HttpHeaders.AUTHORIZATION, accessToken))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andDo(document("member/delete-member",
-                        pathParameters(
-                                parameterWithName("memberId").description("탈퇴하려는 member의 id")
-                        ),
                         requestHeaders(
                             headerWithName(HttpHeaders.AUTHORIZATION).description("사용자의 access token")
                 )));

@@ -42,7 +42,6 @@ include::{snippets}/token-refresh/response-headers.adoc[]
 ===== Request
 include::{snippets}/member/delete-member/http-request.adoc[]
 include::{snippets}/member/delete-member/request-headers.adoc[]
-include::{snippets}/member/delete-member/path-parameters.adoc[]
 
 ===== Response
 include::{snippets}/member/delete-member/http-response.adoc[]
