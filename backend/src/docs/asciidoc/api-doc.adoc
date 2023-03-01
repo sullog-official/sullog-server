@@ -37,3 +37,13 @@ include::{snippets}/token-refresh/http-request.adoc[]
 ===== Response
 include::{snippets}/token-refresh/http-response.adoc[]
 include::{snippets}/token-refresh/response-headers.adoc[]
+
+== 3. 전통주 경험
+==== 전통주 경험 저장
+===== Request
+include::{snippets}/save-record/http-request.adoc[]
+include::{snippets}/save-record/request-parts.adoc[]
+include::{snippets}/save-record/request-part-recordInfo-fields.adoc[]
+
+===== Response
+include::{snippets}/save-record/http-response.adoc[]

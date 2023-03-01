@@ -5,31 +5,31 @@ import lombok.ToString;
 import sullog.backend.common.entity.BaseEntity;
 
 import java.time.Instant;
+import java.util.List;
 
 @ToString(callSuper = true)
 public class Record extends BaseEntity {
 
-    private int recordId;
-
-    private String title;
-
-    private String photoPathList;
-
-    private String alcoholPercentFeeling;
-
-    private String flavorTagList;
-
-    private int scentScore;
-
-    private int tasteScore;
-
-    private int textureScore;
-
-    private String description;
-
     private int memberId;
-
     private int alcoholId;
+
+    private int recordId; //auto increment
+
+    private String title; // 제목
+
+    private List<String> photoPathList; // 사진 경로(3장까지)
+
+    private AlcoholIntensity alcoholPercentFeeling; // 도수 느낌
+
+    private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
+
+    private int scentScore; // 맛점수 (1~5)
+
+    private int tasteScore; // 감촉점수 (1~5)
+
+    private int textureScore; // 상세 내용
+
+    private String description; // 경험 날짜
 
     @Builder
     public Record(
@@ -38,9 +38,9 @@ public class Record extends BaseEntity {
             Instant deletedAt,
             int recordId,
             String title,
-            String photoPathList,
-            String alcoholPercentFeeling,
-            String flavorTagList,
+            List<String> photoPathList,
+            AlcoholIntensity alcoholPercentFeeling,
+            List<FlavorDetail> flavorTagList,
             int scentScore,
             int tasteScore,
             int textureScore,
@@ -69,15 +69,15 @@ public class Record extends BaseEntity {
         return title;
     }
 
-    public String getPhotoPathList() {
+    public List<String> getPhotoPathList() {
         return photoPathList;
     }
 
-    public String getAlcoholPercentFeeling() {
+    public AlcoholIntensity getAlcoholPercentFeeling() {
         return alcoholPercentFeeling;
     }
 
-    public String getFlavorTagList() {
+    public List<FlavorDetail> getFlavorTagList() {
         return flavorTagList;
     }
 
