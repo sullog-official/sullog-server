@@ -47,3 +47,21 @@ include::{snippets}/save-record/request-part-recordInfo-fields.adoc[]
 
 ===== Response
 include::{snippets}/save-record/http-response.adoc[]
+
+== 4. 전통주 조회
+==== 전통주 검색
+===== Request
+include::{snippets}/alcohol-search/http-request.adoc[]
+include::{snippets}/alcohol-search/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/alcohol-search/http-response.adoc[]
+
+
+==== 전통주 조회
+===== Request
+include::{snippets}/alcohol-get/http-request.adoc[]
+include::{snippets}/alcohol-get/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/alcohol-get/http-response.adoc[]
