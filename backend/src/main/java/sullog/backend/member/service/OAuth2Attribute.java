@@ -3,6 +3,7 @@ package sullog.backend.member.service;
 import lombok.Builder;
 import sullog.backend.member.entity.Member;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,7 @@ public class OAuth2Attribute {
         return Member.builder()
                 .email(email)
                 .nickName(name)
+                .searchWordList(Collections.EMPTY_LIST)
                 .build();
     }
 

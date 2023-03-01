@@ -2,13 +2,11 @@ package sullog.backend.member.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import sullog.backend.member.entity.Member;
 
 @Mapper
 public interface MemberMapper {
 
-    void insertMember(
-            @Param("memberId") String memberId,
-            @Param("nickname") String nickname,
-            @Param("searchWordListJson") String searchWordListJson
-    ) throws RuntimeException;
+    void insertMember(Member member) throws RuntimeException;
+    Member selectMemberByEmail(@Param("email") String email);
 }
