@@ -37,3 +37,12 @@ include::{snippets}/token-refresh/http-request.adoc[]
 ===== Response
 include::{snippets}/token-refresh/http-response.adoc[]
 include::{snippets}/token-refresh/response-headers.adoc[]
+
+==== 회원 탈퇴
+===== Request
+include::{snippets}/member/delete-member/http-request.adoc[]
+include::{snippets}/member/delete-member/request-headers.adoc[]
+include::{snippets}/member/delete-member/path-parameters.adoc[]
+
+===== Response
+include::{snippets}/member/delete-member/http-response.adoc[]
