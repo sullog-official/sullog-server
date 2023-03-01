@@ -28,9 +28,12 @@ public class AlcoholService {
 
     public AlcoholInfoWithPagingDto getAlcoholInfo(AlcoholSearchRequestDto alcoholSearchRequestDto) {
         List<AlcoholInfoDto> alcoholInfoDtoList = new ArrayList<>();
-        AtomicInteger currentCursor = new AtomicInteger();
-        alcoholMapper
-                .pagingSelectByKeyword(alcoholSearchRequestDto.getKeyword(), alcoholSearchRequestDto.getCursor(), alcoholSearchRequestDto.getLimit())
+        List<AlcoholWithBrandDto> alcoholWithBrandDtoList = alcoholMapper.pagingSelectByKeyword(
+                alcoholSearchRequestDto.getKeyword(),
+                alcoholSearchRequestDto.getCursor(),
+                alcoholSearchRequestDto.getLimit());
+
+        alcoholWithBrandDtoList
                 .forEach(dto -> {
                     AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
                             .alcoholName(dto.getAlcoholName())
@@ -43,11 +46,11 @@ public class AlcoholService {
                             .alcoholPercent(dto.getAlcoholPercent())
                             .build();
                     alcoholInfoDtoList.add(alcoholInfoDto);
-                    currentCursor.set(dto.getAlcoholId());
                 });
 
+        int cursor = alcoholWithBrandDtoList.get(alcoholWithBrandDtoList.size() - 1).getAlcoholId();
         PagingInfoDto pagingInfoDto = PagingInfoDto.builder()
-                .cursor(currentCursor.get())
+                .cursor(cursor)
                 .limit(alcoholSearchRequestDto.getLimit())
                 .build();
 
