@@ -14,6 +14,12 @@ import java.util.Collections;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
+    private final MemberService memberService;
+
+    public CustomOAuth2UserService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
@@ -22,7 +28,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2Attribute oAuth2Attribute =
                 OAuth2Attribute.of(registrationId, oAuth2User.getAttributes());
 
-        // TODO 술로그 DB에 회원 데이터 저장
+        // 회원가입(이미 가입된 유저이면 skip)
+        memberService.registerMember(oAuth2Attribute.toMember());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
