@@ -10,7 +10,7 @@ import java.util.List;
 @ToString
 public class AlcoholInfoWithPagingDto {
 
-    private List<AlcoholInfoDto> alcoholInfoDtoList = new ArrayList<>();
+    private List<AlcoholInfoDto> alcoholInfoDtoList;
 
     private PagingInfoDto pagingInfoDto;
 

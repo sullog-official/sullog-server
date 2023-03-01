@@ -4,7 +4,7 @@
 
 <mapper namespace="sullog.backend.alcohol.mapper.AlcoholMapper">
 
-    <resultMap id="AlcoholWithAlcoholBrand" type="sullog.backend.alcohol.dto.table.AlcoholWithBrandWithPagingDto">
+    <resultMap id="AlcoholWithAlcoholBrand" type="sullog.backend.alcohol.dto.table.AlcoholWithBrandDto">
         <result property="alcoholId" column="alcohol_id"/>
         <result property="brand_id" column="brand_id"/>
         <result property="alcoholName" column="alcohol_name"/>

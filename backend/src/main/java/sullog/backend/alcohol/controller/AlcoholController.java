@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sullog.backend.alcohol.dto.request.AlcoholSearchRequestDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
 import sullog.backend.alcohol.entity.Alcohol;
@@ -30,11 +31,8 @@ public class AlcoholController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(
-            @RequestParam(required = false) String keyword,
-            @RequestParam int cursor,
-            @RequestParam int limit) {
-        return new ResponseEntity<>(alcoholService.getAlcoholInfo(keyword, cursor, limit), HttpStatus.OK);
+    public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(AlcoholSearchRequestDto alcoholSearchRequestDto) {
+        return new ResponseEntity<>(alcoholService.getAlcoholInfo(alcoholSearchRequestDto), HttpStatus.OK);
     }
 
 }

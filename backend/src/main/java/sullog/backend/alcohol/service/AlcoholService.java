@@ -1,10 +1,11 @@
 package sullog.backend.alcohol.service;
 
 import org.springframework.stereotype.Service;
+import sullog.backend.alcohol.dto.request.AlcoholSearchRequestDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
-import sullog.backend.alcohol.dto.table.AlcoholWithBrandWithPagingDto;
+import sullog.backend.alcohol.dto.table.AlcoholWithBrandDto;
 import sullog.backend.alcohol.mapper.AlcoholMapper;
 
 import java.util.ArrayList;
@@ -21,24 +22,15 @@ public class AlcoholService {
     }
 
     public AlcoholInfoDto getAlcoholById(int alcoholId) {
-        AlcoholWithBrandWithPagingDto alcoholWithBrandWithPagingDto = alcoholMapper.selectByAlcoholIdWithBrand(alcoholId);
-        return AlcoholInfoDto.builder()
-                .alcoholName(alcoholWithBrandWithPagingDto.getAlcoholName())
-                .alcoholPercent(alcoholWithBrandWithPagingDto.getAlcoholPercent())
-                .alcoholTag(alcoholWithBrandWithPagingDto.getAlcoholTag())
-                .brandName(alcoholWithBrandWithPagingDto.getBrandName())
-                .productionLatitude(alcoholWithBrandWithPagingDto.getProductionLatitude())
-                .productionLongitude(alcoholWithBrandWithPagingDto.getProductionLongitude())
-                .productionLocation(alcoholWithBrandWithPagingDto.getProductionLocation())
-                .alcoholPercent(alcoholWithBrandWithPagingDto.getAlcoholPercent())
-                .build();
+        AlcoholWithBrandDto alcoholWithBrandDto = alcoholMapper.selectByAlcoholIdWithBrand(alcoholId);
+        return alcoholWithBrandDto.toAlcoholInfoDto();
     }
 
-    public AlcoholInfoWithPagingDto getAlcoholInfo(String keyword, int cursor, int limit) {
+    public AlcoholInfoWithPagingDto getAlcoholInfo(AlcoholSearchRequestDto alcoholSearchRequestDto) {
         List<AlcoholInfoDto> alcoholInfoDtoList = new ArrayList<>();
         AtomicInteger currentCursor = new AtomicInteger();
         alcoholMapper
-                .pagingSelectByKeyword(keyword, cursor, limit)
+                .pagingSelectByKeyword(alcoholSearchRequestDto.getKeyword(), alcoholSearchRequestDto.getCursor(), alcoholSearchRequestDto.getLimit())
                 .forEach(dto -> {
                     AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
                             .alcoholName(dto.getAlcoholName())
@@ -56,7 +48,7 @@ public class AlcoholService {
 
         PagingInfoDto pagingInfoDto = PagingInfoDto.builder()
                 .cursor(currentCursor.get())
-                .limit(limit)
+                .limit(alcoholSearchRequestDto.getLimit())
                 .build();
 
         return AlcoholInfoWithPagingDto.builder()

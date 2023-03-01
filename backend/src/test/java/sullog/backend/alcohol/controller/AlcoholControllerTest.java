@@ -16,23 +16,27 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import sullog.backend.alcohol.dto.request.AlcoholSearchRequestDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
 import sullog.backend.alcohol.entity.Alcohol;
 import sullog.backend.alcohol.service.AlcoholService;
+import sullog.backend.member.config.jwt.JwtAuthFilter;
+import sullog.backend.member.service.TokenService;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,6 +47,12 @@ class AlcoholControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
+
+    @MockBean
+    private TokenService tokenService;
 
     @MockBean
     private AlcoholService alcoholService;
@@ -123,14 +133,19 @@ class AlcoholControllerTest {
                 .pagingInfoDto(pagingInfoDto)
                 .build();
 
-        when(alcoholService.getAlcoholInfo(anyString(), anyInt(), anyInt())).thenReturn(alcoholInfoWithPagingDto);
+        AlcoholSearchRequestDto alcoholSearchRequestDto = AlcoholSearchRequestDto.builder()
+                .keyword("keyword")
+                .cursor(1)
+                .limit(1)
+                .build();
+
+        when(alcoholService.getAlcoholInfo(alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(
                         get("/api/alcohols/search")
-                                .param("keyword", "전통막")
-                                .param("cursor", "4")
-                                .param("limit", "5")
-                                .contentType(MediaType.APPLICATION_JSON)
+                                .queryParam("keyword", alcoholSearchRequestDto.getKeyword())
+                                .queryParam("cursor", String.valueOf(alcoholSearchRequestDto.getCursor()))
+                                .queryParam("limit", String.valueOf(alcoholSearchRequestDto.getLimit()))
                 )
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작

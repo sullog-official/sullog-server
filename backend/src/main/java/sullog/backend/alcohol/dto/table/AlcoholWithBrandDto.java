@@ -2,12 +2,13 @@ package sullog.backend.alcohol.dto.table;
 
 import lombok.Builder;
 import lombok.ToString;
+import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 
 import java.time.Instant;
 
 @Builder
 @ToString
-public class AlcoholWithBrandWithPagingDto {
+public class AlcoholWithBrandDto {
 
     private int alcoholId;
 
@@ -97,5 +98,18 @@ public class AlcoholWithBrandWithPagingDto {
 
     public Instant getBrandDeletedAt() {
         return brandDeletedAt;
+    }
+
+    public AlcoholInfoDto toAlcoholInfoDto() {
+        return AlcoholInfoDto.builder()
+                .alcoholName(this.getAlcoholName())
+                .alcoholPercent(this.getAlcoholPercent())
+                .alcoholTag(this.getAlcoholTag())
+                .brandName(this.getBrandName())
+                .productionLatitude(this.getProductionLatitude())
+                .productionLongitude(this.getProductionLongitude())
+                .productionLocation(this.getProductionLocation())
+                .alcoholPercent(this.getAlcoholPercent())
+                .build();
     }
 }
