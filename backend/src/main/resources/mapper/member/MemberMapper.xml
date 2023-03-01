@@ -24,13 +24,13 @@
         WHERE email = #{email} and deleted_at = NULL
     </select>
 
-    <delete id="deleteMemberById">
+    <delete id="deleteMemberByEmail">
         UPDATE member
         SET
             deleted_at = NOW(),
             updated_at = NOW()
         WHERE
-            member_id = #{memberId}
+            email = #{email}
     </delete>
 
 </mapper>

@@ -29,7 +29,7 @@ public class MemberService {
         return memberMapper.selectMemberByEmail(email);
     }
 
-    public void deleteMember(int memberId) {
-        memberMapper.deleteMemberById(memberId);
+    public void deleteMember(String email) {
+        memberMapper.deleteMemberByEmail(email);
     }
 }
