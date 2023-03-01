@@ -1,0 +1,5 @@
+jwt:
+  header: Authorization
+  secret: ENC(xYpWTtWAcruRg0r6O29rWv8YQ1pGppht/bQ+OlrkUXfNgAMWwjZQYNMHh588TW87lwQyLvERUT3vqUGYoU61S7c7u4E1p140y8dT7Tp29/M=)
+  access-token-validity-in-seconds: 86400 #1일
+  refresh-token-validity-in-seconds: 1209600 #2주
