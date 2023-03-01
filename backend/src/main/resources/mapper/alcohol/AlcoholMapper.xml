@@ -4,4 +4,87 @@
 
 <mapper namespace="sullog.backend.alcohol.mapper.AlcoholMapper">
 
+    <resultMap id="AlcoholWithAlcoholBrand" type="sullog.backend.alcohol.dto.table.AlcoholWithBrandDto">
+        <result property="alcoholId" column="alcohol_id"/>
+        <result property="brand_id" column="brand_id"/>
+        <result property="alcoholName" column="alcohol_name"/>
+        <result property="alcoholPercent" column="alcohol_percent"/>
+        <result property="productionLocation" column="production_location"/>
+        <result property="productionLatitude" column="production_latitude"/>
+        <result property="productionLongitude" column="production_longitude"/>
+        <result property="alcoholTag" column="alcohol_tag"/>
+        <result property="alcoholCreatedAt" column="alcohol_created_at"/>
+        <result property="alcoholUpdatedAt" column="alcohol_updated_at"/>
+        <result property="alcoholDeletedAt" column="alcohol_deleted_at"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="brandCreatedAt" column="brand_created_at"/>
+        <result property="brandUpdatedAt" column="brand_updated_at"/>
+        <result property="brandDeletedAt" column="brand_deleted_at"/>
+    </resultMap>
+
+    <select id="selectByAlcoholId" resultType="sullog.backend.alcohol.entity.Alcohol">
+        SELECT *
+        FROM alcohol
+        WHERE alcohol_id = #{alcoholId}
+    </select>
+
+    <select id="selectByAlcoholIdWithBrand" resultMap="AlcoholWithAlcoholBrand">
+        SELECT a.alcohol_id           AS alcohol_id,
+               a.brand_id             AS brand_id,
+               a.name                 AS alcohol_name,
+               a.alcohol_percent      AS alcohol_percent,
+               a.production_location  AS production_location,
+               a.production_latitude  AS production_latitude,
+               a.production_longitude AS production_longitude,
+               a.alcohol_tag          AS alcohol_tag,
+               a.created_at           AS alcohol_created_at,
+               a.updated_at           AS alcohol_updated_at,
+               a.deleted_at           AS alcohol_deleted_at,
+               ab.name                AS brand_name,
+               ab.created_at          AS brand_created_at,
+               ab.updated_at          AS brand_updated_at,
+               ab.deleted_at          AS brand_deleted_at
+        FROM alcohol AS a
+                 LEFT JOIN (SELECT *
+                            FROM alcohol_brand) AS ab
+                           ON a.brand_id = ab.brand_id
+        WHERE alcohol_id = #{alcoholId}
+    </select>
+
+    <select id="pagingSelectByKeyword" resultMap="AlcoholWithAlcoholBrand">
+        SELECT a.alcohol_id           AS alcohol_id,
+                a.brand_id             AS brand_id,
+                a.name                 AS alcohol_name,
+                a.alcohol_percent      AS alcohol_percent,
+                a.production_location  AS production_location,
+                a.production_latitude  AS production_latitude,
+                a.production_longitude AS production_longitude,
+                a.alcohol_tag          AS alcohol_tag,
+                a.created_at           AS alcohol_created_at,
+                a.updated_at           AS alcohol_updated_at,
+                a.deleted_at           AS alcohol_deleted_at,
+                ab.name                AS brand_name,
+                ab.created_at          AS brand_created_at,
+                ab.updated_at          AS brand_updated_at,
+                ab.deleted_at          AS brand_deleted_at
+        FROM alcohol AS a
+        LEFT JOIN (
+            SELECT *
+            FROM alcohol_brand
+        ) AS ab
+        ON a.brand_id = ab.brand_id
+        <choose>
+            <when test = "keyword != null">
+                WHERE a.name LIKE CONCAT('%', #{keyword}, '%')
+                AND a.alcohol_id >= #{cursor}
+                ORDER BY a.alcohol_id ASC
+            </when>
+            <otherwise>
+                WHERE a.alcohol_id >= #{cursor}
+                ORDER BY a.alcohol_id ASC
+            </otherwise>
+        </choose>
+        LIMIT #{limit}
+    </select>
+
 </mapper>

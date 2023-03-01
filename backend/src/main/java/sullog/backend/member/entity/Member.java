@@ -72,4 +72,12 @@ public class Member extends BaseEntity implements UserDetails {
     public String getEmail() {
         return email;
     }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public List<String> getSearchWordList() {
+        return searchWordList;
+    }
 }
