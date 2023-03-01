@@ -10,7 +10,7 @@ import sullog.backend.alcohol.error.exception.AlcoholException;
 public class AlcoholControllerAdvice {
 
     @ExceptionHandler(AlcoholException.class)
-    ResponseEntity<?> exceptionHandler(AlcoholException e) {
+    ResponseEntity<ErrorCode> exceptionHandler(AlcoholException e) {
         return new ResponseEntity<>(e.getErrorCode(), HttpStatus.BAD_REQUEST);
     }
 
