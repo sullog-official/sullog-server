@@ -51,7 +51,7 @@ public class OAuth2Attribute {
         return Member.builder()
                 .email(email)
                 .nickName(name)
-                .searchWordList(Collections.EMPTY_LIST)
+                .searchWordList("[]")
                 .build();
     }
 

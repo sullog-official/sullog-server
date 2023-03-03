@@ -44,5 +44,11 @@
         WHERE member_id = #{memberId}
     </select>
 
+    <update id="updateSearchWordList">
+        UPDATE member
+        SET search_word_list = #{searchWordList}
+        WHERE member_id = #{memberId}
+    </update>
+
 
 </mapper>

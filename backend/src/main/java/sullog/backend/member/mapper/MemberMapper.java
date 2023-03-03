@@ -16,4 +16,8 @@ public interface MemberMapper {
     void deleteMemberByEmail(@Param("email") String email);
 
     String selectRecentSearchHistory(@Param("memberId") int memberId) throws RuntimeException;
+
+    int updateSearchWordList(
+            @Param("memberId") int memberId,
+            @Param("searchWordList") String searchWordList) throws RuntimeException;
 }

@@ -139,7 +139,7 @@ class AlcoholControllerTest {
                 .limit(1)
                 .build();
 
-        when(alcoholService.getAlcoholInfo(alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
+        when(alcoholService.getAlcoholInfo(eq(any()), alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(
                         get("/api/alcohols/search")

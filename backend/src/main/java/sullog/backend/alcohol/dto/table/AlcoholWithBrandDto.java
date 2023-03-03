@@ -12,6 +12,8 @@ public class AlcoholWithBrandDto {
 
     private int alcoholId;
 
+    private int brandId;
+
     private String alcoholName;
 
     private double alcoholPercent;
@@ -29,8 +31,6 @@ public class AlcoholWithBrandDto {
     private Instant alcoholUpdatedAt;
 
     private Instant alcoholDeletedAt;
-
-    private int brandId;
 
     private String brandName;
 
@@ -102,14 +102,14 @@ public class AlcoholWithBrandDto {
 
     public AlcoholInfoDto toAlcoholInfoDto() {
         return AlcoholInfoDto.builder()
-                .alcoholName(this.getAlcoholName())
-                .alcoholPercent(this.getAlcoholPercent())
-                .alcoholTag(this.getAlcoholTag())
-                .brandName(this.getBrandName())
-                .productionLatitude(this.getProductionLatitude())
-                .productionLongitude(this.getProductionLongitude())
-                .productionLocation(this.getProductionLocation())
-                .alcoholPercent(this.getAlcoholPercent())
+                .alcoholName(alcoholName)
+                .alcoholPercent(alcoholPercent)
+                .alcoholTag(alcoholTag)
+                .brandName(brandName)
+                .productionLatitude(productionLatitude)
+                .productionLongitude(productionLongitude)
+                .productionLocation(productionLocation)
+                .alcoholPercent(alcoholPercent)
                 .build();
     }
 }
