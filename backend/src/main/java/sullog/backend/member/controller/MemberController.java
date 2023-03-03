@@ -1,25 +1,35 @@
 package sullog.backend.member.controller;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
 import sullog.backend.member.service.MemberService;
 import sullog.backend.member.service.TokenService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 
 @RestController
+@RequestMapping("/api/members")
 public class MemberController {
 
+    private final MemberService memberService;
     private final TokenService tokenService;
     private final MemberService memberService;
 
-    public MemberController(TokenService tokenService, MemberService memberService) {
-        this.tokenService = tokenService;
+    public MemberController(MemberService memberService, TokenService tokenService) {
         this.memberService = memberService;
+        this.tokenService = tokenService;
     }
 
-    @DeleteMapping("/members/me")
+
+    @GetMapping("/{memberId}/recent-search-history")
+    public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(
+            @PathVariable int memberId) {
+
+        return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
+    }
+    
+     @DeleteMapping("/members/me")
     public void deleteMember(@RequestHeader String authorization){
         String email = tokenService.getEmail(authorization);
         memberService.deleteMember(email);
-    }
 }

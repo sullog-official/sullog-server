@@ -13,6 +13,8 @@ public class CommonControllerAdvice {
     @ExceptionHandler(Exception.class)
     ResponseEntity<?> exceptionHandler(Exception e) {
 
+        e.printStackTrace();
+
         return new ResponseEntity<>(ErrorCode.UNKNOWN_ERROR, HttpStatus.BAD_REQUEST);
     }
 
