@@ -6,7 +6,7 @@
 
     <resultMap id="AlcoholWithAlcoholBrand" type="sullog.backend.alcohol.dto.table.AlcoholWithBrandDto">
         <result property="alcoholId" column="alcohol_id"/>
-        <result property="brand_id" column="brand_id"/>
+        <result property="brandId" column="brand_id"/>
         <result property="alcoholName" column="alcohol_name"/>
         <result property="alcoholPercent" column="alcohol_percent"/>
         <result property="productionLocation" column="production_location"/>
@@ -77,13 +77,12 @@
             <when test = "keyword != null">
                 WHERE a.name LIKE CONCAT('%', #{keyword}, '%')
                 AND a.alcohol_id >= #{cursor}
-                ORDER BY a.alcohol_id ASC
             </when>
             <otherwise>
                 WHERE a.alcohol_id >= #{cursor}
-                ORDER BY a.alcohol_id ASC
             </otherwise>
         </choose>
+        ORDER BY a.alcohol_id ASC
         LIMIT #{limit}
     </select>
 

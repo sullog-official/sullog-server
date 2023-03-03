@@ -1,5 +1,6 @@
 package sullog.backend.alcohol.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,10 @@ import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
 import sullog.backend.alcohol.entity.Alcohol;
 import sullog.backend.alcohol.service.AlcoholService;
+import sullog.backend.member.entity.Token;
+import sullog.backend.member.service.TokenService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -20,8 +24,11 @@ public class AlcoholController {
 
     private final AlcoholService alcoholService;
 
-    public AlcoholController(AlcoholService alcoholService) {
+    private final TokenService tokenService;
+
+    public AlcoholController(AlcoholService alcoholService, TokenService tokenService) {
         this.alcoholService = alcoholService;
+        this.tokenService = tokenService;
     }
 
     @GetMapping
@@ -31,8 +38,13 @@ public class AlcoholController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(AlcoholSearchRequestDto alcoholSearchRequestDto) {
-        return new ResponseEntity<>(alcoholService.getAlcoholInfo(alcoholSearchRequestDto), HttpStatus.OK);
+    public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(
+            HttpServletRequest request,
+            AlcoholSearchRequestDto alcoholSearchRequestDto) {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String email = tokenService.getEmail(token);
+
+        return new ResponseEntity<>(alcoholService.getAlcoholInfo(email, alcoholSearchRequestDto), HttpStatus.OK);
     }
 
 }

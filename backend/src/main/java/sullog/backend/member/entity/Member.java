@@ -16,14 +16,14 @@ public class Member extends BaseEntity implements UserDetails {
     private final int memberId;
     private final String email;
     private final String nickName;
-    private final List<String> searchWordList;
+    private final String searchWordList;
 
     @Builder
     public Member(
             int memberId,
             String email,
             String nickName,
-            List<String> searchWordList,
+            String searchWordList,
             Instant createdAt,
             Instant updatedAt,
             Instant deletedAt) {
@@ -77,7 +77,11 @@ public class Member extends BaseEntity implements UserDetails {
         return nickName;
     }
 
-    public List<String> getSearchWordList() {
+    public String getSearchWordList() {
         return searchWordList;
+    }
+
+    public int getMemberId() {
+        return memberId;
     }
 }
