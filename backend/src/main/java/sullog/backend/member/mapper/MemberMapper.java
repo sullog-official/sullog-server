@@ -12,6 +12,8 @@ public interface MemberMapper {
     void insertMember(Member member) throws RuntimeException;
 
     Member selectMemberByEmail(@Param("email") String email);
+    
+    void deleteMemberByEmail(@Param("email") String email);
 
     String selectRecentSearchHistory(@Param("memberId") int memberId) throws RuntimeException;
 }
