@@ -4,6 +4,10 @@
 
 <mapper namespace="sullog.backend.member.mapper.MemberMapper">
 
+    <resultMap id="searchWordListTypeHandler" type="List">
+        <result column="search_word_list" property="searchWordList" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
+    </resultMap>
+
     <insert id="insertMember" parameterType="sullog.backend.member.entity.Member">
         INSERT INTO member
         (
@@ -21,4 +25,12 @@
     <select id="selectMemberByEmail" resultType="sullog.backend.member.entity.Member">
         SELECT * FROM member WHERE email = #{email}
     </select>
+
+    <select id="selectRecentSearchHistory" resultType="String">
+<!--    <select id="selectRecentSearchHistory" resultMap="searchWordListTypeHandler">-->
+        SELECT search_word_list
+        FROM member
+        WHERE member_id = #{memberId}
+    </select>
+
 </mapper>
