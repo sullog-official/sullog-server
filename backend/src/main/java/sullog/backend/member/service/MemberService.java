@@ -44,6 +44,10 @@ public class MemberService {
         return memberMapper.selectMemberByEmail(email);
     }
 
+    public void deleteMember(String email) {
+        memberMapper.deleteMemberByEmail(email);
+    }
+    
     private boolean isAlreadyRegisteredMember(Member member) {
         return memberMapper.selectMemberByEmail(member.getEmail()) != null;
     }

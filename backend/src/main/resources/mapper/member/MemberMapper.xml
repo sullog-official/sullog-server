@@ -23,11 +23,22 @@
     </insert>
 
     <select id="selectMemberByEmail" resultType="sullog.backend.member.entity.Member">
-        SELECT * FROM member WHERE email = #{email}
+        SELECT *
+        FROM member
+        WHERE email = #{email} and deleted_at = NULL
     </select>
 
+
+    <delete id="deleteMemberByEmail">
+        UPDATE member
+        SET
+            deleted_at = NOW(),
+            updated_at = NOW()
+        WHERE
+            email = #{email}
+    </delete>
+
     <select id="selectRecentSearchHistory" resultType="String">
-<!--    <select id="selectRecentSearchHistory" resultMap="searchWordListTypeHandler">-->
         SELECT search_word_list
         FROM member
         WHERE member_id = #{memberId}
@@ -38,5 +49,6 @@
         SET search_word_list = #{searchWordList}
         WHERE member_id = #{memberId}
     </update>
+
 
 </mapper>
