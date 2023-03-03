@@ -13,5 +13,5 @@ public interface MemberMapper {
 
     Member selectMemberByEmail(@Param("email") String email);
 
-    List<String> selectRecentSearchHistory(@Param("memberId") int memberId) throws RuntimeException;
+    String selectRecentSearchHistory(@Param("memberId") int memberId) throws RuntimeException;
 }

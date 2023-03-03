@@ -26,8 +26,8 @@
         SELECT * FROM member WHERE email = #{email}
     </select>
 
-<!--    <select id="selectRecentSearchHistory" resultType="List">-->
-    <select id="selectRecentSearchHistory" resultMap="searchWordListTypeHandler">
+    <select id="selectRecentSearchHistory" resultType="String">
+<!--    <select id="selectRecentSearchHistory" resultMap="searchWordListTypeHandler">-->
         SELECT search_word_list
         FROM member
         WHERE member_id = #{memberId}

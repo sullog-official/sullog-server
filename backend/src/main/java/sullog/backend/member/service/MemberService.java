@@ -19,11 +19,14 @@ public class MemberService {
     }
 
     public RecentSearchHistoryDto getRecentSearchHistory(int memberId) {
-        List<String> recentSearchList = memberMapper.selectRecentSearchHistory(memberId);
-        System.out.println("recentSearchList = " + recentSearchList);
+        String recentSearchList = memberMapper.selectRecentSearchHistory(memberId);
+        List<String> searchWordList = Arrays.stream(recentSearchList
+                .replaceAll("\\[", "")
+                .replaceAll("]", "")
+                .split(",")).toList();
 
         return RecentSearchHistoryDto.builder()
-                .recentSearchWordList(recentSearchList)
+                .recentSearchWordList(searchWordList)
                 .build();
     }
 
