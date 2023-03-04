@@ -9,9 +9,12 @@ public class RecordMetaDto {
     private String description; // 경험기록 상세내용
     private String mainPhotoPath; // 사용자가 등록한 사진 경로(optional)
     private int alcoholId; // 전통주 id
+    private String alcoholName; // 전통주 이름
+    private String productionLocation; // 생산지 명
     private double productionLatitude; // 전통주 생산지 위도
     private double productionLongitude; // 전통주 생산지 경도
     private String alcoholTag; // 전통주 태그
+    private String brandName; // 브랜드 이름
 
     public int getRecordId() {
         return recordId;
@@ -29,6 +32,14 @@ public class RecordMetaDto {
         return alcoholId;
     }
 
+    public String getAlcoholName() {
+        return alcoholName;
+    }
+
+    public String getProductionLocation() {
+        return productionLocation;
+    }
+
     public double getProductionLatitude() {
         return productionLatitude;
     }
@@ -39,5 +50,9 @@ public class RecordMetaDto {
 
     public String getAlcoholTag() {
         return alcoholTag;
+    }
+
+    public String getBrandName() {
+        return brandName;
     }
 }

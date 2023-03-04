@@ -12,9 +12,12 @@ public class RecordMetaWithAlcoholInfoDto {
     private String description;
     private List<String> photoPathList;
     private int alcoholId;
+    private String alcoholName;
+    private String productionLocation;
     private double productionLatitude;
     private double productionLongitude;
     private String alcoholTag;
+    private String brandName;
 
     public int getRecordId() {
         return recordId;
@@ -30,6 +33,14 @@ public class RecordMetaWithAlcoholInfoDto {
 
     public int getAlcoholId() {
         return alcoholId;
+    }
+
+    public String getAlcoholName() {
+        return alcoholName;
+    }
+
+    public String getProductionLocation() {
+        return productionLocation;
     }
 
     public double getProductionLatitude() {
@@ -50,9 +61,12 @@ public class RecordMetaWithAlcoholInfoDto {
                 .description(description)
                 .mainPhotoPath(getMainPhotoPath())
                 .alcoholId(alcoholId)
+                .alcoholName(alcoholName)
+                .productionLocation(productionLocation)
                 .productionLatitude(productionLatitude)
                 .productionLongitude(productionLongitude)
                 .alcoholTag(alcoholTag)
+                .brandName(brandName)
                 .build();
     }
 
