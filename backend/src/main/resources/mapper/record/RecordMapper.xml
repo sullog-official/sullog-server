@@ -60,4 +60,36 @@
                        FROM alcohol) AS a
             ON r.alcohol_id = a.alcohol_id AND r.member_id = #{memberId}
     </select>
+
+    <resultMap id="Record" type="sullog.backend.record.entity.Record">
+        <result property="recordId" column="record_id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="alcoholId" column="alcohol_id"/>
+        <result property="title" column="title"/>
+        <result property="photoPathList" column="photo_path" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
+        <result property="alcoholPercentFeeling" column="alcohol_percent_feeling" typeHandler="sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler"/>
+        <result property="flavorTagList" column="flavor_tag_list" typeHandler="sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler"/>
+        <result property="tasteScore" column="taste_score"/>
+        <result property="scentScore" column="scent_score"/>
+        <result property="textureScore" column="texture_score"/>
+        <result property="description" column="description"/>
+        <result property="experienceDate" column="experience_date" typeHandler="sullog.backend.record.mapper.typehandler.LocalDateTypeHandler"/>
+    </resultMap>
+
+    <select id="selectRecordById" resultMap="Record">
+        SELECT record_id,
+               member_id,
+               alcohol_id,
+               title,
+               photo_path,
+               alcohol_percent_feeling,
+               flavor_tag_list,
+               taste_score,
+               scent_score,
+               texture_score,
+               description,
+               experience_date
+        FROM record
+        WHERE record_id = #{recordId}
+    </select>
 </mapper>

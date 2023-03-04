@@ -12,4 +12,6 @@ public interface RecordMapper {
     void insertRecord(Record record);
 
     List<RecordMetaWithAlcoholInfoDto> selectRecordMetaByMemberId(int memberId);
+
+    Record selectRecordById(int recordId);
 }
