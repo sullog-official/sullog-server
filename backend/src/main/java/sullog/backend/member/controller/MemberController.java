@@ -13,7 +13,6 @@ public class MemberController {
 
     private final MemberService memberService;
     private final TokenService tokenService;
-    private final MemberService memberService;
 
     public MemberController(MemberService memberService, TokenService tokenService) {
         this.memberService = memberService;
@@ -27,9 +26,10 @@ public class MemberController {
 
         return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
     }
-    
-     @DeleteMapping("/members/me")
-    public void deleteMember(@RequestHeader String authorization){
+
+    @DeleteMapping("/members/me")
+    public void deleteMember(@RequestHeader String authorization) {
         String email = tokenService.getEmail(authorization);
         memberService.deleteMember(email);
+    }
 }
