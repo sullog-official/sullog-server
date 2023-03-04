@@ -39,6 +39,8 @@
         <result property="description" column="description"/>
         <result property="photoPathList" column="photo_path" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
         <result property="alcoholId" column="alcohol_id"/>
+        <result property="alcoholName" column="alcohol_name"/>
+        <result property="productionLocation" column="production_location"/>
         <result property="productionLatitude" column="production_latitude"/>
         <result property="productionLongitude" column="production_longitude"/>
         <result property="alcoholTag" column="alcohol_tag"/>
@@ -49,11 +51,15 @@
                r.description          AS description,
                r.photo_path           AS photo_path,
                a.alcohol_id           AS alcohol_id,
+               a.name         AS alcohol_name,
+               a.production_location  AS production_location,
                a.production_latitude  AS production_latitude,
                a.production_longitude AS production_longitude,
                a.alcohol_tag          AS alcohol_tag
         FROM record AS r
             LEFT JOIN (SELECT alcohol_id,
+                              name,
+                              production_location,
                               production_latitude,
                               production_longitude,
                               alcohol_tag
