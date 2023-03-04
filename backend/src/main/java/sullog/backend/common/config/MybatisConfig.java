@@ -16,6 +16,7 @@ import sullog.backend.common.mapper.typehandler.StringListTypeHandler;
 import sullog.backend.record.entity.AlcoholPercentFeeling;
 import sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler;
 import sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler;
+import sullog.backend.record.mapper.typehandler.LocalDateTypeHandler;
 
 import javax.sql.DataSource;
 
@@ -38,7 +39,8 @@ public class MybatisConfig {
         sqlSessionFactory.setTypeHandlers(new TypeHandler[] {
                 new AlcoholPercentFeelingTypeHandler(AlcoholPercentFeeling.class),
                 new FlavorTagListTypeHandler(),
-                new StringListTypeHandler()
+                new StringListTypeHandler(),
+                new LocalDateTypeHandler()
         });
         return sqlSessionFactory.getObject();
     }
