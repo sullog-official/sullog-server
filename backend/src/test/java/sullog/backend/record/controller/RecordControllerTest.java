@@ -16,12 +16,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
+import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.service.TokenService;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.FlavorDetail;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.entity.AlcoholPercentFeeling;
+import sullog.backend.record.entity.Record;
 import sullog.backend.record.service.ImageUploadService;
 import sullog.backend.record.service.RecordService;
 
@@ -37,10 +40,9 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.restdocs.snippet.Attributes.key;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -56,6 +58,9 @@ class RecordControllerTest {
 
     @MockBean
     private ImageUploadService imageUploadService;
+
+    @MockBean
+    private AlcoholService alcoholService;
 
     @MockBean
     private JwtAuthFilter jwtAuthFilter;
@@ -200,4 +205,82 @@ class RecordControllerTest {
         return List.of(recordMetaWithAlcoholInfoDto, recordMetaWithAlcoholInfoDto2, recordMetaWithAlcoholInfoDto3);
     }
 
+    @Test
+    void 경험기록id로_단건의_경험을조회한다() throws Exception {
+        // given
+        int recordId = 1;
+
+        // mocking data
+        Record record = makeRecordData();
+        doReturn(record).when(recordService).getRecordByRecordId(recordId);
+
+        AlcoholInfoDto alcoholInfoDto = makeAlcoholInfoDto();
+        doReturn(alcoholInfoDto).when(alcoholService).getAlcoholById(record.getAlcoholId());
+
+        // when, then
+        mockMvc.perform(get("/records/{recordId}", recordId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.record.recordId").value(record.getRecordId()))
+                .andExpect(jsonPath("$.record.memberId").value(record.getMemberId()))
+                .andExpect(jsonPath("$.record.alcoholId").value(record.getAlcoholId())) //나머지 검증은 생략
+                .andDo(document("record/get-record-by-recordId",
+                    pathParameters(parameterWithName("recordId").description("경험 기록 id")),
+                    responseFields(
+                            fieldWithPath("record").type(JsonFieldType.OBJECT).optional().description("경험기록 정보"),
+                            fieldWithPath("record.recordId").type(JsonFieldType.NUMBER).description("기록 id"),
+                            fieldWithPath("record.memberId").type(JsonFieldType.NUMBER).description("작성자 id"),
+                            fieldWithPath("record.alcoholId").type(JsonFieldType.NUMBER).description("전통주 id"),
+                            fieldWithPath("record.title").type(JsonFieldType.STRING).description("제목"),
+                            fieldWithPath("record.photoPathList").type(JsonFieldType.ARRAY).description("사진 경로(3장까지)").optional(),
+                            fieldWithPath("record.alcoholPercentFeeling").type(JsonFieldType.STRING).description("도수 느낌"),
+                            fieldWithPath("record.flavorTagList").type(JsonFieldType.ARRAY).description("상세 플레이버 태그(optional)").optional(),
+                            fieldWithPath("record.flavorTagList[].majorTag").type(JsonFieldType.STRING).description("상세 플레이버 태그 - 2분류(optional)").optional(),
+                            fieldWithPath("record.flavorTagList[].detailTag").type(JsonFieldType.STRING).description("상세 플레이버 태그 - 3분류(optional)").optional(),
+                            fieldWithPath("record.scentScore").type(JsonFieldType.NUMBER).description("향 점수(1~5)"),
+                            fieldWithPath("record.tasteScore").type(JsonFieldType.NUMBER).description("맛점수 (1~5)"),
+                            fieldWithPath("record.textureScore").type(JsonFieldType.NUMBER).description("감촉점수 (1~5)"),
+                            fieldWithPath("record.description").type(JsonFieldType.STRING).description("상세 내용"),
+                            fieldWithPath("record.experienceDate").type(JsonFieldType.STRING).description("경험 날짜"),
+
+                            fieldWithPath("alcoholInfo").type(JsonFieldType.OBJECT).optional().description("전통주 정보"),
+                            fieldWithPath("alcoholInfo.brandName").description("전통주 브랜드 이름"),
+                            fieldWithPath("alcoholInfo.alcoholName").description("전통주 이름"),
+                            fieldWithPath("alcoholInfo.alcoholPercent").type(JsonFieldType.NUMBER).description("도수"),
+                            fieldWithPath("alcoholInfo.productionLocation").type(JsonFieldType.STRING).description("생산지 주소"),
+                            fieldWithPath("alcoholInfo.productionLatitude").type(JsonFieldType.NUMBER).description("생산지 위도"),
+                            fieldWithPath("alcoholInfo.productionLongitude").type(JsonFieldType.NUMBER).description("생산지 경도"),
+                            fieldWithPath("alcoholInfo.alcoholTag").type(JsonFieldType.STRING).description("전통주 태그")
+                    ))
+                );
+
+    }
+
+    private Record makeRecordData() {
+        return Record.builder()
+                .memberId(1)
+                .alcoholId(1)
+                .title("Dummy Data 1")
+                .photoPathList(Arrays.asList("path1", "path2"))
+                .alcoholPercentFeeling(AlcoholPercentFeeling.STRONG)
+                .flavorTagList(Arrays.asList(FlavorDetail.of("FLOWER", "CHRYSANTHEMUM"), FlavorDetail.of("DAIRY", "BUTTER")))
+                .scentScore(4)
+                .tasteScore(3)
+                .textureScore(2)
+                .description("This is a dummy data 1")
+                .experienceDate(LocalDate.of(2022, 3, 4))
+                .build();
+    }
+
+    private AlcoholInfoDto makeAlcoholInfoDto() {
+        return AlcoholInfoDto.builder()
+                .alcoholName("전통주 샘플")
+                .alcoholTag("SOJU")
+                .alcoholPercent(10.0)
+                .productionLocation("서울시 광진구")
+                .productionLongitude(37.54373496690244)
+                .productionLatitude(127.077794504202)
+                .brandName("진로")
+                .build();
+    }
 }
