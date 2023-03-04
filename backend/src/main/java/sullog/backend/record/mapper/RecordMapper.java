@@ -1,6 +1,7 @@
 package sullog.backend.record.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.Record;
 
@@ -14,4 +15,6 @@ public interface RecordMapper {
     List<RecordMetaWithAlcoholInfoDto> selectRecordMetaByMemberId(int memberId);
 
     Record selectRecordById(int recordId);
+
+    List<RecordMetaWithAlcoholInfoDto> selectRecordMetaByCondition(RecordSearchParamDto recordSearchParamDto);
 }
