@@ -150,7 +150,7 @@ class RecordControllerTest {
                 .andExpect(jsonPath("$[0].productionLatitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLatitude())))
                 .andExpect(jsonPath("$[0].productionLongitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLongitude())))
                 .andExpect(jsonPath("$[0].alcoholTag", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getAlcoholTag())))
-                .andDo(document("record/get-record-by-memberId",
+                .andDo(document("record/get-records-by-memberId",
                         requestParameters(
                                 parameterWithName("memberId").description("조회할 멤버의 ID")
                         ),
