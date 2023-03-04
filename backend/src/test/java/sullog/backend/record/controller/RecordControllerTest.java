@@ -165,7 +165,8 @@ class RecordControllerTest {
                                 fieldWithPath("[].productionLocation").description("전통주 생산지 명"),
                                 fieldWithPath("[].productionLatitude").description("전통주 생산지 위도"),
                                 fieldWithPath("[].productionLongitude").description("전통주 생산지 경도"),
-                                fieldWithPath("[].alcoholTag").description("전통주 태그")
+                                fieldWithPath("[].alcoholTag").description("전통주 태그"),
+                                fieldWithPath("[].brandName").description("브랜드 이름")
                         ))
                 );
     }
@@ -181,6 +182,7 @@ class RecordControllerTest {
                 .productionLatitude(37.123456)
                 .productionLongitude(126.789012)
                 .alcoholTag("SOJU")
+                .brandName("진로")
                 .build();
 
         RecordMetaWithAlcoholInfoDto recordMetaWithAlcoholInfoDto2 = RecordMetaWithAlcoholInfoDto.builder()
@@ -193,6 +195,7 @@ class RecordControllerTest {
                 .productionLatitude(36.987654)
                 .productionLongitude(127.012345)
                 .alcoholTag("FRUIT_WINE")
+                .brandName("진로")
                 .build();
 
         RecordMetaWithAlcoholInfoDto recordMetaWithAlcoholInfoDto3 = RecordMetaWithAlcoholInfoDto.builder()
@@ -205,6 +208,7 @@ class RecordControllerTest {
                 .productionLatitude(35.123456)
                 .productionLongitude(128.789012)
                 .alcoholTag("MAKGEOLLI")
+                .brandName("진로")
                 .build();
 
         return List.of(recordMetaWithAlcoholInfoDto, recordMetaWithAlcoholInfoDto2, recordMetaWithAlcoholInfoDto3);
