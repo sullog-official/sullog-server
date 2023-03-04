@@ -18,7 +18,7 @@
         VALUES (
             #{email},
             #{nickName},
-            #{searchWordList, typeHandler=sullog.backend.member.mapper.typehandler.SearchWordListTypeHandler}
+            #{searchWordList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler}
         )
     </insert>
 
