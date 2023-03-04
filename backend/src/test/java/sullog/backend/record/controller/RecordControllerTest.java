@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.service.TokenService;
+import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.FlavorDetail;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.entity.AlcoholPercentFeeling;
@@ -28,15 +30,19 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.snippet.Attributes.key;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(RecordController.class)
 @ExtendWith(RestDocumentationExtension.class)
@@ -121,4 +127,77 @@ class RecordControllerTest {
                         ))
                 ));
     }
+
+    @Test
+    void 멤버id기반_경험기록을_조회한다() throws Exception {
+        // given
+        int memberId = 1;
+
+        // mocking data
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = makeMockingDBResponse();
+        doReturn(recordMetaWithAlcoholInfoDtos).when(recordService).getRecordMetasByMemberId(memberId);
+
+        // when, then
+        mockMvc.perform(get("/records")
+                        .param("memberId", String.valueOf(memberId)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].recordId", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getRecordId())))
+                .andExpect(jsonPath("$[0].description", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getDescription())))
+                .andExpect(jsonPath("$[0].mainPhotoPath", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getMainPhotoPath())))
+                .andExpect(jsonPath("$[0].alcoholId", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getAlcoholId())))
+                .andExpect(jsonPath("$[0].productionLatitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLatitude())))
+                .andExpect(jsonPath("$[0].productionLongitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLongitude())))
+                .andExpect(jsonPath("$[0].alcoholTag", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getAlcoholTag())))
+                .andDo(document("record/get-record-by-memberId",
+                        requestParameters(
+                                parameterWithName("memberId").description("조회할 멤버의 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].recordId").description("경험기록 ID"),
+                                fieldWithPath("[].description").description("경험기록 상세내용"),
+                                fieldWithPath("[].mainPhotoPath").description("사용자가 업로드한 사진 경로(없을 경우, 빈 문자열(\"\")"),
+                                fieldWithPath("[].alcoholId").description("전통주 ID"),
+                                fieldWithPath("[].productionLatitude").description("전통주 생산지 위도"),
+                                fieldWithPath("[].productionLongitude").description("전통주 생산지 경도"),
+                                fieldWithPath("[].alcoholTag").description("전통주 태그")
+                        ))
+                );
+    }
+
+    private List<RecordMetaWithAlcoholInfoDto> makeMockingDBResponse() {
+        RecordMetaWithAlcoholInfoDto recordMetaWithAlcoholInfoDto = RecordMetaWithAlcoholInfoDto.builder()
+                .recordId(1)
+                .description("This is a first sample record.")
+                .photoPathList(Arrays.asList("path/to/photo1.jpg", "path/to/photo2.jpg"))
+                .alcoholId(1)
+                .productionLatitude(37.123456)
+                .productionLongitude(126.789012)
+                .alcoholTag("SOJU")
+                .build();
+
+        RecordMetaWithAlcoholInfoDto recordMetaWithAlcoholInfoDto2 = RecordMetaWithAlcoholInfoDto.builder()
+                .recordId(2)
+                .description("This is a second sample record.")
+                .photoPathList(Arrays.asList("path/to/photo3.jpg", "path/to/photo4.jpg"))
+                .alcoholId(2)
+                .productionLatitude(36.987654)
+                .productionLongitude(127.012345)
+                .alcoholTag("FRUIT_WINE")
+                .build();
+
+        RecordMetaWithAlcoholInfoDto recordMetaWithAlcoholInfoDto3 = RecordMetaWithAlcoholInfoDto.builder()
+                .recordId(3)
+                .description("This is a third sample record.")
+                .photoPathList(Arrays.asList("path/to/photo5.jpg", "path/to/photo6.jpg"))
+                .alcoholId(3)
+                .productionLatitude(35.123456)
+                .productionLongitude(128.789012)
+                .alcoholTag("MAKGEOLLI")
+                .build();
+
+        return List.of(recordMetaWithAlcoholInfoDto, recordMetaWithAlcoholInfoDto2, recordMetaWithAlcoholInfoDto3);
+    }
+
 }
