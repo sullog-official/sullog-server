@@ -44,6 +44,7 @@
         <result property="productionLatitude" column="production_latitude"/>
         <result property="productionLongitude" column="production_longitude"/>
         <result property="alcoholTag" column="alcohol_tag"/>
+        <result property="brandName" column="brand_name"/>
     </resultMap>
 
     <select id="selectRecordMetaByMemberId" resultMap="RecordMetaWithAlcoholInfo">
@@ -51,19 +52,23 @@
                r.description          AS description,
                r.photo_path           AS photo_path,
                a.alcohol_id           AS alcohol_id,
-               a.name         AS alcohol_name,
+               a.name                 AS alcohol_name,
                a.production_location  AS production_location,
                a.production_latitude  AS production_latitude,
                a.production_longitude AS production_longitude,
-               a.alcohol_tag          AS alcohol_tag
+               a.alcohol_tag          AS alcohol_tag,
+               ab.name                AS brand_name
         FROM record AS r
-            LEFT JOIN (SELECT alcohol_id,
-                              name,
-                              production_location,
-                              production_latitude,
-                              production_longitude,
-                              alcohol_tag
-                       FROM alcohol) AS a
-            ON r.alcohol_id = a.alcohol_id AND r.member_id = #{memberId}
+        LEFT JOIN (SELECT alcohol_id,
+                          brand_id,
+                          name,
+                          production_location,
+                          production_latitude,
+                          production_longitude,
+                          alcohol_tag
+                    FROM alcohol) AS a
+        ON r.alcohol_id = a.alcohol_id AND r.member_id = #{memberId}
+        LEFT JOIN alcohol_brand AS ab
+        ON a.brand_id = ab.brand_id
     </select>
 </mapper>

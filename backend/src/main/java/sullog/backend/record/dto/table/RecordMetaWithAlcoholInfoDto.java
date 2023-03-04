@@ -17,6 +17,7 @@ public class RecordMetaWithAlcoholInfoDto {
     private double productionLatitude;
     private double productionLongitude;
     private String alcoholTag;
+    private String brandName;
 
     public int getRecordId() {
         return recordId;
@@ -65,6 +66,7 @@ public class RecordMetaWithAlcoholInfoDto {
                 .productionLatitude(productionLatitude)
                 .productionLongitude(productionLongitude)
                 .alcoholTag(alcoholTag)
+                .brandName(brandName)
                 .build();
     }
 
