@@ -20,6 +20,7 @@ import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.service.TokenService;
+import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.FlavorDetail;
 import sullog.backend.record.dto.RecordSaveRequestDto;
@@ -32,6 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -296,5 +298,54 @@ class RecordControllerTest {
                 .productionLatitude(127.077794504202)
                 .brandName("진로")
                 .build();
+    }
+
+    @Test
+    void 특정사용자의_경험기록을_키워드기반으로_조회한다() throws Exception {
+        // given
+        RecordSearchParamDto recordSearchParamDto = RecordSearchParamDto.builder()
+                .memberId(1)
+                .keyword("keyword")
+                .cursor(1)
+                .limit(2)
+                .build();
+
+        // when, then
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = makeMockingDBResponse().stream().limit(recordSearchParamDto.getLimit()).collect(Collectors.toList());
+        doReturn(recordMetaWithAlcoholInfoDtos).when(recordService).getRecordMetasByCondition(any());
+
+        // when, then
+        mockMvc.perform(get("/records/search")
+                        .param("memberId", String.valueOf(recordSearchParamDto.getMemberId()))
+                        .param("cursor", String.valueOf(recordSearchParamDto.getCursor()))
+                        .param("keyword", recordSearchParamDto.getKeyword())
+                        .param("limit", String.valueOf(recordSearchParamDto.getLimit())))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.recordMetaList", hasSize(recordSearchParamDto.getLimit())))
+                .andDo(document("record/get-records-filter-by-condition",
+                        requestParameters( // path 파라미터 정보 입력
+                                parameterWithName("memberId").description("조회 대상이 될 사용자 id"),
+                                parameterWithName("keyword").description("검색 키워드"),
+                                parameterWithName("cursor").description("마지막으로 조회한 경험기록 id(최초 조회 시 null)"),
+                                parameterWithName("limit").description("한번에 조회해올 데이터 갯수")
+                        ),
+                        responseFields(
+                                fieldWithPath("recordMetaList").type(JsonFieldType.ARRAY).description("경험기록 리스트"),
+                                    fieldWithPath("recordMetaList[].recordId").description("경험기록 ID"),
+                                    fieldWithPath("recordMetaList[].description").description("경험기록 상세내용"),
+                                    fieldWithPath("recordMetaList[].mainPhotoPath").description("사용자가 업로드한 사진 경로(없을 경우, 빈 문자열(\"\")"),
+                                    fieldWithPath("recordMetaList[].alcoholId").description("전통주 ID"),
+                                    fieldWithPath("recordMetaList[].alcoholName").description("전통주 이름"),
+                                    fieldWithPath("recordMetaList[].productionLocation").description("전통주 생산지 명"),
+                                    fieldWithPath("recordMetaList[].productionLatitude").description("전통주 생산지 위도"),
+                                    fieldWithPath("recordMetaList[].productionLongitude").description("전통주 생산지 경도"),
+                                    fieldWithPath("recordMetaList[].alcoholTag").description("전통주 태그"),
+                                    fieldWithPath("recordMetaList[].brandName").description("브랜드 이름"),
+                                fieldWithPath("pagingInfo").type(JsonFieldType.OBJECT).description("페이징 정보"),
+                                    fieldWithPath("pagingInfo.cursor").type(JsonFieldType.NUMBER).description("마지막으로 조회한 경험기록 id(다음요청 시 그대로 전달)"),
+                                    fieldWithPath("pagingInfo.limit").type(JsonFieldType.NUMBER).description("한번에 조회해올 데이터 갯수(다음요청 시 그대로 전달)")
+                        ))
+                );
     }
 }
