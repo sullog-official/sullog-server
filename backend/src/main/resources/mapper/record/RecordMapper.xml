@@ -33,4 +33,31 @@
                    #{experienceDate}
                );
     </insert>
+
+    <resultMap id="RecordMetaWithAlcoholInfo" type="sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto">
+        <result property="recordId" column="record_id"/>
+        <result property="description" column="description"/>
+        <result property="photoPathList" column="photo_path" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
+        <result property="alcoholId" column="alcohol_id"/>
+        <result property="productionLatitude" column="production_latitude"/>
+        <result property="productionLongitude" column="production_longitude"/>
+        <result property="alcoholTag" column="alcohol_tag"/>
+    </resultMap>
+
+    <select id="selectRecordMetaByMemberId" resultMap="RecordMetaWithAlcoholInfo">
+        SELECT r.record_id            AS record_id,
+               r.description          AS description,
+               r.photo_path           AS photo_path,
+               a.alcohol_id           AS alcohol_id,
+               a.production_latitude  AS production_latitude,
+               a.production_longitude AS production_longitude,
+               a.alcohol_tag          AS alcohol_tag
+        FROM record AS r
+            LEFT JOIN (SELECT alcohol_id,
+                              production_latitude,
+                              production_longitude,
+                              alcohol_tag
+                       FROM alcohol) AS a
+            ON r.alcohol_id = a.alcohol_id AND r.member_id = #{memberId}
+    </select>
 </mapper>
