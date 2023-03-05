@@ -51,7 +51,9 @@ public class SecurityConfig {
                     .and()
                 .authorizeRequests()
                     .antMatchers("/login/oauth2/code/**", //kakao oauth redirect url
-                            "/favicon.ico").permitAll()
+                                 "/favicon.ico",
+                                 "/docs/api-doc.html" // rest-docs 문서 url
+                    ).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .oauth2Login()
