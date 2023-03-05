@@ -1,11 +1,11 @@
 package sullog.backend.member.controller;
 
+import sullog.backend.member.service.MemberService;
+import sullog.backend.member.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sullog.backend.member.dto.response.RecentSearchHistoryDto;
-import sullog.backend.member.service.MemberService;
-import sullog.backend.member.service.TokenService;
 
 @RestController
 @RequestMapping("/api/members")
@@ -32,5 +32,4 @@ public class MemberController {
         String email = tokenService.getEmail(authorization);
         memberService.deleteMember(email);
     }
-
 }
