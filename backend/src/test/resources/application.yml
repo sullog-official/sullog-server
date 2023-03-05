@@ -1,7 +1,7 @@
 spring:
   profiles:
     include:
-      - oauth
+      - oauth-local
     active: test   # alpha, live
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,7 +9,7 @@ spring:
     username: test
     password: test
 server:
-  port: 8877
+  port: 8081
 jwt:
   header: Authorization
   secret: ENC(n1YYPkbzsvB4xDuHogBjWSVd7nF86P6NnKhAANwpxAp9w0FMc302lfgoLQwn2beKTMIIAFqBj6oK7WFPJNkMnMm6FTfaJ4zKn/4DYl4nsKw=)
