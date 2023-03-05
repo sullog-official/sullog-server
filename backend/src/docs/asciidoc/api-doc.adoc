@@ -11,10 +11,10 @@
 |===
 | 환경 | domain
 
-| 개발서버
-| `TBD`
+| 개발서버(alpha)
+| `https://api.bbpsp-backend-api.click`
 
-| 운영서버
+| 운영서버(live)
 | `TBD`
 |===
 
