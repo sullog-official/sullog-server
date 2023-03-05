@@ -34,7 +34,7 @@ public class AlcoholService {
         return alcoholWithBrandDto.toAlcoholInfoDto();
     }
 
-    public AlcoholInfoWithPagingDto getAlcoholInfo(String email, AlcoholSearchRequestDto alcoholSearchRequestDto) {
+    public AlcoholInfoWithPagingDto getAlcoholInfo(int memberId, AlcoholSearchRequestDto alcoholSearchRequestDto) {
         List<AlcoholInfoDto> alcoholInfoDtoList = new ArrayList<>();
         List<AlcoholWithBrandDto> alcoholWithBrandDtoList = alcoholMapper.pagingSelectByKeyword(
                 alcoholSearchRequestDto.getKeyword(),
@@ -65,7 +65,7 @@ public class AlcoholService {
                 .limit(alcoholSearchRequestDto.getLimit())
                 .build();
 
-        memberService.updateRecentSearchWordList(email, alcoholSearchRequestDto.getKeyword());
+        memberService.updateRecentSearchWordList(memberId, alcoholSearchRequestDto.getKeyword());
 
         return AlcoholInfoWithPagingDto.builder()
                 .alcoholInfoDtoList(alcoholInfoDtoList)
