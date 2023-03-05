@@ -4,8 +4,8 @@
 
 <mapper namespace="sullog.backend.member.mapper.MemberMapper">
 
-    <resultMap id="searchWordListTypeHandler" type="List">
-        <result column="search_word_list" property="searchWordList" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
+    <resultMap id="searchWordMap" type="String">
+        <result property="searchWordList" column="search_word_list" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
     </resultMap>
 
     <insert id="insertMember" parameterType="sullog.backend.member.entity.Member">
@@ -18,14 +18,14 @@
         VALUES (
             #{email},
             #{nickName},
-            #{searchWordList, typeHandler=sullog.backend.member.mapper.typehandler.SearchWordListTypeHandler}
+            #{searchWordList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler}
         )
     </insert>
 
     <select id="selectMemberByEmail" resultType="sullog.backend.member.entity.Member">
         SELECT *
         FROM member
-        WHERE email = #{email} and deleted_at = NULL
+        WHERE email = #{email} and deleted_at IS NULL
     </select>
 
 
@@ -38,7 +38,7 @@
             email = #{email}
     </delete>
 
-    <select id="selectRecentSearchHistory" resultType="String">
+    <select id="selectRecentSearchHistory" resultMap="searchWordMap">
         SELECT search_word_list
         FROM member
         WHERE member_id = #{memberId}
@@ -46,7 +46,7 @@
 
     <update id="updateSearchWordList">
         UPDATE member
-        SET search_word_list = #{searchWordList}
+        SET search_word_list = #{searchWordList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler}
         WHERE member_id = #{memberId}
     </update>
 
