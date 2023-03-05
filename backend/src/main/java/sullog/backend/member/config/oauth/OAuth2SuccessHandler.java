@@ -6,11 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import sullog.backend.member.dto.MemberDto;
+import sullog.backend.member.entity.Member;
 import sullog.backend.member.entity.Token;
 import sullog.backend.member.service.TokenService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,9 +29,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-        MemberDto memberDto = MemberDto.of(oAuth2User);
+        Member member = Member.of(oAuth2User);
 
-        Token token = tokenService.generateToken(memberDto.getEmail(), "USER");
+        Token token = tokenService.generateToken(member.getMemberId(), "USER");
 
         makeTokenResponse(response, token);
     }
