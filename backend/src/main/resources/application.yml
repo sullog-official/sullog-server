@@ -9,10 +9,11 @@ spring:
       max-request-size: 50MB
   profiles:
     include:
-      - oauth
+      - oauth-alpha
       - jwt
       - aws
-    active: alpha   # alpha, live
+      - mybatis
+    active: alpha   # local, alpha, live
 server:
-  port: 8877
+  port: 8081
 

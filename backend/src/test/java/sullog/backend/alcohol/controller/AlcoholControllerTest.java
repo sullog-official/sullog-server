@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -35,6 +36,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -139,17 +142,25 @@ class AlcoholControllerTest {
                 .limit(1)
                 .build();
 
-        when(alcoholService.getAlcoholInfo(eq(any()), alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
+        String email = "sampel@naver.com";
+        when(tokenService.getEmail(anyString())).thenReturn(email);
+        when(alcoholService.getAlcoholInfo(email, alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(
                         get("/api/alcohols/search")
                                 .queryParam("keyword", alcoholSearchRequestDto.getKeyword())
                                 .queryParam("cursor", String.valueOf(alcoholSearchRequestDto.getCursor()))
                                 .queryParam("limit", String.valueOf(alcoholSearchRequestDto.getLimit()))
+                                .with(request -> {
+                                    request.addHeader("Authorization", "auth");
+                                    return request;
+                                })
                 )
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작
                         document("alcohol-search", // 문서 조각 디렉토리 명
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 requestParameters( // path 파라미터 정보 입력
                                         parameterWithName("keyword").description("키워드"),
                                         parameterWithName("cursor").description("커서"),

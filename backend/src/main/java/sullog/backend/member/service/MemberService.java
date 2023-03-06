@@ -20,15 +20,9 @@ public class MemberService {
     }
 
     public RecentSearchHistoryDto getRecentSearchHistory(int memberId) {
-        String recentSearchList = memberMapper.selectRecentSearchHistory(memberId);
-        System.out.println("recentSearchListSTR = " + recentSearchList);
-        List<String> searchWordList = Arrays.stream(recentSearchList
-                .replaceAll("\\[", "")
-                .replaceAll("]", "")
-                .split(",")).toList();
-
+        List<String> recentSearchList = memberMapper.selectRecentSearchHistory(memberId);
         return RecentSearchHistoryDto.builder()
-                .recentSearchWordList(searchWordList)
+                .recentSearchWordList(recentSearchList)
                 .build();
     }
 
@@ -54,8 +48,7 @@ public class MemberService {
 
     public void updateRecentSearchWordList(String email, String keyword) {
         Member member = findMemberByEmail(email);
-        RecentSearchHistoryDto recentSearchHistoryDto = getRecentSearchHistory(member.getMemberId());
-        List<String> recentSearchWordList = new ArrayList<>(recentSearchHistoryDto.getRecentSearchWordList());
+        List<String> recentSearchWordList = member.getSearchWordList();
         if (recentSearchWordList.contains(keyword)) {
             return;
         }
@@ -63,18 +56,6 @@ public class MemberService {
             recentSearchWordList.remove(0);
         }
         recentSearchWordList.add(keyword);
-        memberMapper.updateSearchWordList(member.getMemberId(), parseListToListStr(recentSearchWordList));
-    }
-
-    private String parseListToListStr(List<String> recentSearchWordList) {
-        StringBuilder builder = new StringBuilder("[");
-        for (String word : recentSearchWordList) {
-            builder.append(word).append(",");
-        }
-        if (builder.length() > 1) {
-            builder.deleteCharAt(builder.length() - 1);
-        }
-        System.out.println("builder.toString() = " + builder.toString());
-        return builder.append("]").toString();
+        memberMapper.updateSearchWordList(member.getMemberId(), recentSearchWordList);
     }
 }

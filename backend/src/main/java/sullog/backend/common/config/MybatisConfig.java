@@ -1,5 +1,6 @@
 package sullog.backend.common.config;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,7 +20,7 @@ import sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(value = "sullog.backend", sqlSessionFactoryRef = "factory")
+@MapperScan(value = "sullog.backend", sqlSessionFactoryRef = "factory", annotationClass = Mapper.class)
 public class MybatisConfig {
 
     @Bean(name = "datasource")
@@ -34,11 +35,11 @@ public class MybatisConfig {
         sqlSessionFactory.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/**/*.xml"));
-        sqlSessionFactory.setTypeHandlers(new TypeHandler[] {
-                new StringListTypeHandler(),
+        sqlSessionFactory.setTypeHandlers(
+                new FlavorTagListTypeHandler(),
                 new AlcoholPercentFeelingTypeHandler(AlcoholPercentFeeling.class),
-                new FlavorTagListTypeHandler()
-        });
+                new StringListTypeHandler()
+        );
         return sqlSessionFactory.getObject();
     }
 
