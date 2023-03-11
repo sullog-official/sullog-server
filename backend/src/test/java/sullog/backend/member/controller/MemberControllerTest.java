@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -72,7 +73,7 @@ class MemberControllerTest {
         doNothing().when(memberService).deleteMember(email);
 
         // then
-        this.mockMvc.perform(delete("/members/me")
+        this.mockMvc.perform(delete("/api/members/members/me")
                         .header(HttpHeaders.AUTHORIZATION, accessToken))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
@@ -97,7 +98,9 @@ class MemberControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작
-                        document("member-get-recent-search", // 문서 조각 디렉토리 명
+                        document("member-get-recent-search",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("memberId").description("멤버 아이디")
                                 ),

@@ -13,6 +13,7 @@ spring:
       #        idle-timeout: 600000
       #        max-lifetime: 1800000
       max-lifetime: 6000 # Possibly consider using a shorter maxLifetime value.(10000 => 6000)
+
 logging:
   level:
     jdbc:
