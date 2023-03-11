@@ -57,6 +57,15 @@ include::{snippets}/record/save-record/request-part-recordInfo-fields.adoc[]
 ==== Response
 include::{snippets}/record/save-record/http-response.adoc[]
 
+==== 특정 사용자의 전통주 경험 조회
+===== Request
+include::{snippets}/record/get-records-by-memberId/http-request.adoc[]
+include::{snippets}/record/get-records-by-memberId/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/record/get-records-by-memberId/http-response.adoc[]
+include::{snippets}/record/get-records-by-memberId/response-fields.adoc[]
+
 == 4. 전통주 조회
 === 전통주 검색
 ==== Request

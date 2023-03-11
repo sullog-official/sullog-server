@@ -4,10 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sullog.backend.record.dto.RecordSaveRequestDto;
+import sullog.backend.record.dto.response.RecordMetaDto;
+import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.service.ImageUploadService;
 import sullog.backend.record.service.RecordService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RecordController {
@@ -30,5 +33,11 @@ public class RecordController {
 
         // 경험기록 저장
         recordService.saveRecord(requestDto.toEntity(photoPathList));
+    }
+
+    @GetMapping("/records")
+    public List<RecordMetaDto> getRecords(@RequestParam int memberId) {
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByMemberId(memberId);
+        return recordMetaWithAlcoholInfoList.stream().map(RecordMetaWithAlcoholInfoDto::toResponseDto).collect(Collectors.toList());
     }
 }

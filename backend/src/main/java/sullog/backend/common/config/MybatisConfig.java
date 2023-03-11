@@ -35,11 +35,11 @@ public class MybatisConfig {
         sqlSessionFactory.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/**/*.xml"));
-        sqlSessionFactory.setTypeHandlers(
-                new FlavorTagListTypeHandler(),
+        sqlSessionFactory.setTypeHandlers(new TypeHandler[] {
                 new AlcoholPercentFeelingTypeHandler(AlcoholPercentFeeling.class),
+                new FlavorTagListTypeHandler(),
                 new StringListTypeHandler()
-        );
+        });
         return sqlSessionFactory.getObject();
     }
 
