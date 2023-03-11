@@ -42,7 +42,6 @@ public class StringListTypeHandler extends BaseTypeHandler<List<String>> {
 
     private List<String> jsonToStringList(String rs) {
         try {
-            System.out.println("rs = " + rs);
             return objectMapper.readValue(rs, new TypeReference<>() {});
         } catch (JsonProcessingException e) {
             e.printStackTrace();

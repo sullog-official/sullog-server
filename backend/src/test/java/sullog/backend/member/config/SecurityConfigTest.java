@@ -30,7 +30,7 @@ class SecurityConfigTest {
     @BeforeEach
     public void setup(RestDocumentationContextProvider restDocumentation) {
         RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 8877;
+        RestAssured.port = 8081;
         this.documentSpec = new RequestSpecBuilder()
                 .addFilter(documentationConfiguration(restDocumentation))
                 .addFilter(documentationConfiguration(restDocumentation))
