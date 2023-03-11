@@ -34,6 +34,10 @@ public class Record extends BaseEntity {
 
     private LocalDate experienceDate; // 경험 날짜
 
+    public Record() {
+        super();
+    }
+
     @Builder
     public Record(
             Instant createdAt,

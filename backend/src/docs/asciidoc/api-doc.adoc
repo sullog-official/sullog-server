@@ -66,6 +66,15 @@ include::{snippets}/record/get-records-by-memberId/request-parameters.adoc[]
 include::{snippets}/record/get-records-by-memberId/http-response.adoc[]
 include::{snippets}/record/get-records-by-memberId/response-fields.adoc[]
 
+==== 경험기록 id 기반 전통주 경험 단건 조회
+===== Request
+include::{snippets}/record/get-record-by-recordId/http-request.adoc[]
+include::{snippets}/record/get-record-by-recordId/path-parameters.adoc[]
+
+===== Response
+include::{snippets}/record/get-record-by-recordId/http-response.adoc[]
+include::{snippets}/record/get-record-by-recordId/response-fields.adoc[]
+
 == 4. 전통주 조회
 === 전통주 검색
 ==== Request

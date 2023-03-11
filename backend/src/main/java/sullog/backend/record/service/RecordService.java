@@ -24,4 +24,8 @@ public class RecordService {
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = recordMapper.selectRecordMetaByMemberId(memberId);
         return recordMetaWithAlcoholInfoDtos;
     }
+
+    public Record getRecordByRecordId(int recordId) {
+        return recordMapper.selectRecordById(recordId);
+    }
 }
