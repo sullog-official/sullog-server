@@ -1,6 +1,7 @@
 package sullog.backend.record.service;
 
 import org.springframework.stereotype.Service;
+import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.Record;
 import sullog.backend.record.mapper.RecordMapper;
@@ -27,5 +28,10 @@ public class RecordService {
 
     public Record getRecordByRecordId(int recordId) {
         return recordMapper.selectRecordById(recordId);
+    }
+
+    public List<RecordMetaWithAlcoholInfoDto> getRecordMetasByCondition(RecordSearchParamDto recordSearchParamDto) {
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = recordMapper.selectRecordMetaByCondition(recordSearchParamDto);
+        return recordMetaWithAlcoholInfoDtos;
     }
 }
