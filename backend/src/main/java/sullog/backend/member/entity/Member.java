@@ -4,11 +4,13 @@ import lombok.Builder;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import sullog.backend.common.entity.BaseEntity;
 
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @ToString(callSuper = true)
 public class Member extends BaseEntity implements UserDetails {
@@ -83,5 +85,14 @@ public class Member extends BaseEntity implements UserDetails {
 
     public int getMemberId() {
         return memberId;
+    }
+
+    public static Member of(OAuth2User oAuth2User) {
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        return Member.builder()
+                .memberId((int)attributes.get("memberId"))
+                .email((String)attributes.get("email"))
+                .nickName((String)attributes.get("name"))
+                .build();
     }
 }

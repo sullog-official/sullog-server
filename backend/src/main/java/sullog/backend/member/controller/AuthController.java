@@ -24,8 +24,8 @@ public class AuthController {
     @GetMapping("/token/refresh")
     public void refreshAuth(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        String email = tokenService.getEmail(token);
-        Token newToken = tokenService.generateToken(email, "USER");
+        int memberId = tokenService.getMemberId(token);
+        Token newToken = tokenService.generateToken(memberId, "USER");
 
         response.addHeader(HttpHeaders.AUTHORIZATION, newToken.getAccessToken());
         response.addHeader("Refresh", newToken.getRefreshToken());

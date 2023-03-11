@@ -46,8 +46,8 @@ public class TokenService implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Token generateToken(String email, String role) {
-        Claims claims = Jwts.claims().setSubject(email);
+    public Token generateToken(int memberId, String role) {
+        Claims claims = Jwts.claims().setSubject(String.valueOf(memberId));
         claims.put("role", role);
 
         Instant now = Instant.now();
@@ -77,7 +77,7 @@ public class TokenService implements InitializingBean {
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.error("잘못된 jwt 서명을 가진 토큰입니다", e);
         } catch (ExpiredJwtException e) {
-            log.error("잘만료된 jwt 토큰입니다", e);
+            log.error("만료된 jwt 토큰입니다", e);
         } catch (UnsupportedJwtException e) {
             log.error("지원하지 않는 jwt 토큰입니다", e);
         } catch (IllegalArgumentException e) {
@@ -87,14 +87,15 @@ public class TokenService implements InitializingBean {
     }
 
     public Authentication getAuthentication(String token) {
-        String email = getEmail(token);
-        Member findMember = memberService.findMemberByEmail(email);
+        int memberId = getMemberId(token);
+        Member findMember = memberService.findMemberById(memberId);
         return new UsernamePasswordAuthenticationToken(findMember, "",
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
-    public String getEmail(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+    public int getMemberId(String token) {
+        String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+        return Integer.parseInt(subject);
     }
 
 }

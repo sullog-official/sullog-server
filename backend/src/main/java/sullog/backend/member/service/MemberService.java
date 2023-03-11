@@ -5,10 +5,7 @@ import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 import sullog.backend.member.entity.Member;
 import sullog.backend.member.mapper.MemberMapper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -38,16 +35,20 @@ public class MemberService {
         return memberMapper.selectMemberByEmail(email);
     }
 
-    public void deleteMember(String email) {
-        memberMapper.deleteMemberByEmail(email);
+    public Member findMemberById(int memberId) {
+        return memberMapper.selectMemberById(memberId);
+    }
+
+    public void deleteMember(int memberId) {
+        memberMapper.deleteMemberById(memberId);
     }
     
     private boolean isAlreadyRegisteredMember(Member member) {
         return memberMapper.selectMemberByEmail(member.getEmail()) != null;
     }
 
-    public void updateRecentSearchWordList(String email, String keyword) {
-        Member member = findMemberByEmail(email);
+    public void updateRecentSearchWordList(int memberId, String keyword) {
+        Member member = findMemberById(memberId);
         List<String> recentSearchWordList = member.getSearchWordList();
         if (recentSearchWordList.contains(keyword)) {
             return;
@@ -56,6 +57,6 @@ public class MemberService {
             recentSearchWordList.remove(0);
         }
         recentSearchWordList.add(keyword);
-        memberMapper.updateSearchWordList(member.getMemberId(), recentSearchWordList);
+        memberMapper.updateSearchWordList(memberId, recentSearchWordList);
     }
 }

@@ -42,9 +42,9 @@ public class AlcoholController {
             HttpServletRequest request,
             AlcoholSearchRequestDto alcoholSearchRequestDto) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        String email = tokenService.getEmail(token);
+        int memberId = tokenService.getMemberId(token);
 
-        return new ResponseEntity<>(alcoholService.getAlcoholInfo(email, alcoholSearchRequestDto), HttpStatus.OK);
+        return new ResponseEntity<>(alcoholService.getAlcoholInfo(memberId, alcoholSearchRequestDto), HttpStatus.OK);
     }
 
 }
