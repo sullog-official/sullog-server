@@ -1,10 +1,12 @@
 package sullog.backend.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.ToString;
 
 import java.time.Instant;
 
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseEntity {
 
     private final Instant createdAt;
@@ -20,6 +22,12 @@ public class BaseEntity {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
+    }
+
+    public BaseEntity() {
+        this.createdAt = null;
+        this.updatedAt = null;
+        this.deletedAt = null;
     }
 
     public Instant getCreatedAt() {
