@@ -119,3 +119,139 @@ include::{snippets}/record/get-records-filter-by-condition/request-parameters.ad
 include::{snippets}/record/get-records-filter-by-condition/http-response.adoc[]
 include::{snippets}/record/get-records-filter-by-condition/response-fields.adoc[]
 
+== 4. 별첨
+=== alcoholPercentFeeling
+
+[cols="1a"]
+|===
+|alcoholPercentFeeling
+
+|MILD
+|MODERATE
+|STRONG
+|===
+
+
+
+=== flavorTagList
+[cols="2a,5a"]
+|===
+| Tag Category | Detail Tag
+
+| FLOWER
+| CHRYSANTHEMUM
+
+|
+| PLUM_BLOSSOM
+
+|
+| ACACIA
+
+|
+| LOTUS
+
+|
+| ROSE
+
+| FRUIT
+| CITRUS
+
+|
+| STRAWBERRY
+
+|
+| JAPANESE_PLUM
+
+|
+| MELON
+
+|
+| BANANA
+
+|
+| PEAR
+
+|
+| PEACH
+
+|
+| APPLE
+
+|
+| WILD_STRAWBERRY
+
+|
+| APRICOT
+
+|
+| YUZU
+
+|
+| PLUM
+
+|
+| CANTALOUPE
+
+|
+| PINEAPPLE
+
+| GRAIN
+| POTATO
+
+|
+| FRESHLY_COOKED_RICE
+
+|
+| SWEET_POTATO
+
+|
+| GRAIN_POWDER
+
+|
+| NURUNGJI
+
+|
+| WHEAT
+
+|
+| RAW_RICE
+
+|
+| CORN
+
+| NUT
+| PEANUT
+
+|
+| CHESTNUT
+
+|
+| ALMOND
+
+|
+| PINE_NUT
+
+| SWEETENER
+| HONEY
+
+|
+| MALT_SYRUP
+
+|
+| BROWN_RICE_SYRUP
+
+|
+| CARAMEL
+
+| DAIRY
+| BUTTER
+
+|
+| YOGURT
+
+|
+| MILK
+
+|
+| CHEESE
+|===
