@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/records")
 public class RecordController {
 
     private final RecordService recordService;
@@ -32,7 +33,7 @@ public class RecordController {
         this.alcoholService = alcoholService;
     }
 
-    @PostMapping("/records")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveRecord(
                         @RequestPart(required = false) List<MultipartFile> photoList,
@@ -44,13 +45,13 @@ public class RecordController {
         recordService.saveRecord(requestDto.toEntity(photoPathList));
     }
 
-    @GetMapping("/records")
+    @GetMapping
     public List<RecordMetaDto> getRecords(@RequestParam int memberId) {
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByMemberId(memberId);
         return recordMetaWithAlcoholInfoList.stream().map(RecordMetaWithAlcoholInfoDto::toResponseDto).collect(Collectors.toList());
     }
 
-    @GetMapping("/records/{recordId}")
+    @GetMapping("/{recordId}")
     public RecordDetailDto getRecord(@PathVariable int recordId) {
         Record record = recordService.getRecordByRecordId(recordId);
         AlcoholInfoDto alcoholWithBrand = alcoholService.getAlcoholById(record.getAlcoholId());
@@ -60,7 +61,7 @@ public class RecordController {
                 .build();
     }
 
-    @GetMapping("/records/search")
+    @GetMapping("/search")
     public RecordMetaListWithPagingDto searchRecords(RecordSearchParamDto recordSearchParamDto) {
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(recordSearchParamDto);
         return RecordMetaListWithPagingDto.builder()
