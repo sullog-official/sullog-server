@@ -1,10 +1,7 @@
 package sullog.backend.member.controller;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import sullog.backend.member.entity.Token;
 import sullog.backend.member.service.TokenService;
@@ -29,10 +26,5 @@ public class AuthController {
 
         response.addHeader(HttpHeaders.AUTHORIZATION, newToken.getAccessToken());
         response.addHeader("Refresh", newToken.getRefreshToken());
-    }
-
-    @GetMapping("/")
-    @ResponseStatus(value = HttpStatus.OK, code = HttpStatus.OK)
-    public void checkNetwork() {
     }
 }
