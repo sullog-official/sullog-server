@@ -73,7 +73,7 @@ class MemberControllerTest {
         doNothing().when(memberService).deleteMember(email);
 
         // then
-        this.mockMvc.perform(delete("/api/members/members/me")
+        this.mockMvc.perform(delete("/members/me")
                         .header(HttpHeaders.AUTHORIZATION, accessToken))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
@@ -93,7 +93,7 @@ class MemberControllerTest {
         when(memberService.getRecentSearchHistory(anyInt())).thenReturn(recentSearchHistoryDto);
 
         mockMvc.perform(
-                        get("/api/members/{memberId}/recent-search-history", 1)
+                        get("/members/{memberId}/recent-search-history", 1)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())

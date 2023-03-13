@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/alcohols")
+@RequestMapping("/alcohols")
 public class AlcoholController {
 
     private final AlcoholService alcoholService;

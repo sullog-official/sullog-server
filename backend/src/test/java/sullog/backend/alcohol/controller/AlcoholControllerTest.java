@@ -87,7 +87,7 @@ class AlcoholControllerTest {
         when(alcoholService.getAlcoholById(anyInt())).thenReturn(alcoholInfoDto);
 
         mockMvc.perform(
-                        get("/api/alcohols")
+                        get("/alcohols")
                                 .param("alcoholId", "1")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -147,7 +147,7 @@ class AlcoholControllerTest {
         when(alcoholService.getAlcoholInfo(email, alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(
-                        get("/api/alcohols/search")
+                        get("/alcohols/search")
                                 .queryParam("keyword", alcoholSearchRequestDto.getKeyword())
                                 .queryParam("cursor", String.valueOf(alcoholSearchRequestDto.getCursor()))
                                 .queryParam("limit", String.valueOf(alcoholSearchRequestDto.getLimit()))

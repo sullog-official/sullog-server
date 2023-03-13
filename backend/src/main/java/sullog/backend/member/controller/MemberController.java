@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -27,7 +27,7 @@ public class MemberController {
         return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
     }
 
-    @DeleteMapping("/members/me")
+    @DeleteMapping("/me")
     public void deleteMember(@RequestHeader String authorization) {
         String email = tokenService.getEmail(authorization);
         memberService.deleteMember(email);
