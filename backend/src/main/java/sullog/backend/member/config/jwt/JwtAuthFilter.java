@@ -26,7 +26,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest servletRequest, HttpServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        if (isRootContext(httpServletRequest)) return;
         String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (tokenService.validateToken(token)) { // JWT 토큰이 유효한 경우에만, USER객체 셋팅
@@ -34,13 +33,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(servletRequest, servletResponse); // 다음 Filter를 실행(마지막 필터라면 필터 실행 후 리소스를 반환)
-    }
-
-    /**
-     * AWS 에서 서버 health check를 하게 되는데 default가 /로 체크를 해 해당 메소드가 없다면 401 에러가 나게됨
-     * 추후 health check 전용 컨텍스트를 만들던지 현행 유지
-     */
-    private static boolean isRootContext(HttpServletRequest httpServletRequest) {
-        return httpServletRequest.getRequestURI().equals("/");
     }
 }
