@@ -29,7 +29,7 @@ public class MemberController {
 
     @DeleteMapping("/me")
     public void deleteMember(@RequestHeader String authorization) {
-        String email = tokenService.getEmail(authorization);
-        memberService.deleteMember(email);
+        int memberId = tokenService.getMemberId(authorization);
+        memberService.deleteMember(memberId);
     }
 }

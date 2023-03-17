@@ -65,12 +65,12 @@ class MemberControllerTest {
     @Test
     void memberId값을_바탕으로_회원탈퇴를_진행한다() throws Exception {
         // given
-        String email = "test@test.com";
+        int memberId = 0;
         String accessToken = "sample_token";
 
         // when
-        doReturn(email).when(tokenService).getEmail(accessToken);
-        doNothing().when(memberService).deleteMember(email);
+        doReturn(memberId).when(tokenService).getMemberId(accessToken);
+        doNothing().when(memberService).deleteMember(memberId);
 
         // then
         this.mockMvc.perform(delete("/members/me")

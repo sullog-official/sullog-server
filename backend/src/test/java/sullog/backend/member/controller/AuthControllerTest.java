@@ -48,12 +48,12 @@ class AuthControllerTest {
     public void testRefreshAuth() throws Exception {
         // given
         String token = "sample_token";
-        String email = "sample_email@example.com";
+        int memberId = 0;
         Token newToken = new Token("sample_access_token", "sample_refresh_token");
 
         // when
-        when(tokenService.getEmail(token)).thenReturn(email);
-        when(tokenService.generateToken(email, "USER")).thenReturn(newToken);
+        when(tokenService.getMemberId(token)).thenReturn(memberId);
+        when(tokenService.generateToken(memberId, "USER")).thenReturn(newToken);
 
         // then
         this.mockMvc.perform(get("/token/refresh")

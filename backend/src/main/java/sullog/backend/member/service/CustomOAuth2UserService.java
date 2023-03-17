@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import sullog.backend.member.entity.Member;
 
 import java.util.Collections;
 
@@ -29,10 +30,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 OAuth2Attribute.of(registrationId, oAuth2User.getAttributes());
 
         // 회원가입(이미 가입된 유저이면 skip)
-        memberService.registerMember(oAuth2Attribute.toMember());
+        Member requestMember = oAuth2Attribute.toMember();
+        memberService.registerMember(requestMember);
+
+        // 회원정보 조회
+        Member findMember = memberService.findMemberByEmail(requestMember.getEmail());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
-                oAuth2Attribute.toMap(), "email");
+                oAuth2Attribute.toMap(findMember.getMemberId()), "memberId");
     }
 }

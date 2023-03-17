@@ -29,13 +29,13 @@
     </select>
 
 
-    <delete id="deleteMemberByEmail">
+    <delete id="deleteMemberById">
         UPDATE member
         SET
             deleted_at = NOW(),
             updated_at = NOW()
         WHERE
-            email = #{email}
+            member_id = #{memberId}
     </delete>
 
     <select id="selectRecentSearchHistory" resultMap="searchWordMap">
@@ -50,5 +50,11 @@
         WHERE member_id = #{memberId}
     </update>
 
+    <select id="selectMemberById" resultType="sullog.backend.member.entity.Member">
+        SELECT *
+        FROM member
+        WHERE member_id = #{memberId}
+          and deleted_at IS NULL
+    </select>
 
 </mapper>

@@ -37,10 +37,11 @@ public class OAuth2Attribute {
                 .build();
     }
 
-    public Map<String, Object> toMap() {
+    public Map<String, Object> toMap(int memberId) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", attributeKey);
         map.put("key", attributeKey);
+        map.put("memberId", memberId);
         map.put("name", name);
         map.put("email", email);
 
