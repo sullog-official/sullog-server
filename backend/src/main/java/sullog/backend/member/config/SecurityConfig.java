@@ -39,6 +39,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .cors()
+                .and()
                 .httpBasic().disable()
                 .csrf().disable() // Rest API 서버이기때문에 CSRF 처리를 해제
                 .formLogin().disable()
