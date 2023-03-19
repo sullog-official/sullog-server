@@ -10,7 +10,6 @@ import sullog.backend.member.dto.MemberDto;
 import sullog.backend.member.entity.Token;
 import sullog.backend.member.service.TokenService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

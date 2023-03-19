@@ -1,5 +1,6 @@
-package sullog.backend.member.config;
+package sullog.backend.common.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -8,11 +9,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import sullog.backend.member.config.jwt.JwtAccessDeniedHandler;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.config.jwt.JwtAuthenticationEntryPoint;
 import sullog.backend.member.config.oauth.OAuth2SuccessHandler;
 import sullog.backend.member.service.CustomOAuth2UserService;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @EnableWebSecurity
 public class SecurityConfig {
@@ -22,6 +29,11 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    @Value("${spring.profiles.active}")
+    private String activeVersion; // 현재 local or alpha
+
+    private final String LIVE_VERSION = "live";
 
     public SecurityConfig(CustomOAuth2UserService oAuth2UserService, OAuth2SuccessHandler successHandler, JwtAuthFilter jwtAuthFilter, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.oAuth2UserService = oAuth2UserService;
@@ -65,5 +77,17 @@ public class SecurityConfig {
                     .and()
                 .and()
                 .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        String frontDomain = activeVersion.equals(LIVE_VERSION) ? "https://sullog.vercel.app" : "http://localhost:3000";
+        configuration.setAllowedOrigins(Collections.singletonList(frontDomain));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
