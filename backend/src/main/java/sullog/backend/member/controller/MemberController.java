@@ -28,8 +28,9 @@ public class MemberController {
     }
 
     @DeleteMapping("/me")
-    public void deleteMember(@RequestHeader String authorization) {
+    public ResponseEntity<Void> deleteMember(@RequestHeader String authorization) {
         int memberId = tokenService.getMemberId(authorization);
         memberService.deleteMember(memberId);
+        return ResponseEntity.ok().build();
     }
 }

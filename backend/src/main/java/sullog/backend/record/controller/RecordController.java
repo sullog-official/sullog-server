@@ -1,6 +1,7 @@
 package sullog.backend.record.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
@@ -34,8 +35,7 @@ public class RecordController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void saveRecord(
+    public ResponseEntity<Void> saveRecord(
                         @RequestPart(required = false) List<MultipartFile> photoList,
                         @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
         // 이미지 저장
@@ -43,33 +43,51 @@ public class RecordController {
 
         // 경험기록 저장
         recordService.saveRecord(requestDto.toEntity(photoPathList));
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<RecordMetaDto> getRecords(@RequestParam int memberId) {
-        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByMemberId(memberId);
-        return recordMetaWithAlcoholInfoList.stream().map(RecordMetaWithAlcoholInfoDto::toResponseDto).collect(Collectors.toList());
+    public ResponseEntity<List<RecordMetaDto>> getRecords(@RequestParam int memberId) {
+        List<RecordMetaDto> recordMetaDtoList = recordService.getRecordMetasByMemberId(memberId).stream()
+                .map(RecordMetaWithAlcoholInfoDto::toResponseDto)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(recordMetaDtoList, HttpStatus.OK);
     }
 
     @GetMapping("/{recordId}")
-    public RecordDetailDto getRecord(@PathVariable int recordId) {
+    public ResponseEntity<RecordDetailDto> getRecord(@PathVariable int recordId) {
+        // 경험기록 조회
         Record record = recordService.getRecordByRecordId(recordId);
+
+        // 주류 정보 조회
         AlcoholInfoDto alcoholWithBrand = alcoholService.getAlcoholById(record.getAlcoholId());
-        return RecordDetailDto.builder()
+
+        RecordDetailDto recordDetailDto = RecordDetailDto.builder()
                 .record(record)
                 .alcoholInfo(alcoholWithBrand)
                 .build();
+
+        return new ResponseEntity<>(recordDetailDto, HttpStatus.OK);
     }
 
     @GetMapping("/search")
-    public RecordMetaListWithPagingDto searchRecords(RecordSearchParamDto recordSearchParamDto) {
+    public ResponseEntity<RecordMetaListWithPagingDto> searchRecords(RecordSearchParamDto recordSearchParamDto) {
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(recordSearchParamDto);
-        return RecordMetaListWithPagingDto.builder()
-                .recordMetaList(recordMetaWithAlcoholInfoList.stream().map(RecordMetaWithAlcoholInfoDto::toResponseDto).collect(Collectors.toList()))
+
+        RecordMetaListWithPagingDto recordMetaListWithPagingDto = RecordMetaListWithPagingDto.builder()
+                .recordMetaList(recordMetaWithAlcoholInfoList.stream()
+                        .map(RecordMetaWithAlcoholInfoDto::toResponseDto)
+                        .collect(Collectors.toList())
+                )
                 .pagingInfo(PagingInfoDto.builder()
                         .cursor(recordMetaWithAlcoholInfoList.get(recordMetaWithAlcoholInfoList.size() - 1).getRecordId())
                         .limit(recordSearchParamDto.getLimit())
-                        .build())
+                        .build()
+                )
                 .build();
+
+        return new ResponseEntity<>(recordMetaListWithPagingDto, HttpStatus.OK);
     }
 }
