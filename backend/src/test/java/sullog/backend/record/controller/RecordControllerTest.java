@@ -88,9 +88,9 @@ class RecordControllerTest {
     @Test
     public void saveRecordTest() throws Exception {
         // given
+        int memberId = 1;
         List<FlavorDetail> flavorDetailList = Arrays.asList(FlavorDetail.of("FLOWER", "CHRYSANTHEMUM"), FlavorDetail.of("DAIRY", "BUTTER"));
         RecordSaveRequestDto requestDto = RecordSaveRequestDto.builder()
-                .memberId(1)
                 .alcoholId(1)
                 .title("Test record")
                 .alcoholPercentFeeling(AlcoholPercentFeeling.STRONG)
@@ -107,13 +107,18 @@ class RecordControllerTest {
                 new MockMultipartFile("photoList", "test2.jpg", "image/jpeg", "test2".getBytes()));
 
         when(imageUploadService.uploadImageList(any())).thenReturn(List.of("test1.jpg", "test2.jpg"));
-
+        when(tokenService.getMemberId(anyString())).thenReturn(memberId);
 
         // when, then
         mockMvc.perform(multipart("/records")
                         .file(mockMultipartFiles.get(0))
                         .file(mockMultipartFiles.get(1))
-                        .file(new MockMultipartFile("recordInfo", "", "application/json", objectMapper.writeValueAsString(requestDto).getBytes(StandardCharsets.UTF_8))))
+                        .file(new MockMultipartFile("recordInfo", "", "application/json", objectMapper.writeValueAsString(requestDto).getBytes(StandardCharsets.UTF_8)))
+                        .with(request -> {
+                            request.addHeader("Authorization", "accessToken");
+                            return request;
+                        })
+                )
                 .andExpect(status().isCreated())
                 .andDo(document("record/save-record",
                         preprocessRequest(prettyPrint()),
@@ -123,7 +128,6 @@ class RecordControllerTest {
                                 partWithName("recordInfo").description("사용자가 작성한 전통주 경험")
                         )),
                         requestPartFields("recordInfo", List.of(
-                                fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("작성자 id"),
                                 fieldWithPath("alcoholId").type(JsonFieldType.NUMBER).description("술 id"),
                                 fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("alcoholPercentFeeling").type(JsonFieldType.STRING).description("도수 느낌. 값은 별첨 참고)"),

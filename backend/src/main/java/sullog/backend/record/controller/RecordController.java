@@ -38,14 +38,17 @@ public class RecordController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveRecord(
+    public void saveRecord(@RequestHeader(name="Authorization") String accessToken,
                         @RequestPart(required = false) List<MultipartFile> photoList,
                         @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
+        // 작성자 조회
+        int memberId = tokenService.getMemberId(accessToken);
+
         // 이미지 저장
         List<String> photoPathList = imageUploadService.uploadImageList(photoList);
 
         // 경험기록 저장
-        recordService.saveRecord(requestDto.toEntity(photoPathList));
+        recordService.saveRecord(requestDto.toEntity(memberId, photoPathList));
     }
 
     @GetMapping("/me")
