@@ -10,9 +10,6 @@ import java.util.List;
 
 @Builder
 public class RecordSaveRequestDto {
-
-    private Integer memberId; // 작성자 id
-
     private Integer alcoholId; // 술 id
 
     private String title; // 제목
@@ -35,7 +32,6 @@ public class RecordSaveRequestDto {
     }
 
     public RecordSaveRequestDto(
-            Integer memberId,
             Integer alcoholId,
             String title,
             AlcoholPercentFeeling alcoholPercentFeeling,
@@ -45,7 +41,6 @@ public class RecordSaveRequestDto {
             Integer textureScore,
             String description,
             LocalDate experienceDate) {
-        this.memberId = memberId;
         this.alcoholId = alcoholId;
         this.title = title;
         this.alcoholPercentFeeling = alcoholPercentFeeling;
@@ -55,10 +50,6 @@ public class RecordSaveRequestDto {
         this.textureScore = textureScore;
         this.description = description;
         this.experienceDate = experienceDate;
-    }
-
-    public int getMemberId() {
-        return memberId;
     }
 
     public int getAlcoholId() {
@@ -97,7 +88,7 @@ public class RecordSaveRequestDto {
         return experienceDate;
     }
 
-    public Record toEntity(List<String> photoPathList) {
+    public Record toEntity(int memberId, List<String> photoPathList) {
         return Record.builder()
                 .memberId(memberId)
                 .alcoholId(alcoholId)

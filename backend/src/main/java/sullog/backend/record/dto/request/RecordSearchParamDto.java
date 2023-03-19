@@ -5,14 +5,9 @@ import lombok.Builder;
 @Builder
 public class RecordSearchParamDto {
 
-    private Integer memberId;
     private String keyword;
     private Integer cursor;
     private Integer limit;
-
-    public Integer getMemberId() {
-        return memberId;
-    }
 
     public String getKeyword() {
         return keyword;
