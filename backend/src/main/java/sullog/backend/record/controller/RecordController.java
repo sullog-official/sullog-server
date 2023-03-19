@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
+import sullog.backend.member.service.TokenService;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.response.RecordMetaDto;
@@ -23,11 +24,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/records")
 public class RecordController {
 
+    private final TokenService tokenService;
     private final RecordService recordService;
     private final ImageUploadService imageUploadService;
     private final AlcoholService alcoholService;
 
-    public RecordController(RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService) {
+    public RecordController(TokenService tokenService, RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService) {
+        this.tokenService = tokenService;
         this.recordService = recordService;
         this.imageUploadService = imageUploadService;
         this.alcoholService = alcoholService;
@@ -35,18 +38,22 @@ public class RecordController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveRecord(
+    public void saveRecord(@RequestHeader(name="Authorization") String accessToken,
                         @RequestPart(required = false) List<MultipartFile> photoList,
                         @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
+        // 작성자 조회
+        int memberId = tokenService.getMemberId(accessToken);
+
         // 이미지 저장
         List<String> photoPathList = imageUploadService.uploadImageList(photoList);
 
         // 경험기록 저장
-        recordService.saveRecord(requestDto.toEntity(photoPathList));
+        recordService.saveRecord(requestDto.toEntity(memberId, photoPathList));
     }
 
-    @GetMapping
-    public List<RecordMetaDto> getRecords(@RequestParam int memberId) {
+    @GetMapping("/me")
+    public List<RecordMetaDto> getRecords(@RequestHeader(name="Authorization") String accessToken) {
+        int memberId = tokenService.getMemberId(accessToken);
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByMemberId(memberId);
         return recordMetaWithAlcoholInfoList.stream().map(RecordMetaWithAlcoholInfoDto::toResponseDto).collect(Collectors.toList());
     }
@@ -61,9 +68,10 @@ public class RecordController {
                 .build();
     }
 
-    @GetMapping("/search")
-    public RecordMetaListWithPagingDto searchRecords(RecordSearchParamDto recordSearchParamDto) {
-        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(recordSearchParamDto);
+    @GetMapping("/me/search")
+    public RecordMetaListWithPagingDto searchRecords(@RequestHeader(name="Authorization") String accessToken, RecordSearchParamDto recordSearchParamDto) {
+        int memberId = tokenService.getMemberId(accessToken);
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(memberId, recordSearchParamDto);
         return RecordMetaListWithPagingDto.builder()
                 .recordMetaList(recordMetaWithAlcoholInfoList.stream().map(RecordMetaWithAlcoholInfoDto::toResponseDto).collect(Collectors.toList()))
                 .pagingInfo(PagingInfoDto.builder()

@@ -30,8 +30,8 @@ public class RecordService {
         return recordMapper.selectRecordById(recordId);
     }
 
-    public List<RecordMetaWithAlcoholInfoDto> getRecordMetasByCondition(RecordSearchParamDto recordSearchParamDto) {
-        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = recordMapper.selectRecordMetaByCondition(recordSearchParamDto);
+    public List<RecordMetaWithAlcoholInfoDto> getRecordMetasByCondition(int memberId, RecordSearchParamDto recordSearchParamDto) {
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = recordMapper.selectRecordMetaByCondition(memberId, recordSearchParamDto);
         return recordMetaWithAlcoholInfoDtos;
     }
 }

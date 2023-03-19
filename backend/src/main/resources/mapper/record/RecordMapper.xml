@@ -125,21 +125,21 @@
                             alcohol_tag
                             FROM alcohol) AS a
             ON r.alcohol_id = a.alcohol_id AND r.member_id = #{memberId}
-                <if test="cursor != null">
-                    AND <![CDATA[r.record_id < #{cursor}]]>
+                <if test="recordSearchParamDto.cursor != null">
+                    AND <![CDATA[r.record_id < #{recordSearchParamDto.cursor}]]>
                 </if>
         LEFT JOIN alcohol_brand AS ab
             ON a.brand_id = ab.brand_id
         <choose>
-            <when test = "keyword != null">
-                WHERE a.name LIKE CONCAT('%', #{keyword}, '%')
-                    OR ab.name LIKE CONCAT('%', #{keyword}, '%')
-                    OR r.description LIKE CONCAT('%', #{keyword}, '%')
+            <when test = "recordSearchParamDto.keyword != null">
+                WHERE a.name LIKE CONCAT('%', #{recordSearchParamDto.keyword}, '%')
+                    OR ab.name LIKE CONCAT('%', #{recordSearchParamDto.keyword}, '%')
+                    OR r.description LIKE CONCAT('%', #{recordSearchParamDto.keyword}, '%')
             </when>
         </choose>
         ORDER BY r.record_id DESC
-        <if test="limit != null">
-            LIMIT #{limit}
+        <if test="recordSearchParamDto.limit != null">
+            LIMIT #{recordSearchParamDto.limit}
         </if>
     </select>
 </mapper>

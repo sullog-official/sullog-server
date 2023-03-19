@@ -142,9 +142,9 @@ class AlcoholControllerTest {
                 .limit(1)
                 .build();
 
-        String email = "sampel@naver.com";
-        when(tokenService.getEmail(anyString())).thenReturn(email);
-        when(alcoholService.getAlcoholInfo(email, alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
+        int memberId = 1;
+        when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(alcoholService.getAlcoholInfo(memberId, alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(
                         get("/alcohols/search")
@@ -152,7 +152,7 @@ class AlcoholControllerTest {
                                 .queryParam("cursor", String.valueOf(alcoholSearchRequestDto.getCursor()))
                                 .queryParam("limit", String.valueOf(alcoholSearchRequestDto.getLimit()))
                                 .with(request -> {
-                                    request.addHeader("Authorization", "auth");
+                                    request.addHeader("Authorization", "accessToken");
                                     return request;
                                 })
                 )
