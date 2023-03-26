@@ -1,6 +1,7 @@
 package sullog.backend.record.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
@@ -9,9 +10,8 @@ import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.service.TokenService;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
-import sullog.backend.record.dto.response.RecordMetaDto;
-import sullog.backend.record.dto.response.RecordDetailDto;
-import sullog.backend.record.dto.response.RecordMetaListWithPagingDto;
+import sullog.backend.record.dto.response.*;
+import sullog.backend.record.dto.table.AllRecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.Record;
 import sullog.backend.record.service.ImageUploadService;
@@ -79,5 +79,26 @@ public class RecordController {
                         .limit(recordSearchParamDto.getLimit())
                         .build())
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<AllRecordMetaListWithPaging> getRecordFeed(
+            @RequestParam(required = false) Integer cursor,
+            @RequestParam Integer limit) {
+        List<AllRecordMetaWithAlcoholInfoDto> allRecordMetaWithAlcoholInfoList = recordService.getRecordFeed(cursor, limit);
+        int newCursor = 0;
+        if (allRecordMetaWithAlcoholInfoList.size() > 0) {
+            newCursor = allRecordMetaWithAlcoholInfoList.get(allRecordMetaWithAlcoholInfoList.size() - 1).getRecordId();
+        }
+        AllRecordMetaListWithPaging allRecordMetaListWithPaging = AllRecordMetaListWithPaging.builder()
+                .allRecordMetaList(allRecordMetaWithAlcoholInfoList.stream()
+                        .map(AllRecordMetaWithAlcoholInfoDto::toResponseDto)
+                        .collect(Collectors.toList()))
+                .pagingInfo(PagingInfoDto.builder()
+                        .cursor(newCursor)
+                        .limit(limit)
+                        .build())
+                .build();
+        return new ResponseEntity<>(allRecordMetaListWithPaging, HttpStatus.OK);
     }
 }
