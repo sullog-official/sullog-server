@@ -21,6 +21,7 @@ import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.service.TokenService;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
+import sullog.backend.record.dto.table.AllRecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.FlavorDetail;
 import sullog.backend.record.dto.RecordSaveRequestDto;
@@ -359,5 +360,101 @@ class RecordControllerTest {
                                 fieldWithPath("pagingInfo.limit").type(JsonFieldType.NUMBER).description("한번에 조회해올 데이터 갯수(다음요청 시 그대로 전달)")
                         ))
                 );
+    }
+
+    @Test
+    void 모든_사용자_경험기록_조회() throws Exception { // 피드
+        // given
+        int memberId = 1;
+        RecordSearchParamDto recordSearchParamDto = RecordSearchParamDto.builder()
+                .cursor(1)
+                .limit(2)
+                .build();
+
+        // mocking
+        when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        List<AllRecordMetaWithAlcoholInfoDto> allRecordMetaWithAlcoholInfoDtoList = makeMockingDBResponse4All().stream().limit(recordSearchParamDto.getLimit()).collect(Collectors.toList());
+        when(recordService.getRecordFeed(anyInt(), anyInt())).thenReturn(allRecordMetaWithAlcoholInfoDtoList);
+
+        // when, then
+        mockMvc.perform(get("/records")
+                        .param("cursor", String.valueOf(recordSearchParamDto.getCursor()))
+                        .param("limit", String.valueOf(recordSearchParamDto.getLimit()))
+                        .with(request -> {
+                            request.addHeader("Authorization", "accessToken");
+                            return request;
+                        }))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.allRecordMetaList", hasSize(recordSearchParamDto.getLimit())))
+                .andDo(document("record/get-record-feeds",
+                        requestParameters( // path 파라미터 정보 입력
+                                parameterWithName("cursor").description("마지막으로 조회한 경험기록 id(최초 조회 시 null)"),
+                                parameterWithName("limit").description("한번에 조회해올 데이터 갯수")
+                        ),
+                        responseFields(
+                                fieldWithPath("allRecordMetaList").type(JsonFieldType.ARRAY).description("경험기록 리스트"),
+                                fieldWithPath("allRecordMetaList[].memberId").description("사용자 ID"),
+                                fieldWithPath("allRecordMetaList[].recordId").description("경험기록 ID"),
+                                fieldWithPath("allRecordMetaList[].description").description("경험기록 상세내용"),
+                                fieldWithPath("allRecordMetaList[].mainPhotoPath").description("사용자가 업로드한 사진 경로(없을 경우, 빈 문자열(\"\")"),
+                                fieldWithPath("allRecordMetaList[].alcoholId").description("전통주 ID"),
+                                fieldWithPath("allRecordMetaList[].alcoholName").description("전통주 이름"),
+                                fieldWithPath("allRecordMetaList[].productionLocation").description("전통주 생산지 명"),
+                                fieldWithPath("allRecordMetaList[].productionLatitude").description("전통주 생산지 위도"),
+                                fieldWithPath("allRecordMetaList[].productionLongitude").description("전통주 생산지 경도"),
+                                fieldWithPath("allRecordMetaList[].alcoholTag").description("전통주 태그"),
+                                fieldWithPath("allRecordMetaList[].brandName").description("브랜드 이름"),
+                                fieldWithPath("pagingInfo").type(JsonFieldType.OBJECT).description("페이징 정보"),
+                                fieldWithPath("pagingInfo.cursor").type(JsonFieldType.NUMBER).description("마지막으로 조회한 경험기록 id(다음요청 시 그대로 전달)"),
+                                fieldWithPath("pagingInfo.limit").type(JsonFieldType.NUMBER).description("한번에 조회해올 데이터 갯수(다음요청 시 그대로 전달)")
+                        ))
+                );
+    }
+
+    private List<AllRecordMetaWithAlcoholInfoDto> makeMockingDBResponse4All() {
+        AllRecordMetaWithAlcoholInfoDto allRecordMetaWithAlcoholInfoDto1 = AllRecordMetaWithAlcoholInfoDto.builder()
+                .memberId(1)
+                .recordId(1)
+                .description("This is a first sample record.")
+                .photoPathList(Arrays.asList("path/to/photo1.jpg", "path/to/photo2.jpg"))
+                .alcoholId(1)
+                .alcoholName("test1")
+                .productionLocation("서울시 광진구 능동로 120")
+                .productionLatitude(37.123456)
+                .productionLongitude(126.789012)
+                .alcoholTag("SOJU")
+                .brandName("진로")
+                .build();
+
+        AllRecordMetaWithAlcoholInfoDto allRecordMetaWithAlcoholInfoDto2 = AllRecordMetaWithAlcoholInfoDto.builder()
+                .memberId(2)
+                .recordId(2)
+                .description("This is a second sample record.")
+                .photoPathList(Arrays.asList("path/to/photo3.jpg", "path/to/photo4.jpg"))
+                .alcoholId(2)
+                .alcoholName("test2")
+                .productionLocation("서울시 광진구 능동로 120")
+                .productionLatitude(36.987654)
+                .productionLongitude(127.012345)
+                .alcoholTag("FRUIT_WINE")
+                .brandName("진로")
+                .build();
+
+        AllRecordMetaWithAlcoholInfoDto allRecordMetaWithAlcoholInfoDto3 = AllRecordMetaWithAlcoholInfoDto.builder()
+                .memberId(3)
+                .recordId(3)
+                .description("This is a third sample record.")
+                .photoPathList(Arrays.asList("path/to/photo5.jpg", "path/to/photo6.jpg"))
+                .alcoholId(3)
+                .alcoholName("test3")
+                .productionLocation("서울시 광진구 능동로 120")
+                .productionLatitude(35.123456)
+                .productionLongitude(128.789012)
+                .alcoholTag("MAKGEOLLI")
+                .brandName("진로")
+                .build();
+
+        return List.of(allRecordMetaWithAlcoholInfoDto1, allRecordMetaWithAlcoholInfoDto2, allRecordMetaWithAlcoholInfoDto3);
     }
 }
