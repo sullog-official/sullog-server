@@ -118,6 +118,16 @@ include::{snippets}/record/get-records-filter-by-condition/request-parameters.ad
 include::{snippets}/record/get-records-filter-by-condition/http-response.adoc[]
 include::{snippets}/record/get-records-filter-by-condition/response-fields.adoc[]
 
+
+=== 경험 피드
+===== Request
+include::{snippets}/record/get-record-feeds/http-request.adoc[]
+include::{snippets}/record/get-record-feeds/request-parameters.adoc[]
+
+===== Response
+include::{snippets}/record/get-record-feeds/http-response.adoc[]
+include::{snippets}/record/get-record-feeds/response-fields.adoc[]
+
 == 4. 별첨
 === alcoholPercentFeeling
 
