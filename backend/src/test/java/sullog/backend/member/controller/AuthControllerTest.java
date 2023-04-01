@@ -13,9 +13,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import sullog.backend.auth.controller.AuthController;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.member.entity.Token;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;

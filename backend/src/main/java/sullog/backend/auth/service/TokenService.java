@@ -1,4 +1,4 @@
-package sullog.backend.member.service;
+package sullog.backend.auth.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import sullog.backend.member.entity.Member;
 import sullog.backend.member.entity.Token;
+import sullog.backend.member.service.MemberService;
 
 import java.security.Key;
 import java.time.Instant;

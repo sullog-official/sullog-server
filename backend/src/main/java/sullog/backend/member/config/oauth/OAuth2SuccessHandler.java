@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import sullog.backend.member.entity.Member;
 import sullog.backend.member.entity.Token;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         this.objectMapper = objectMapper;
     }
 
-    // oauth 서버에서 accessToken, refreshToekn 생성
+    // oauth 서버에서 accessToken, refreshToken 생성
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();

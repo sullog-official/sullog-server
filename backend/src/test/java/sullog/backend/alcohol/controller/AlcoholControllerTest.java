@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -21,14 +20,11 @@ import sullog.backend.alcohol.dto.request.AlcoholSearchRequestDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
-import sullog.backend.alcohol.entity.Alcohol;
 import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
