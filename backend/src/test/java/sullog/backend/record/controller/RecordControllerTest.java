@@ -19,7 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.FlavorDetail;

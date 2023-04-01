@@ -22,7 +22,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete; // MockMvcBuilders 사용하면 pathParameters 이용 시 에러발생
 import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 import sullog.backend.member.service.MemberService;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 
 import java.util.List;
 

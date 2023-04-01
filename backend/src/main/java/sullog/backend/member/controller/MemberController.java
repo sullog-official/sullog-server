@@ -1,7 +1,7 @@
 package sullog.backend.member.controller;
 
 import sullog.backend.member.service.MemberService;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

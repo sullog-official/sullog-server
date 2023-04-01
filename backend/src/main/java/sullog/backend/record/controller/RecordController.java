@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.response.RecordMetaDto;
