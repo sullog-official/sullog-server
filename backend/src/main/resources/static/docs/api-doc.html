@@ -471,6 +471,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_특정_사용자의_전통주_경험_조회">특정 사용자의 전통주 경험 조회</a></li>
 <li><a href="#_경험기록_id_기반_전통주_경험_단건_조회">경험기록 id 기반 전통주 경험 단건 조회</a></li>
 <li><a href="#_특정_사용자의_키워드_기반_경험기록_검색">특정 사용자의 키워드 기반 경험기록 검색</a></li>
+<li><a href="#_경험_피드">경험 피드</a></li>
 </ul>
 </li>
 <li><a href="#_4_별첨">4. 별첨</a>
@@ -510,6 +511,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">v0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/0-42ec0b5127c641d5977d344f57df3bc6" class="bare">https://www.notion.so/shinwonse/0-42ec0b5127c641d5977d344f57df3bc6</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023-03-19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/1-6941de58559d4209851f79647060352c" class="bare">https://www.notion.so/shinwonse/1-6941de58559d4209851f79647060352c</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023-04-02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/2-050b8e1d0ba74847b1466e08cc65eb46" class="bare">https://www.notion.so/shinwonse/2-050b8e1d0ba74847b1466e08cc65eb46</a></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -546,25 +557,40 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_카카오_로그인_요청">카카오 로그인 요청</h3>
 <div class="paragraph">
-<p>카카오 인증 서버와 통신하며 인가코드를 전달받고, 인가코드 기반으로 회원가입 or 로그인 프로세스를 진행.</p>
+<p>클라이언트에서 인가코드를 넘겨주면, 인가코드 기반으로 토큰 조회 및 사용자 정보 조회해서 jwt토큰 반환</p>
 </div>
 <div class="sect3">
 <h4 id="_request">Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /oauth2/authorization/kakao HTTP/1.1
-Host: localhost:8081</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /kakao?code=test_code HTTP/1.1
+Host: localhost:8080</code></pre>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카카오 인증 서버에서 발급해준 인가코드</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_response">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Authorization: sample_access_token
 Refresh: sample_refresh_token</code></pre>
 </div>
@@ -610,9 +636,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Authorization: sample_access_token
 Refresh: sample_refresh_token</code></pre>
 </div>
@@ -677,9 +700,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 53
 
@@ -724,10 +744,7 @@ Host: localhost:8080</code></pre>
 <h4 id="_response_4">Response</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
 </div>
 </div>
 </div>
@@ -780,9 +797,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 579
 
@@ -848,9 +862,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 189
 
@@ -889,7 +900,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"title":"Test record","alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-03-22"}
+{"alcoholId":1,"title":"Test record","alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-04-03"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -991,10 +1002,7 @@ Content-Type: application/json
 <h4 id="_response_7">Response</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created</code></pre>
 </div>
 </div>
 </div>
@@ -1016,9 +1024,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 904
 
@@ -1128,9 +1133,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 601
 
@@ -1313,9 +1315,6 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 657
 
@@ -1388,6 +1387,144 @@ Content-Length: 657
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordMetaList[].brandName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pagingInfo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이징 정보</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pagingInfo.cursor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회한 경험기록 id(다음요청 시 그대로 전달)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pagingInfo.limit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">한번에 조회해올 데이터 갯수(다음요청 시 그대로 전달)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_경험_피드">경험 피드</h3>
+<div class="sect4">
+<h5 id="_request_11">Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /records?cursor=1&amp;limit=2 HTTP/1.1
+Authorization: accessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cursor</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회한 경험기록 id(최초 조회 시 null)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>limit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">한번에 조회해올 데이터 갯수</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_response_11">Response</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 686
+
+{"allRecordMetaList":[{"memberId":1,"recordId":1,"description":"This is a first sample record.","mainPhotoPath":"path/to/photo1.jpg","alcoholId":1,"alcoholName":"test1","productionLocation":"서울시 광진구 능동로 120","productionLatitude":37.123456,"productionLongitude":126.789012,"alcoholTag":"SOJU","brandName":"진로"},{"memberId":2,"recordId":2,"description":"This is a second sample record.","mainPhotoPath":"path/to/photo3.jpg","alcoholId":2,"alcoholName":"test2","productionLocation":"서울시 광진구 능동로 120","productionLatitude":36.987654,"productionLongitude":127.012345,"alcoholTag":"FRUIT_WINE","brandName":"진로"}],"pagingInfo":{"cursor":2,"limit":2}}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">경험기록 리스트</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].memberId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].recordId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">경험기록 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">경험기록 상세내용</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].mainPhotoPath</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자가 업로드한 사진 경로(없을 경우, 빈 문자열("")</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].alcoholId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 ID</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].alcoholName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].productionLocation</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 생산지 명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].productionLatitude</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 생산지 위도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].productionLongitude</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 생산지 경도</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].alcoholTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 태그</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].brandName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">브랜드 이름</p></td>
 </tr>
@@ -1714,7 +1851,7 @@ Content-Length: 657
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-22 22:25:44 +0900
+Last updated 2023-04-03 00:12:30 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
