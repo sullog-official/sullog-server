@@ -142,4 +142,54 @@
             LIMIT #{recordSearchParamDto.limit}
         </if>
     </select>
+
+    <resultMap id="RecordMetaWithAlcoholInfoAndMemberId" type="sullog.backend.record.dto.table.AllRecordMetaWithAlcoholInfoDto">
+        <result property="memberId" column="member_id"/>
+        <result property="recordId" column="record_id"/>
+        <result property="description" column="description"/>
+        <result property="photoPathList" column="photo_path" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
+        <result property="alcoholId" column="alcohol_id"/>
+        <result property="alcoholName" column="alcohol_name"/>
+        <result property="productionLocation" column="production_location"/>
+        <result property="productionLatitude" column="production_latitude"/>
+        <result property="productionLongitude" column="production_longitude"/>
+        <result property="alcoholTag" column="alcohol_tag"/>
+        <result property="brandName" column="brand_name"/>
+    </resultMap>
+
+    <select id="selectAllRecordMetaByPaging" resultMap="RecordMetaWithAlcoholInfoAndMemberId">
+        SELECT
+        r.member_id            AS member_id,
+        r.record_id            AS record_id,
+        r.description          AS description,
+        r.photo_path           AS photo_path,
+        a.alcohol_id           AS alcohol_id,
+        a.name                 AS alcohol_name,
+        a.production_location  AS production_location,
+        a.production_latitude  AS production_latitude,
+        a.production_longitude AS production_longitude,
+        a.alcohol_tag          AS alcohol_tag,
+        ab.name                AS brand_name
+        FROM record AS r
+        LEFT JOIN (
+            SELECT alcohol_id,
+                    brand_id,
+                    name,
+                    production_location,
+                    production_latitude,
+                    production_longitude,
+                    alcohol_tag
+            FROM alcohol
+        ) AS a
+        ON r.alcohol_id = a.alcohol_id
+        <if test="recordSearchParamDto.cursor != null">
+            AND <![CDATA[r.record_id < #{recordSearchParamDto.cursor}]]>
+        </if>
+        LEFT JOIN alcohol_brand AS ab
+        ON a.brand_id = ab.brand_id
+        ORDER BY r.record_id DESC
+        <if test="recordSearchParamDto.limit != null">
+            LIMIT #{recordSearchParamDto.limit}
+        </if>
+    </select>
 </mapper>
