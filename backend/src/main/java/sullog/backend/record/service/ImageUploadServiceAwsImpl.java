@@ -46,7 +46,7 @@ public class ImageUploadServiceAwsImpl implements ImageUploadService{
     }
 
     public List<String> uploadImageList(List<MultipartFile> multipartFileList) {
-        if(multipartFileList.isEmpty()) {
+        if(null == multipartFileList) {
             return Collections.emptyList();
         }
 
