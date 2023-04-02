@@ -30,10 +30,11 @@
 
 == 1. 사용자
 === 카카오 로그인 요청
-카카오 인증 서버와 통신하며 인가코드를 전달받고, 인가코드 기반으로 회원가입 or 로그인 프로세스를 진행.
+클라이언트에서 인가코드를 넘겨주면, 인가코드 기반으로 토큰 조회 및 사용자 정보 조회해서 jwt토큰 반환
 
 ==== Request
 include::{snippets}/oauth2/request-kakao-login/http-request.adoc[]
+include::{snippets}/oauth2/request-kakao-login/request-parameters.adoc[]
 
 ==== Response
 include::{snippets}/token-refresh/http-response.adoc[]

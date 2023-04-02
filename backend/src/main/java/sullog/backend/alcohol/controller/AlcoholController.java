@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import sullog.backend.alcohol.dto.request.AlcoholSearchRequestDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
-import sullog.backend.alcohol.entity.Alcohol;
 import sullog.backend.alcohol.service.AlcoholService;
-import sullog.backend.member.entity.Token;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequestMapping("/alcohols")

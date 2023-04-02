@@ -1,7 +1,7 @@
 package sullog.backend.member.controller;
 
 import sullog.backend.member.service.MemberService;
-import sullog.backend.member.service.TokenService;
+import sullog.backend.auth.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +28,9 @@ public class MemberController {
     }
 
     @DeleteMapping("/me")
-    public void deleteMember(@RequestHeader String authorization) {
+    public ResponseEntity<Void> deleteMember(@RequestHeader String authorization) {
         int memberId = tokenService.getMemberId(authorization);
         memberService.deleteMember(memberId);
+        return ResponseEntity.ok().build();
     }
 }

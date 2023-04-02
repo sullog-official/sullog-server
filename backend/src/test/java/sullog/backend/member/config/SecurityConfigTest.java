@@ -37,8 +37,6 @@ class SecurityConfigTest {
                 .build();
     }
 
-
-    @Test
     void kakao로그인_시도하면_OAuth로그인창이_등장한다() {
         given(this.documentSpec)
                 .filter(document("oauth2/request-kakao-login"))
