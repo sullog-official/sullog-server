@@ -22,7 +22,7 @@
 | 환경 | domain
 
 | 개발서버
-| `https://api.bbpsp-backend-api.click`
+| `http://ec2-3-18-111-157.us-east-2.compute.amazonaws.com:8081`
 
 | 운영서버
 | `TBD`
