@@ -20,10 +20,9 @@ public class MemberController {
     }
 
 
-    @GetMapping("/{memberId}/recent-search-history")
-    public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(
-            @PathVariable int memberId) {
-
+    @GetMapping("/me/recent-search-history")
+    public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(@RequestHeader String authorization) {
+        int memberId = tokenService.getMemberId(authorization);
         return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
     }
 
