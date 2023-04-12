@@ -84,9 +84,6 @@ public class KakaoService {
         String nickName = jsonNode.get("properties")
                 .get("nickname").asText();
 
-        return Member.builder()
-                .email(email)
-                .nickName(nickName)
-                .build();
+        return Member.ofRegisterMember(email, nickName);
     }
 }
