@@ -13,7 +13,7 @@ import java.io.StringWriter;
 public class CommonControllerAdvice {
 
     @ExceptionHandler(Exception.class)
-    ResponseEntity<?> exceptionHandler(Exception e) {
+    ResponseEntity<String> exceptionHandler(Exception e) {
 
         e.printStackTrace();
 
@@ -21,11 +21,11 @@ public class CommonControllerAdvice {
     }
 
     @ExceptionHandler(CommonException.class)
-    ResponseEntity<?> commonExceptionHandler(CommonException e) {
+    ResponseEntity<String> commonExceptionHandler(CommonException e) {
 
         e.printStackTrace();
 
-        return new ResponseEntity<>(e.getErrorCode(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getErrorCode().toString(), HttpStatus.BAD_REQUEST);
     }
 
     private String getSystemErrorMessage(Exception e) {

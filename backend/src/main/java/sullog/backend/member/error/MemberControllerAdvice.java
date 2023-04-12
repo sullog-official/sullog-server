@@ -10,8 +10,8 @@ import sullog.backend.member.error.exception.MemberException;
 public class MemberControllerAdvice {
 
     @ExceptionHandler(MemberException.class)
-    ResponseEntity<?> exceptionHandler(MemberException e) {
-        return new ResponseEntity<>(e.getErrorCode(), HttpStatus.BAD_REQUEST);
+    ResponseEntity<String> exceptionHandler(MemberException e) {
+        return new ResponseEntity<>(e.getErrorCode().toString(), HttpStatus.BAD_REQUEST);
     }
 
 }
