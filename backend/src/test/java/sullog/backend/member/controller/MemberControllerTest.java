@@ -85,7 +85,15 @@ class MemberControllerTest {
 
     @Test
     public void 최근_검색어_조회() throws Exception {
+        // given
+        String accessToken = "sample_token";
+        int memberId = 0;
 
+        // when
+        doReturn(memberId).when(tokenService).getMemberId(accessToken);
+        doNothing().when(memberService).deleteMember(memberId);
+
+        // then
         RecentSearchHistoryDto recentSearchHistoryDto = RecentSearchHistoryDto.builder()
                 .recentSearchWordList(List.of("abc", "가나다"))
                 .build();
@@ -93,16 +101,17 @@ class MemberControllerTest {
         when(memberService.getRecentSearchHistory(anyInt())).thenReturn(recentSearchHistoryDto);
 
         mockMvc.perform(
-                        get("/members/{memberId}/recent-search-history", 1)
+                        get("/members/me/recent-search-history")
                                 .contentType(MediaType.APPLICATION_JSON)
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
                 )
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작
                         document("member-get-recent-search",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
-                                pathParameters(
-                                        parameterWithName("memberId").description("멤버 아이디")
+                                requestHeaders(
+                                        headerWithName(HttpHeaders.AUTHORIZATION).description("사용자의 access token")
                                 ),
                                 responseFields( // response 필드 정보 입력
                                         fieldWithPath("recentSearchWordList").type(JsonFieldType.ARRAY).description("최근 검색어 리스트")
