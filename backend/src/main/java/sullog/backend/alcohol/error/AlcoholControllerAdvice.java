@@ -11,8 +11,8 @@ import sullog.backend.common.error.ErrorCode;
 public class AlcoholControllerAdvice {
 
     @ExceptionHandler(AlcoholException.class)
-    ResponseEntity<ErrorCode> exceptionHandler(AlcoholException e) {
-        return new ResponseEntity<>(e.getErrorCode(), HttpStatus.BAD_REQUEST);
+    ResponseEntity<String> exceptionHandler(AlcoholException e) {
+        return new ResponseEntity<>(e.getErrorCode().toString(), HttpStatus.BAD_REQUEST);
     }
 
 }

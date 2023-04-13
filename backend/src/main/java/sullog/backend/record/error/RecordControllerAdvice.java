@@ -11,8 +11,8 @@ import sullog.backend.record.error.exception.RecordException;
 public class RecordControllerAdvice {
 
     @ExceptionHandler(RecordException.class)
-    ResponseEntity<?> exceptionHandler(RecordException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getErrorCode());
+    ResponseEntity<String> exceptionHandler(RecordException e) {
+        return new ResponseEntity<>(e.getErrorCode().toString(), HttpStatus.BAD_REQUEST);
     }
 
 }
