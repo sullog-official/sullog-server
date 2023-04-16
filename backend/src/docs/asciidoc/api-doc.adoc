@@ -25,6 +25,9 @@
 | 2023-04-13
 | v4
 | https://www.notion.so/shinwonse/4-35923a3dbf4f424fb9e3036174190d24
+| 2023-04-16
+| v5
+| https://www.notion.so/shinwonse/5-a81ec4841e3349e89fbc9da3e558cde1
 
 |===
 
@@ -34,7 +37,7 @@
 | 환경 | domain
 
 | 개발서버
-| `http://ec2-3-18-111-157.us-east-2.compute.amazonaws.com:8081`
+| `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
 
 | 운영서버
 | `TBD`
