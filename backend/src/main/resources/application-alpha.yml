@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: "classpath:oauth-alpha.yml"
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     jdbc-url: ENC(IILZOkyZ39yX4NAP9z9HEdTxL4iLSEN7e9pzJyGeVDlKH4g1FChj614Jx8Drt+36/MenMOhS3ZLIDe4le1kLzmuscvCeJIxEvB2iVQD05EBOZRrKgNMCLRxGXpnu6lQ9zjd0KALwZ380fD3dyxRPw4T+rN402GVtECh0WWmfPU8wCjgmXXZlgQPU3mtCS+Xs+g/C+zMIDuP4QN8OWf2dwjbxYEth3f+PSj2KPe33a23vz2xbxze+Y5Ufbbzm79KY)
