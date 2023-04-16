@@ -27,7 +27,7 @@ Configuration:
             basePath: "${log-path}"
             maxDepth: "1"
             IfLastModified:
-              age: "P14D"
+              age: "P30D"
             IfAccumulatedFileCount:
               exceeds: 140
   Loggers:
