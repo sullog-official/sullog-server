@@ -3,9 +3,9 @@ spring:
     import: "classpath:oauth-local.yml"
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    jdbc-url: ENC(IILZOkyZ39yX4NAP9z9HEdTxL4iLSEN7e9pzJyGeVDlKH4g1FChj614Jx8Drt+36/MenMOhS3ZLIDe4le1kLzmuscvCeJIxEvB2iVQD05EBOZRrKgNMCLRxGXpnu6lQ9zjd0KALwZ380fD3dyxRPw4T+rN402GVtECh0WWmfPU8wCjgmXXZlgQPU3mtCS+Xs+g/C+zMIDuP4QN8OWf2dwjbxYEth3f+PSj2KPe33a23vz2xbxze+Y5Ufbbzm79KY)
-    username: ENC(aNexS6IkSpTXHGWZeqlYIi3mH3QEFohI)
-    password: ENC(YRlxk0mURqreyy0hCKf9L1eXJrvPXwjO)
+    jdbc-url: ENC(I82xieWlXOgnSdf9pob+XXhfPrqYKxsDRghOFNyRNSwogRP2Hw2gXb6AqHNQJR2VAfrSYLrpg9htdh+KUs68REgBNoCt87erFIC1/o8eLISxSs4fdsftalnOhjZ+WJQuz5oBo4IY8X9oWIxHPla8A3+o8WQ/l4wxUo8SQAqPACkbG31ETSs+864CCrd8GY1AWc3Bd3kX0YDIgMaoGf4d1hnSB8q062SEgt2Gvqj9l0GOFB+0lc14rCQEVJOeN80u/HzRqxnmzPo=)
+    username: ENC(+s3VvY4FZ+n6yPic4s+FNtXAz9paqMRg)
+    password: ENC(YcswAmAmRikB4To119ar4z9/h/PZwDvZ)
     hikari: # Connection Pool 설정 (Hikari CP가 해당 역할 수행)
       #        maximum-pool-size: 10
       #        connection-timeout: 5000

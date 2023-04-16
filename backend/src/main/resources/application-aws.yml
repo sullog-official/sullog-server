@@ -1,11 +1,11 @@
 cloud:
   aws:
     credentials:
-      accessKey: ENC(GLwNJAiWIQqF2LAv+0Wf3q899sqLAvPLH6RoAXWCnlo=)
-      secretKey: ENC(ozI3X+ywQP00ehTxjVZbzoSITtI9Phjri/1RKyD9avQGalFl6cJI4NledyncgXxVQuAJHcirUFs=)
+      accessKey: ENC(CMrNZQIf17VL36IdfWoSygPl/NMwyu1cnRxfyd6jcQU=)
+      secretKey: ENC(cYzjMTXTP3sNvG2/BpjAgx+5BO4o/1unTQvhjtezAtXS2r/OcR1TjGhs4ZgvKZvXkNbTx3ndVdQ=)
     s3:
-      bucket: sullog-image-bucket
+      bucket: sullog-s3
     region:
-      static: us-east-2
+      static: ap-northeast-2
     stack:
       auto: false
