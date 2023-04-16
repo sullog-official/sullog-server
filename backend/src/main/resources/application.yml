@@ -9,7 +9,6 @@ spring:
       max-request-size: 50MB
   profiles:
     include:
-      - oauth-alpha
       - jwt
       - aws
       - mybatis

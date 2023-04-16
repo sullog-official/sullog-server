@@ -22,3 +22,4 @@ logging:
       audit: off
       resultset: off
       connection: off
+  config: classpath:log4j2-alpha.yml

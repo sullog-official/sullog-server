@@ -3,6 +3,7 @@ package sullog.backend.record.mapper.typehandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import sullog.backend.record.entity.FlavorDetail;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Slf4j
 public class FlavorTagListTypeHandler extends BaseTypeHandler<List<FlavorDetail>> {
 
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -43,11 +45,11 @@ public class FlavorTagListTypeHandler extends BaseTypeHandler<List<FlavorDetail>
 
     private List<FlavorDetail> jsonToFlavorTagMap(String jsonString) {
         try {
-            System.out.println("flavorTag = " + jsonString);
+            log.debug("jsonString={}", jsonString);
             return objectMapper.readValue(jsonString, new TypeReference<>() {
             });
         } catch (JsonProcessingException e) {
-            System.out.println("flavorTag = " + jsonString);
+            log.error("FlavorTagList 변환 시 에러 발생", e);
             throw new RuntimeException(e);
         }
     }

@@ -1,0 +1,43 @@
+Configuration:
+  name: Default
+  status: info
+
+  Properties:
+    Property:
+      name: log-path
+      value: "logs"
+
+  Appenders:
+    RollingFile:
+      - name: RollingFile_Appender
+        fileName: ${log-path}/catalina.out
+        filePattern: "${log-path}/catalina.out.%d{yyyy-MM-dd}.gz"
+        PatternLayout:
+          pattern: "%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{cyan} %highlight{[%-5p]}{FATAL=bg_red,
+            ERROR=red, INFO=green, DEBUG=blue, TRACE=bg_yellow} [%C] %style{[%t]}{yellow}- %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            Interval: 1
+            modulate: true
+          SizeBasedTriggeringPolicy:
+            size: "10 MB"
+        DefaultRollOverStrategy:    # 로그 파일 롤오버(최대 파일 크기, 파일 개수 등)를 처리하는 전략 (롤오버: 로그 파일이 특정 조건을 충족할 때 새로운 로그 파일로 교체되는 기능)
+          max: 10                   # 롤오버되는 파일의 최대 개수
+          Delete:
+            basePath: "${log-path}"
+            maxDepth: "1"
+            IfLastModified:
+              age: "P30D"           # 파일이 최종 수정된 후 얼마나 오래 지나야 삭제할 것인지(30일)
+            IfAccumulatedFileCount:
+              exceeds: 140          # 롤오버된 파일들의 누적 개수가 몇 개를 초과할 때 삭제할 것인지
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: RollingFile_Appender
+    Logger:
+      - name: com.sullog.backend
+        additivity: false
+        level: info
+        AppenderRef:
+          - ref: RollingFile_Appender
