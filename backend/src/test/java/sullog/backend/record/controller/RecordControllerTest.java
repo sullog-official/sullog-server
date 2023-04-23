@@ -93,9 +93,9 @@ class RecordControllerTest {
         List<FlavorDetail> flavorDetailList = Arrays.asList(FlavorDetail.of("FLOWER", "CHRYSANTHEMUM"), FlavorDetail.of("DAIRY", "BUTTER"));
         RecordSaveRequestDto requestDto = RecordSaveRequestDto.builder()
                 .alcoholId(1)
-                .title("Test record")
                 .alcoholPercentFeeling(AlcoholPercentFeeling.STRONG)
                 .flavorTagList(flavorDetailList)
+                .starScore(5)
                 .scentScore(3)
                 .tasteScore(4)
                 .textureScore(5)
@@ -130,11 +130,11 @@ class RecordControllerTest {
                         )),
                         requestPartFields("recordInfo", List.of(
                                 fieldWithPath("alcoholId").type(JsonFieldType.NUMBER).description("술 id"),
-                                fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("alcoholPercentFeeling").type(JsonFieldType.STRING).description("도수 느낌. 값은 별첨 참고)"),
                                 fieldWithPath("flavorTagList").type(JsonFieldType.ARRAY).description("상세 플레이버 태그(optional). 값은 별첨 참고").optional(),
                                 fieldWithPath("flavorTagList[0].majorTag").type(JsonFieldType.STRING).description("1분류").optional(),
                                 fieldWithPath("flavorTagList[0].detailTag").type(JsonFieldType.STRING).description("2분류").optional(),
+                                fieldWithPath("starScore").type(JsonFieldType.NUMBER).description("별점 (1~5)"),
                                 fieldWithPath("scentScore").type(JsonFieldType.NUMBER).description("향점수 (1~5)"),
                                 fieldWithPath("tasteScore").type(JsonFieldType.NUMBER).description("맛점수 (1~5)"),
                                 fieldWithPath("textureScore").type(JsonFieldType.NUMBER).description("감촉점수 (1~5)"),
@@ -257,12 +257,12 @@ class RecordControllerTest {
                                 fieldWithPath("record.recordId").type(JsonFieldType.NUMBER).description("기록 id"),
                                 fieldWithPath("record.memberId").type(JsonFieldType.NUMBER).description("작성자 id"),
                                 fieldWithPath("record.alcoholId").type(JsonFieldType.NUMBER).description("전통주 id"),
-                                fieldWithPath("record.title").type(JsonFieldType.STRING).description("제목"),
                                 fieldWithPath("record.photoPathList").type(JsonFieldType.ARRAY).description("사진 경로(3장까지)").optional(),
                                 fieldWithPath("record.alcoholPercentFeeling").type(JsonFieldType.STRING).description("도수 느낌. 값은 별첨 참고"),
                                 fieldWithPath("record.flavorTagList").type(JsonFieldType.ARRAY).description("상세 플레이버 태그(optional). 값은 별첨 참고").optional(),
                                 fieldWithPath("record.flavorTagList[].majorTag").type(JsonFieldType.STRING).description("상세 플레이버 태그 - 1분류(optional)").optional(),
                                 fieldWithPath("record.flavorTagList[].detailTag").type(JsonFieldType.STRING).description("상세 플레이버 태그 - 2분류(optional)").optional(),
+                                fieldWithPath("record.starScore").type(JsonFieldType.NUMBER).description("별점(1~5)"),
                                 fieldWithPath("record.scentScore").type(JsonFieldType.NUMBER).description("향 점수(1~5)"),
                                 fieldWithPath("record.tasteScore").type(JsonFieldType.NUMBER).description("맛점수 (1~5)"),
                                 fieldWithPath("record.textureScore").type(JsonFieldType.NUMBER).description("감촉점수 (1~5)"),
@@ -286,10 +286,10 @@ class RecordControllerTest {
         return Record.builder()
                 .memberId(1)
                 .alcoholId(1)
-                .title("Dummy Data 1")
                 .photoPathList(Arrays.asList("path1", "path2"))
                 .alcoholPercentFeeling(AlcoholPercentFeeling.STRONG)
                 .flavorTagList(Arrays.asList(FlavorDetail.of("FLOWER", "CHRYSANTHEMUM"), FlavorDetail.of("DAIRY", "BUTTER")))
+                .starScore(5)
                 .scentScore(4)
                 .tasteScore(3)
                 .textureScore(2)

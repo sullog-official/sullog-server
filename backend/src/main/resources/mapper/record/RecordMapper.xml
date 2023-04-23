@@ -9,10 +9,10 @@
         (
             member_id,
             alcohol_id,
-            title,
             photo_path,
             alcohol_percent_feeling,
             flavor_tag_list,
+            star_score,
             scent_score,
             taste_score,
             texture_score,
@@ -22,10 +22,10 @@
         VALUES (
                    #{memberId},
                    #{alcoholId},
-                   #{title},
                    #{photoPathList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler},
                    #{alcoholPercentFeeling, typeHandler=sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler},
                    #{flavorTagList, typeHandler=sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler},
+                   #{starScore},
                    #{scentScore},
                    #{tasteScore},
                    #{textureScore},
@@ -77,10 +77,10 @@
         <result property="recordId" column="record_id"/>
         <result property="memberId" column="member_id"/>
         <result property="alcoholId" column="alcohol_id"/>
-        <result property="title" column="title"/>
         <result property="photoPathList" column="photo_path" typeHandler="sullog.backend.common.mapper.typehandler.StringListTypeHandler"/>
         <result property="alcoholPercentFeeling" column="alcohol_percent_feeling" typeHandler="sullog.backend.record.mapper.typehandler.AlcoholPercentFeelingTypeHandler"/>
         <result property="flavorTagList" column="flavor_tag_list" typeHandler="sullog.backend.record.mapper.typehandler.FlavorTagListTypeHandler"/>
+        <result property="starScore" column="star_score"/>
         <result property="tasteScore" column="taste_score"/>
         <result property="scentScore" column="scent_score"/>
         <result property="textureScore" column="texture_score"/>
@@ -92,10 +92,10 @@
         SELECT record_id,
                member_id,
                alcohol_id,
-               title,
                photo_path,
                alcohol_percent_feeling,
                flavor_tag_list,
+               star_score,
                taste_score,
                scent_score,
                texture_score,

@@ -915,7 +915,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"title":"Test record","alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-04-16"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-04-23"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -961,11 +961,6 @@ Content-Type: application/json
 <td class="tableblock halign-left valign-top"><p class="tableblock">술 id</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholPercentFeeling</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">도수 느낌. 값은 별첨 참고)</p></td>
@@ -984,6 +979,11 @@ Content-Type: application/json
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>flavorTagList[0].detailTag</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2분류</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>starScore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">별점 (1~5)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>scentScore</code></p></td>
@@ -1149,9 +1149,9 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 601
+Content-Length: 592
 
-{"record":{"memberId":1,"alcoholId":1,"recordId":0,"title":"Dummy Data 1","photoPathList":["path1","path2"],"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"scentScore":4,"tasteScore":3,"textureScore":2,"description":"This is a dummy data 1","experienceDate":"2022-03-04"},"alcoholInfo":{"alcoholName":"전통주 샘플","brandName":"진로","alcoholPercent":10.0,"productionLocation":"서울시 광진구","productionLatitude":127.077794504202,"productionLongitude":37.54373496690244,"alcoholTag":"SOJU"}}</code></pre>
+{"record":{"memberId":1,"alcoholId":1,"recordId":0,"photoPathList":["path1","path2"],"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":4,"tasteScore":3,"textureScore":2,"description":"This is a dummy data 1","experienceDate":"2022-03-04"},"alcoholInfo":{"alcoholName":"전통주 샘플","brandName":"진로","alcoholPercent":10.0,"productionLocation":"서울시 광진구","productionLatitude":127.077794504202,"productionLongitude":37.54373496690244,"alcoholTag":"SOJU"}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1189,11 +1189,6 @@ Content-Length: 601
 <td class="tableblock halign-left valign-top"><p class="tableblock">전통주 id</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.photoPathList</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사진 경로(3장까지)</p></td>
@@ -1217,6 +1212,11 @@ Content-Length: 601
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.flavorTagList[].detailTag</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">상세 플레이버 태그 - 2분류(optional)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.starScore</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">별점(1~5)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.scentScore</code></p></td>
@@ -1866,7 +1866,7 @@ Content-Length: 686
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-16 22:32:00 +0900
+Last updated 2023-04-16 23:11:55 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
