@@ -19,11 +19,27 @@ public class MemberController {
         this.tokenService = tokenService;
     }
 
-
     @GetMapping("/me/recent-search-history")
     public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(@RequestHeader String authorization) {
         int memberId = tokenService.getMemberId(authorization);
         return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/me/recent-search-history/{keyword}")
+    public ResponseEntity<Void> removeSpecificSearchKeyword(@RequestHeader String authorization,
+                                                            @PathVariable String keyword) {
+        int memberId = tokenService.getMemberId(authorization);
+        memberService.removeSearchKeyword(memberId, keyword);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/me/recent-search-history")
+    public ResponseEntity<Void> removeSpecificSearchKeyword(@RequestHeader String authorization) {
+        int memberId = tokenService.getMemberId(authorization);
+        memberService.clearRecentSearchKeyword(memberId);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/me")

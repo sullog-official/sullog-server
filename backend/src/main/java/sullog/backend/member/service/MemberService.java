@@ -17,10 +17,20 @@ public class MemberService {
     }
 
     public RecentSearchHistoryDto getRecentSearchHistory(int memberId) {
-        List<String> recentSearchList = memberMapper.selectRecentSearchHistory(memberId);
+        List<String> recentSearchList = findMemberById(memberId).getSearchWordList();
         return RecentSearchHistoryDto.builder()
                 .recentSearchWordList(recentSearchList)
                 .build();
+    }
+
+    public void removeSearchKeyword(int memberId, String keyword) {
+        List<String> recentSearchList = findMemberById(memberId).getSearchWordList();
+        recentSearchList.remove(keyword);
+        memberMapper.updateSearchWordList(memberId, recentSearchList);
+    }
+
+    public void clearRecentSearchKeyword(int memberId) {
+        memberMapper.updateSearchWordList(memberId, List.of());
     }
 
     public void registerMember(Member member) {
