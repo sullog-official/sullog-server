@@ -37,7 +37,7 @@
 | 환경 | domain
 
 | 개발서버
-| `https://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
+| `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
 
 | Prod, 운영 서버
 | `https://sullog-server.click`
