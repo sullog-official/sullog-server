@@ -37,7 +37,7 @@
 | 환경 | domain
 
 | 개발서버
-| `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
+| `https:sullog-server.click`
 
 | 운영서버
 | `TBD`
