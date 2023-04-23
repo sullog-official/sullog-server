@@ -12,13 +12,13 @@ import java.util.List;
 public class RecordSaveRequestDto {
     private Integer alcoholId; // 술 id
 
-    private String title; // 제목
-
     private AlcoholPercentFeeling alcoholPercentFeeling; // 도수 느낌
 
     private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
 
-    private Integer scentScore; //향점수(1~5)
+    private Integer starScore; // 별점(1~5)
+
+    private Integer scentScore; // 향점수(1~5)
 
     private Integer tasteScore; // 맛점수 (1~5)
 
@@ -33,18 +33,18 @@ public class RecordSaveRequestDto {
 
     public RecordSaveRequestDto(
             Integer alcoholId,
-            String title,
             AlcoholPercentFeeling alcoholPercentFeeling,
             List<FlavorDetail> flavorTagList,
+            Integer starScore,
             Integer scentScore,
             Integer tasteScore,
             Integer textureScore,
             String description,
             LocalDate experienceDate) {
         this.alcoholId = alcoholId;
-        this.title = title;
         this.alcoholPercentFeeling = alcoholPercentFeeling;
         this.flavorTagList = flavorTagList;
+        this.starScore = starScore;
         this.scentScore = scentScore;
         this.tasteScore = tasteScore;
         this.textureScore = textureScore;
@@ -56,16 +56,16 @@ public class RecordSaveRequestDto {
         return alcoholId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public AlcoholPercentFeeling getAlcoholPercentFeeling() {
         return alcoholPercentFeeling;
     }
 
     public List<FlavorDetail> getFlavorTagList() {
         return flavorTagList;
+    }
+
+    public Integer getStarScore() {
+        return starScore;
     }
 
     public Integer getScentScore() {
@@ -88,14 +88,15 @@ public class RecordSaveRequestDto {
         return experienceDate;
     }
 
-    public Record toEntity(int memberId, List<String> photoPathList) {
+    public Record toEntity(int memberId,
+                           List<String> photoPathList) {
         return Record.builder()
                 .memberId(memberId)
                 .alcoholId(alcoholId)
-                .title(title)
                 .photoPathList(photoPathList)
                 .alcoholPercentFeeling(alcoholPercentFeeling)
                 .flavorTagList(flavorTagList)
+                .starScore(starScore)
                 .scentScore(scentScore)
                 .tasteScore(tasteScore)
                 .textureScore(textureScore)

@@ -12,17 +12,18 @@ import java.util.List;
 public class Record extends BaseEntity {
 
     private int memberId;
+
     private int alcoholId;
 
     private int recordId; //auto increment
-
-    private String title; // 제목
 
     private List<String> photoPathList; // 사진 경로(3장까지)
 
     private AlcoholPercentFeeling alcoholPercentFeeling; // 도수 느낌
 
     private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
+
+    private int starScore; // 별점(1~5)
 
     private int scentScore; // 향 점수(1~5)
 
@@ -46,10 +47,10 @@ public class Record extends BaseEntity {
             int memberId,
             int alcoholId,
             int recordId,
-            String title,
             List<String> photoPathList,
             AlcoholPercentFeeling alcoholPercentFeeling,
             List<FlavorDetail> flavorTagList,
+            int starScore,
             int scentScore,
             int tasteScore,
             int textureScore,
@@ -59,10 +60,10 @@ public class Record extends BaseEntity {
         this.memberId = memberId;
         this.alcoholId = alcoholId;
         this.recordId = recordId;
-        this.title = title;
         this.photoPathList = photoPathList;
         this.alcoholPercentFeeling = alcoholPercentFeeling;
         this.flavorTagList = flavorTagList;
+        this.starScore = starScore;
         this.scentScore = scentScore;
         this.tasteScore = tasteScore;
         this.textureScore = textureScore;
@@ -82,8 +83,8 @@ public class Record extends BaseEntity {
         return recordId;
     }
 
-    public String getTitle() {
-        return title;
+    public int getStarScore() {
+        return starScore;
     }
 
     public List<String> getPhotoPathList() {
