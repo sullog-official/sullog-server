@@ -90,6 +90,8 @@ class AlcoholControllerTest {
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작
                         document("alcohol-get", // 문서 조각 디렉토리 명
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
                                 requestParameters( // path 파라미터 정보 입력
                                         parameterWithName("alcoholId").description("전통주 ID")
                                 ),
