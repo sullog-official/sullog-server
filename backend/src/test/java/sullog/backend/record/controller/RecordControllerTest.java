@@ -173,6 +173,8 @@ class RecordControllerTest {
                 .andExpect(jsonPath("$[0].productionLongitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLongitude())))
                 .andExpect(jsonPath("$[0].alcoholTag", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getAlcoholTag())))
                 .andDo(document("record/get-records-by-memberId",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("[].recordId").description("경험기록 ID"),
                                 fieldWithPath("[].description").description("경험기록 상세내용"),
@@ -251,6 +253,8 @@ class RecordControllerTest {
                 .andExpect(jsonPath("$.record.memberId").value(record.getMemberId()))
                 .andExpect(jsonPath("$.record.alcoholId").value(record.getAlcoholId())) //나머지 검증은 생략
                 .andDo(document("record/get-record-by-recordId",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         pathParameters(parameterWithName("recordId").description("경험 기록 id")),
                         responseFields(
                                 fieldWithPath("record").type(JsonFieldType.OBJECT).optional().description("경험기록 정보"),
@@ -338,6 +342,8 @@ class RecordControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.recordMetaList", hasSize(recordSearchParamDto.getLimit())))
                 .andDo(document("record/get-records-filter-by-condition",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         requestParameters( // path 파라미터 정보 입력
                                 parameterWithName("keyword").description("검색 키워드"),
                                 parameterWithName("cursor").description("마지막으로 조회한 경험기록 id(최초 조회 시 null)"),
@@ -388,6 +394,8 @@ class RecordControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.allRecordMetaList", hasSize(recordSearchParamDto.getLimit())))
                 .andDo(document("record/get-record-feeds",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         requestParameters( // path 파라미터 정보 입력
                                 parameterWithName("cursor").description("마지막으로 조회한 경험기록 id(최초 조회 시 null)"),
                                 parameterWithName("limit").description("한번에 조회해올 데이터 갯수")
