@@ -1,8 +1,7 @@
 package sullog.backend.common.mapper.typehandler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
@@ -14,15 +13,11 @@ import java.util.List;
 
 public class StringListTypeHandler extends BaseTypeHandler<List<String>> {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private Gson gson = new Gson();
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, List<String> parameter, JdbcType jdbcType) throws SQLException {
-        try {
-            ps.setString(i, objectMapper.writeValueAsString(parameter));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        ps.setString(i, gson.toJson(parameter));
     }
 
     @Override
@@ -41,11 +36,6 @@ public class StringListTypeHandler extends BaseTypeHandler<List<String>> {
     }
 
     private List<String> jsonToStringList(String rs) {
-        try {
-            return objectMapper.readValue(rs, new TypeReference<>() {});
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        return gson.fromJson(rs, new TypeToken<List<String>>() {}.getType());
     }
 }
