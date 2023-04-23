@@ -9,7 +9,6 @@ import sullog.backend.common.entity.BaseEntity;
 
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -101,7 +100,7 @@ public class Member extends BaseEntity implements UserDetails {
         return Member.builder()
                 .email(email)
                 .nickName(nickName)
-                .searchWordList(Collections.EMPTY_LIST)
+                .searchWordList(List.of())
                 .build();
     }
 }

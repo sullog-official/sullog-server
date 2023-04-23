@@ -120,4 +120,61 @@ class MemberControllerTest {
                 )
         ;
     }
+
+    @Test
+    void 최근검색어리스트에서_특정검색어를_제거한다() throws Exception {
+        // given
+        String accessToken = "sample_token";
+        int memberId = 0;
+        String keyword = "abc";
+
+        // when
+        doReturn(memberId).when(tokenService).getMemberId(accessToken);
+        doNothing().when(memberService).removeSearchKeyword(memberId, keyword);
+
+        // then
+        mockMvc.perform(
+                        delete("/members/me/recent-search-history/{keyword}", keyword)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                )
+                .andExpect(status().isOk())
+                .andDo( // rest docs 문서 작성 시작
+                        document("member/delete-specific-keyword",
+                                pathParameters(parameterWithName("keyword").description("삭제할 키워드")),
+                                requestHeaders(
+                                        headerWithName(HttpHeaders.AUTHORIZATION).description("사용자의 access token")
+                                )
+                        )
+                )
+        ;
+    }
+
+    @Test
+    void 최근검색어를_전부_초기화한다() throws Exception {
+        // given
+        String accessToken = "sample_token";
+        int memberId = 0;
+        String keyword = "abc";
+
+        // when
+        doReturn(memberId).when(tokenService).getMemberId(accessToken);
+        doNothing().when(memberService).clearRecentSearchKeyword(memberId);
+
+        // then
+        mockMvc.perform(
+                        delete("/members/me/recent-search-history")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header(HttpHeaders.AUTHORIZATION, accessToken)
+                )
+                .andExpect(status().isOk())
+                .andDo( // rest docs 문서 작성 시작
+                        document("member/clear-specific-keywords",
+                                requestHeaders(
+                                        headerWithName(HttpHeaders.AUTHORIZATION).description("사용자의 access token")
+                                )
+                        )
+                )
+        ;
+    }
 }
