@@ -28,6 +28,9 @@
 | 2023-04-16
 | v5
 | https://www.notion.so/shinwonse/5-a81ec4841e3349e89fbc9da3e558cde1
+| 2023-04-23
+| v6
+| https://www.notion.so/shinwonse/6-6f3890f2f9a44f5ca1aaca976dc36c4f
 
 |===
 
@@ -39,8 +42,8 @@
 | 개발서버
 | `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
 
-| Prod, 운영 서버
-| `https://sullog-server.click`
+| Prod / 운영 서버
+| `https://api.sullog-server.click`
 |===
 
 == 1. 사용자
@@ -126,38 +129,38 @@ include::{snippets}/record/save-record/request-part-recordInfo-fields.adoc[]
 include::{snippets}/record/save-record/http-response.adoc[]
 
 === 특정 사용자의 전통주 경험 조회
-===== Request
+==== Request
 include::{snippets}/record/get-records-by-memberId/http-request.adoc[]
 
-===== Response
+==== Response
 include::{snippets}/record/get-records-by-memberId/http-response.adoc[]
 include::{snippets}/record/get-records-by-memberId/response-fields.adoc[]
 
 === 경험기록 id 기반 전통주 경험 단건 조회
-===== Request
+==== Request
 include::{snippets}/record/get-record-by-recordId/http-request.adoc[]
 include::{snippets}/record/get-record-by-recordId/path-parameters.adoc[]
 
-===== Response
+==== Response
 include::{snippets}/record/get-record-by-recordId/http-response.adoc[]
 include::{snippets}/record/get-record-by-recordId/response-fields.adoc[]
 
 === 특정 사용자의 키워드 기반 경험기록 검색
-===== Request
+==== Request
 include::{snippets}/record/get-records-filter-by-condition/http-request.adoc[]
 include::{snippets}/record/get-records-filter-by-condition/request-parameters.adoc[]
 
-===== Response
+==== Response
 include::{snippets}/record/get-records-filter-by-condition/http-response.adoc[]
 include::{snippets}/record/get-records-filter-by-condition/response-fields.adoc[]
 
 
 === 경험 피드
-===== Request
+==== Request
 include::{snippets}/record/get-record-feeds/http-request.adoc[]
 include::{snippets}/record/get-record-feeds/request-parameters.adoc[]
 
-===== Response
+==== Response
 include::{snippets}/record/get-record-feeds/http-response.adoc[]
 include::{snippets}/record/get-record-feeds/response-fields.adoc[]
 
