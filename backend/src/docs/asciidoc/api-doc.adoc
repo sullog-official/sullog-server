@@ -37,10 +37,10 @@
 | 환경 | domain
 
 | 개발서버
-| `https:sullog-server.click`
+| `https://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
 
 | 운영서버
-| `TBD`
+| `https://sullog-server.click`
 |===
 
 == 1. 사용자
