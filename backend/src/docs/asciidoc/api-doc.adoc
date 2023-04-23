@@ -39,8 +39,8 @@
 | 개발서버
 | `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
 
-| Prod, 운영 서버
-| `https://sullog-server.click`
+| 운영서버
+| `TBD`
 |===
 
 == 1. 사용자
