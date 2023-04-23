@@ -72,6 +72,23 @@ include::{snippets}/member-get-recent-search/request-headers.adoc[]
 ==== Response
 include::{snippets}/member-get-recent-search/http-response.adoc[]
 
+=== 최근 검색어 중 특정 검색어 제거
+==== Request
+include::{snippets}/member/delete-specific-keyword/http-request.adoc[]
+include::{snippets}/member/delete-specific-keyword/request-headers.adoc[]
+include::{snippets}/member/delete-specific-keyword/path-parameters.adoc[]
+
+==== Response
+include::{snippets}/member/delete-specific-keyword/http-response.adoc[]
+
+=== 최근 검색어 목록 초기화
+==== Request
+include::{snippets}/member/clear-specific-keywords/http-request.adoc[]
+include::{snippets}/member/clear-specific-keywords/request-headers.adoc[]
+
+==== Response
+include::{snippets}/member/clear-specific-keywords/http-response.adoc[]
+
 === 회원 탈퇴
 ==== Request
 include::{snippets}/member/delete-member/http-request.adoc[]
