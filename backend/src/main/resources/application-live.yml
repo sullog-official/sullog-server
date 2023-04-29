@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: "classpath:oauth-live.yml"
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     jdbc-url: ENC(eP1NIZrxh2ECdO2BRGC8eQyHt8vMyZSSyyRjYIW0FCr8hfoRUQi+EtS6TR5gNr5p0FksqCEX6p6UZvGcuVfWA4R1HR7uKEnKIT6gb2f0JtyH0Tz5XWBfJlDOP9cUAY4Xr7Du5A5l3y7D28lUjVZ4oM0+vIKZIYzkCyl8POg+oagDpAPxau2aOsDtFRuMNRJ7TdEB4ahZyU+F1DnA7p1pSEMikImCnNHGAl55TNd5Uovw+C7qSfb1F+roNi8danc+y/n/v7D0iEA=)
@@ -13,8 +15,10 @@ spring:
       #        idle-timeout: 600000
       #        max-lifetime: 1800000
       max-lifetime: 6000 # Possibly consider using a shorter maxLifetime value.(10000 => 6000)
+
 mybatis:
   mapper-locations: "classpath:/mapper/**/*.xml"
+
 logging:
   level:
     jdbc:
@@ -25,3 +29,5 @@ logging:
       resultset: off
       connection: off
 
+# CORS 이슈 대응
+client-domains: "https://sullog-client.vercel.app,https://sullog-dev.vercel.app"
