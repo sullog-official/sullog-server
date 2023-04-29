@@ -116,7 +116,7 @@ class RecordControllerTest {
                         .file(mockMultipartFiles.get(1))
                         .file(new MockMultipartFile("recordInfo", "", "application/json", objectMapper.writeValueAsString(requestDto).getBytes(StandardCharsets.UTF_8)))
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         })
                 )
@@ -157,7 +157,7 @@ class RecordControllerTest {
         // when, then
         mockMvc.perform(get("/records/me")
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         }))
                 .andExpect(status().isOk())
@@ -335,7 +335,7 @@ class RecordControllerTest {
                         .param("keyword", recordSearchParamDto.getKeyword())
                         .param("limit", String.valueOf(recordSearchParamDto.getLimit()))
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         }))
                 .andExpect(status().isOk())
@@ -387,7 +387,7 @@ class RecordControllerTest {
                         .param("cursor", String.valueOf(recordSearchParamDto.getCursor()))
                         .param("limit", String.valueOf(recordSearchParamDto.getLimit()))
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         }))
                 .andExpect(status().isOk())
