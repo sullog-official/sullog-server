@@ -24,25 +24,20 @@ import java.util.stream.Collectors;
 @RequestMapping("/records")
 public class RecordController {
 
-    private final TokenService tokenService;
     private final RecordService recordService;
     private final ImageUploadService imageUploadService;
     private final AlcoholService alcoholService;
 
-    public RecordController(TokenService tokenService, RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService) {
-        this.tokenService = tokenService;
+    public RecordController(RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService) {
         this.recordService = recordService;
         this.imageUploadService = imageUploadService;
         this.alcoholService = alcoholService;
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveRecord(@RequestHeader(name="Authorization") String accessToken,
+    public ResponseEntity<Void> saveRecord(@RequestAttribute Integer memberId,
                         @RequestPart(required = false) List<MultipartFile> photoList,
                         @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
-        // 작성자 조회
-        int memberId = tokenService.getMemberId(accessToken);
-
         // 이미지 저장
         List<String> photoPathList = imageUploadService.uploadImageList(photoList);
 
@@ -53,9 +48,7 @@ public class RecordController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<RecordMetaDto>> getRecords(@RequestHeader(name="Authorization") String accessToken) {
-        int memberId = tokenService.getMemberId(accessToken);
-
+    public ResponseEntity<List<RecordMetaDto>> getRecords(@RequestAttribute Integer memberId) {
         List<RecordMetaDto> recordMetaDtoList = recordService.getRecordMetasByMemberId(memberId).stream()
                 .map(RecordMetaWithAlcoholInfoDto::toResponseDto)
                 .collect(Collectors.toList());
@@ -80,11 +73,9 @@ public class RecordController {
     }
 
     @GetMapping("/me/search")
-    public ResponseEntity<RecordMetaListWithPagingDto> searchRecords(@RequestHeader(name="Authorization") String accessToken,
+    public ResponseEntity<RecordMetaListWithPagingDto> searchRecords(@RequestAttribute Integer memberId,
                                                                      RecordSearchParamDto recordSearchParamDto) {
-        int memberId = tokenService.getMemberId(accessToken);
-
-        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(memberId, recordSearchParamDto);
+       List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(memberId, recordSearchParamDto);
 
         RecordMetaListWithPagingDto recordMetaListWithPagingDto = RecordMetaListWithPagingDto.builder()
                 .recordMetaList(recordMetaWithAlcoholInfoList.stream()
