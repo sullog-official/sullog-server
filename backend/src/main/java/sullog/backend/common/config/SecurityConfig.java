@@ -1,6 +1,7 @@
 package sullog.backend.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,10 +33,8 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Value("${spring.profiles.active}")
-    private String activeVersion; // 현재 local or alpha
-
-    private final String LIVE_VERSION = "live";
+    @Value("#{'${client-domains}'.split(',')}")
+    private List<String> clientDomains;
 
     public SecurityConfig(CustomOAuth2UserService oAuth2UserService, OAuth2SuccessHandler successHandler, JwtAuthFilter jwtAuthFilter, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.oAuth2UserService = oAuth2UserService;
@@ -85,8 +84,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        String frontDomain = activeVersion.equals(LIVE_VERSION) ? "https://sullog.vercel.app" : "http://localhost:3000";
-        configuration.setAllowedOrigins(Collections.singletonList(frontDomain));
+        configuration.setAllowedOrigins(clientDomains);
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setExposedHeaders(List.of("Refresh", HttpHeaders.AUTHORIZATION));
