@@ -20,6 +20,9 @@ public class MemberIdInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (null == token) { // permitAll로 처리되는 요청은 jwtToken값을 실어보내지 않으므로, 방어로직 추가
+            return true;
+        }
         Integer memberId = tokenService.getMemberId(token);
         request.setAttribute("memberId", memberId);
         return true;
