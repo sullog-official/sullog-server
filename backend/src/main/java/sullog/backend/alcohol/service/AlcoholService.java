@@ -42,19 +42,7 @@ public class AlcoholService {
                 alcoholSearchRequestDto.getLimit());
 
         alcoholWithBrandDtoList
-                .forEach(dto -> {
-                    AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
-                            .alcoholName(dto.getAlcoholName())
-                            .alcoholPercent(dto.getAlcoholPercent())
-                            .alcoholTag(dto.getAlcoholTag())
-                            .brandName(dto.getBrandName())
-                            .productionLatitude(dto.getProductionLatitude())
-                            .productionLongitude(dto.getProductionLongitude())
-                            .productionLocation(dto.getProductionLocation())
-                            .alcoholPercent(dto.getAlcoholPercent())
-                            .build();
-                    alcoholInfoDtoList.add(alcoholInfoDto);
-                });
+                .forEach(dto -> alcoholInfoDtoList.add(dto.toAlcoholInfoDto()));
 
         int cursor = 0;
         if (alcoholInfoDtoList.size() > 0) {

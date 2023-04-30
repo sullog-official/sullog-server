@@ -15,6 +15,8 @@ public class Alcohol extends BaseEntity {
 
     private String name;
 
+    private String alcoholType;
+
     private double alcoholPercent;
 
     private String productionLocation;
@@ -31,6 +33,10 @@ public class Alcohol extends BaseEntity {
 
     public String getName() {
         return name;
+    }
+
+    public String getAlcoholType() {
+        return alcoholType;
     }
 
     public double getAlcoholPercent() {
@@ -62,6 +68,7 @@ public class Alcohol extends BaseEntity {
             int alcoholId,
             int brandId,
             String name,
+            String alcoholType,
             double alcoholPercent,
             String productionLocation,
             double productionLatitude,
@@ -74,6 +81,7 @@ public class Alcohol extends BaseEntity {
         this.alcoholId = alcoholId;
         this.brandId = brandId;
         this.name = name;
+        this.alcoholType = alcoholType;
         this.alcoholPercent = alcoholPercent;
         this.productionLocation = productionLocation;
         this.productionLatitude = productionLatitude;

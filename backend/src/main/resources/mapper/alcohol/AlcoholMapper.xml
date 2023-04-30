@@ -8,6 +8,7 @@
         <result property="alcoholId" column="alcohol_id"/>
         <result property="brandId" column="brand_id"/>
         <result property="alcoholName" column="alcohol_name"/>
+        <result property="alcoholType" column="alcohol_type"/>
         <result property="alcoholPercent" column="alcohol_percent"/>
         <result property="productionLocation" column="production_location"/>
         <result property="productionLatitude" column="production_latitude"/>
@@ -32,6 +33,7 @@
         SELECT a.alcohol_id           AS alcohol_id,
                a.brand_id             AS brand_id,
                a.name                 AS alcohol_name,
+               a.alcohol_type         AS alcohol_type,
                a.alcohol_percent      AS alcohol_percent,
                a.production_location  AS production_location,
                a.production_latitude  AS production_latitude,
@@ -55,6 +57,7 @@
         SELECT a.alcohol_id           AS alcohol_id,
                 a.brand_id             AS brand_id,
                 a.name                 AS alcohol_name,
+                a.alcohol_type         AS alcohol_type,
                 a.alcohol_percent      AS alcohol_percent,
                 a.production_location  AS production_location,
                 a.production_latitude  AS production_latitude,
