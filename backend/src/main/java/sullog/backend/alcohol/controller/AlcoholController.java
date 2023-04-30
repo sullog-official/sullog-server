@@ -1,19 +1,13 @@
 package sullog.backend.alcohol.controller;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sullog.backend.alcohol.dto.request.AlcoholSearchRequestDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.AlcoholInfoWithPagingDto;
 import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.auth.service.TokenService;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/alcohols")
@@ -21,11 +15,8 @@ public class AlcoholController {
 
     private final AlcoholService alcoholService;
 
-    private final TokenService tokenService;
-
-    public AlcoholController(AlcoholService alcoholService, TokenService tokenService) {
+    public AlcoholController(AlcoholService alcoholService) {
         this.alcoholService = alcoholService;
-        this.tokenService = tokenService;
     }
 
     @GetMapping
@@ -35,12 +26,8 @@ public class AlcoholController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(
-            HttpServletRequest request,
-            AlcoholSearchRequestDto alcoholSearchRequestDto) {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        int memberId = tokenService.getMemberId(token);
-
+    public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(@RequestAttribute Integer memberId,
+                                                                                         AlcoholSearchRequestDto alcoholSearchRequestDto) {
         return new ResponseEntity<>(alcoholService.getAlcoholInfo(memberId, alcoholSearchRequestDto), HttpStatus.OK);
     }
 
