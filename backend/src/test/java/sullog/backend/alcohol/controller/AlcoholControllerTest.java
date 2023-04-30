@@ -71,6 +71,7 @@ class AlcoholControllerTest {
 
         AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
                 .alcoholName("전통주 샘플")
+                .alcoholType("기타")
                 .alcoholTag("{}")
                 .alcoholPercent(10.0)
                 .productionLocation("서울시 광진구")
@@ -98,6 +99,7 @@ class AlcoholControllerTest {
                                 responseFields( // response 필드 정보 입력
                                         fieldWithPath("alcoholName").type(JsonFieldType.STRING).description("전통주 이름"),
                                         fieldWithPath("brandName").type(JsonFieldType.STRING).description("브랜드 이름"),
+                                        fieldWithPath("alcoholType").type(JsonFieldType.STRING).description("주종"),
                                         fieldWithPath("alcoholPercent").type(JsonFieldType.NUMBER).description("도수"),
                                         fieldWithPath("productionLocation").type(JsonFieldType.STRING).description("생산지 주소"),
                                         fieldWithPath("productionLatitude").type(JsonFieldType.NUMBER).description("생산지 위도"),
@@ -116,6 +118,7 @@ class AlcoholControllerTest {
         AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
                 .alcoholName("전통주 샘플")
                 .alcoholTag("{}")
+                .alcoholType("기타")
                 .alcoholPercent(10.0)
                 .productionLocation("서울시 광진구")
                 .productionLongitude(0.0)
@@ -168,6 +171,7 @@ class AlcoholControllerTest {
                                         fieldWithPath("alcoholInfoDtoList").type(JsonFieldType.ARRAY).description("전통주 리스트"),
                                         fieldWithPath("alcoholInfoDtoList[].alcoholName").type(JsonFieldType.STRING).description("전통주 명"),
                                         fieldWithPath("alcoholInfoDtoList[].brandName").type(JsonFieldType.STRING).description("브랜드 명"),
+                                        fieldWithPath("alcoholInfoDtoList[].alcoholType").type(JsonFieldType.STRING).description("주종"),
                                         fieldWithPath("alcoholInfoDtoList[].alcoholPercent").type(JsonFieldType.NUMBER).description("도수"),
                                         fieldWithPath("alcoholInfoDtoList[].productionLocation").type(JsonFieldType.STRING).description("생산지 주소"),
                                         fieldWithPath("alcoholInfoDtoList[].productionLatitude").type(JsonFieldType.NUMBER).description("생산지 위도"),
