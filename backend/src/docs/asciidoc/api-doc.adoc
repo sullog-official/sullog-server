@@ -164,6 +164,14 @@ include::{snippets}/record/get-record-feeds/request-parameters.adoc[]
 include::{snippets}/record/get-record-feeds/http-response.adoc[]
 include::{snippets}/record/get-record-feeds/response-fields.adoc[]
 
+=== 사용자 경험 통계
+==== Request
+include::{snippets}/record/get-statistics/http-request.adoc[]
+
+==== Response
+include::{snippets}/record/get-statistics/http-response.adoc[]
+include::{snippets}/record/get-statistics/response-fields.adoc[]
+
 == 4. 별첨
 === alcoholPercentFeeling
 

@@ -194,4 +194,17 @@
             LIMIT #{recordSearchParamDto.limit}
         </if>
     </select>
+
+    <select id="selectAlcoholTypeList" resultType="String">
+        SELECT
+            a.alcohol_type
+        FROM record AS r
+        LEFT JOIN (
+            SELECT *
+            FROM alcohol
+        ) AS a
+        ON r.alcohol_id = a.alcohol_id
+        WHERE r.member_id = #{member_id}
+    </select>
+
 </mapper>

@@ -16,8 +16,10 @@ import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.Record;
 import sullog.backend.record.service.ImageUploadService;
 import sullog.backend.record.service.RecordService;
+import sullog.backend.record.service.RecordStatisticService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,11 +29,13 @@ public class RecordController {
     private final RecordService recordService;
     private final ImageUploadService imageUploadService;
     private final AlcoholService alcoholService;
+    private final RecordStatisticService recordStatisticService;
 
-    public RecordController(RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService) {
+    public RecordController(RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService, RecordStatisticService recordStatisticService) {
         this.recordService = recordService;
         this.imageUploadService = imageUploadService;
         this.alcoholService = alcoholService;
+        this.recordStatisticService = recordStatisticService;
     }
 
     @PostMapping
@@ -111,5 +115,11 @@ public class RecordController {
                         .build())
                 .build();
         return new ResponseEntity<>(allRecordMetaListWithPaging, HttpStatus.OK);
+    }
+
+    @GetMapping("/me/statistics")
+    public ResponseEntity<Map<String, Integer>> getMyRecordStatistics(@RequestAttribute Integer memberId) {
+        Map<String, Integer> recordStatisticMap = recordStatisticService.getRecordStatistics(memberId);
+        return new ResponseEntity<>(recordStatisticMap, HttpStatus.OK);
     }
 }
