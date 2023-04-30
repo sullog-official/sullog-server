@@ -23,6 +23,7 @@ import java.util.Date;
 @Service
 public class TokenService implements InitializingBean {
 
+    private static final String BEARER_PREFIX = "Bearer ";
     private final String secret;
     private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
@@ -53,27 +54,32 @@ public class TokenService implements InitializingBean {
 
         Instant now = Instant.now();
         return new Token(
-                Jwts.builder()
-                        .setClaims(claims)
-                        .setIssuedAt(new Date(Instant.now().toEpochMilli()))
-                        .setExpiration(new Date(now.toEpochMilli() + accessTokenValidityInMilliseconds))
-                        .signWith(key, SignatureAlgorithm.HS256)
-                        .compact(),
-                Jwts.builder()
-                        .setClaims(claims)
-                        .setIssuedAt(new Date(Instant.now().toEpochMilli()))
-                        .setExpiration(new Date(now.toEpochMilli() + refreshTokenValidityInMilliseconds))
-                        .signWith(key, SignatureAlgorithm.HS256)
-                        .compact());
+                makeJwtValue(claims, now, accessTokenValidityInMilliseconds),
+                makeJwtValue(claims, now, refreshTokenValidityInMilliseconds));
+    }
+
+    private String makeJwtValue(Claims claims, Instant now, long accessTokenValidityInMilliseconds) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(now.toEpochMilli()))
+                .setExpiration(new Date(now.toEpochMilli() + accessTokenValidityInMilliseconds))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public boolean validateToken(String token) {
-        if(token == null) {
+        if (null == token) {
             return false;
         }
 
+        if (false == token.startsWith(BEARER_PREFIX)) {
+            return false;
+        }
+
+        String value = token.substring(BEARER_PREFIX.length());
+
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(value);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.error("잘못된 jwt 서명을 가진 토큰입니다", e);
@@ -95,7 +101,8 @@ public class TokenService implements InitializingBean {
     }
 
     public int getMemberId(String token) {
-        String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+        String value = token.substring(BEARER_PREFIX.length());
+        String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(value).getBody().getSubject();
         return Integer.parseInt(subject);
     }
 

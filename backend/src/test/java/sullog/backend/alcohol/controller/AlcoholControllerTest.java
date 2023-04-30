@@ -153,7 +153,7 @@ class AlcoholControllerTest {
                                 .queryParam("cursor", String.valueOf(alcoholSearchRequestDto.getCursor()))
                                 .queryParam("limit", String.valueOf(alcoholSearchRequestDto.getLimit()))
                                 .with(request -> {
-                                    request.addHeader("Authorization", "accessToken");
+                                    request.addHeader("Authorization", "Bearer accessToken");
                                     return request;
                                 })
                 )

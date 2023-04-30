@@ -919,12 +919,13 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 579
+Content-Length: 639
 
 {
   "alcoholInfoDtoList" : [ {
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
+    "alcoholType" : "기타",
     "alcoholPercent" : 10.0,
     "productionLocation" : "서울시 광진구",
     "productionLatitude" : 0.0,
@@ -933,6 +934,7 @@ Content-Length: 579
   }, {
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
+    "alcoholType" : "기타",
     "alcoholPercent" : 10.0,
     "productionLocation" : "서울시 광진구",
     "productionLatitude" : 0.0,
@@ -984,11 +986,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 225
+Content-Length: 253
 
 {
   "alcoholName" : "전통주 샘플",
   "brandName" : "진로",
+  "alcoholType" : "기타",
   "alcoholPercent" : 10.0,
   "productionLocation" : "서울시 광진구",
   "productionLatitude" : 0.0,
@@ -1029,7 +1032,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-04-23"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-04-30"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1296,7 +1299,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 794
+Content-Length: 820
 
 {
   "record" : {
@@ -1322,6 +1325,7 @@ Content-Length: 794
   "alcoholInfo" : {
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
+    "alcoholType" : null,
     "alcoholPercent" : 10.0,
     "productionLocation" : "서울시 광진구",
     "productionLatitude" : 127.077794504202,
@@ -1434,6 +1438,11 @@ Content-Length: 794
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.alcoholName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">전통주 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.alcoholType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주종</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.alcoholPercent</code></p></td>
@@ -2101,7 +2110,7 @@ Content-Length: 877
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-23 22:51:51 +0900
+Last updated 2023-04-24 09:41:53 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

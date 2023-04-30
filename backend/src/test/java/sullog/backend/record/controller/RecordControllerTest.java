@@ -29,10 +29,12 @@ import sullog.backend.record.entity.AlcoholPercentFeeling;
 import sullog.backend.record.entity.Record;
 import sullog.backend.record.service.ImageUploadService;
 import sullog.backend.record.service.RecordService;
+import sullog.backend.record.service.RecordStatisticService;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +62,9 @@ class RecordControllerTest {
 
     @MockBean
     private RecordService recordService;
+
+    @MockBean
+    private RecordStatisticService recordStatisticService;
 
     @MockBean
     private ImageUploadService imageUploadService;
@@ -116,7 +121,7 @@ class RecordControllerTest {
                         .file(mockMultipartFiles.get(1))
                         .file(new MockMultipartFile("recordInfo", "", "application/json", objectMapper.writeValueAsString(requestDto).getBytes(StandardCharsets.UTF_8)))
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         })
                 )
@@ -157,7 +162,7 @@ class RecordControllerTest {
         // when, then
         mockMvc.perform(get("/records/me")
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         }))
                 .andExpect(status().isOk())
@@ -336,7 +341,7 @@ class RecordControllerTest {
                         .param("keyword", recordSearchParamDto.getKeyword())
                         .param("limit", String.valueOf(recordSearchParamDto.getLimit()))
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         }))
                 .andExpect(status().isOk())
@@ -388,7 +393,7 @@ class RecordControllerTest {
                         .param("cursor", String.valueOf(recordSearchParamDto.getCursor()))
                         .param("limit", String.valueOf(recordSearchParamDto.getLimit()))
                         .with(request -> {
-                            request.addHeader("Authorization", "accessToken");
+                            request.addHeader("Authorization", "Bearer accessToken");
                             return request;
                         }))
                 .andExpect(status().isOk())
@@ -419,6 +424,38 @@ class RecordControllerTest {
                                 fieldWithPath("pagingInfo.limit").type(JsonFieldType.NUMBER).description("한번에 조회해올 데이터 갯수(다음요청 시 그대로 전달)")
                         ))
                 );
+    }
+
+    @Test
+    public void 사용자_경험_통계_조회() throws Exception {
+
+        // given
+        Integer memberId = 1;
+
+        // mocking data
+        HashMap<String, Integer> responseMap = new HashMap<>();
+        responseMap.put("기타", 3);
+        responseMap.put("막걸리", 2);
+        responseMap.put("과실주", 5);
+        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = makeMockingDBResponse();
+        doReturn(responseMap).when(recordStatisticService).getRecordStatistics(memberId);
+        when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+
+        // when, then
+        mockMvc.perform(get("/records/me/statistics")
+                        .with(request -> {
+                            request.addHeader("Authorization", "Bearer accessToken");
+                            return request;
+                        }))
+                .andExpect(status().isOk())
+                .andDo(document("record/get-statistics",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("*").description("주종 명")
+                        ))
+                );
+
     }
 
     private List<AllRecordMetaWithAlcoholInfoDto> makeMockingDBResponse4All() {
