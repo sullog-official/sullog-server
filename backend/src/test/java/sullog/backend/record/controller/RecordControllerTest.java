@@ -21,6 +21,7 @@ import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.auth.service.TokenService;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
+import sullog.backend.record.dto.response.RecordStatistics;
 import sullog.backend.record.dto.table.AllRecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.dto.table.RecordMetaWithAlcoholInfoDto;
 import sullog.backend.record.entity.FlavorDetail;
@@ -437,8 +438,13 @@ class RecordControllerTest {
         responseMap.put("기타", 3);
         responseMap.put("막걸리", 2);
         responseMap.put("과실주", 5);
-        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = makeMockingDBResponse();
-        doReturn(responseMap).when(recordStatisticService).getRecordStatistics(memberId);
+        RecordStatistics recordStatistics = RecordStatistics.builder()
+                .memberId(memberId)
+                .email("abc@naver.com")
+                .nickname("술로그123")
+                .recordStatisticsMap(responseMap)
+                .build();
+        doReturn(recordStatistics).when(recordStatisticService).getRecordStatistics(memberId);
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
 
         // when, then
@@ -452,7 +458,11 @@ class RecordControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         responseFields(
-                                fieldWithPath("*").description("주종 명")
+                                fieldWithPath("memberId").description("사용자 ID"),
+                                fieldWithPath("email").description("이메일"),
+                                fieldWithPath("nickname").description("닉네임"),
+                                fieldWithPath("recordStatisticsMap").type(JsonFieldType.OBJECT).description("주종 명 별 통계 정보"),
+                                fieldWithPath("recordStatisticsMap.*").description("주종 명 별 누적 숫자")
                         ))
                 );
 
