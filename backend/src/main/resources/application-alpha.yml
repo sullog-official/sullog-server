@@ -25,3 +25,6 @@ logging:
       resultset: off
       connection: off
   config: classpath:log4j2-alpha.yml
+
+# CORS 이슈 대응
+client-domains: "http://localhost:3000"
