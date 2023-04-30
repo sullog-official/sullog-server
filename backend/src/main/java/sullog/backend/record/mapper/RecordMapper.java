@@ -22,4 +22,6 @@ public interface RecordMapper {
                                                                    @Param("recordSearchParamDto") RecordSearchParamDto recordSearchParamDto);
 
     List<AllRecordMetaWithAlcoholInfoDto> selectAllRecordMetaByPaging(@Param("recordSearchParamDto") RecordSearchParamDto recordSearchParamDto);
+
+    List<String> selectAlcoholTypeList(@Param("member_id") Integer memberId);
 }
