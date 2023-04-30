@@ -12,39 +12,33 @@ import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 public class MemberController {
 
     private final MemberService memberService;
-    private final TokenService tokenService;
 
-    public MemberController(MemberService memberService, TokenService tokenService) {
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
-        this.tokenService = tokenService;
     }
 
     @GetMapping("/me/recent-search-history")
-    public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(@RequestHeader String authorization) {
-        int memberId = tokenService.getMemberId(authorization);
+    public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(@RequestAttribute Integer memberId) {
         return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
     }
 
     @DeleteMapping("/me/recent-search-history/{keyword}")
-    public ResponseEntity<Void> removeSpecificSearchKeyword(@RequestHeader String authorization,
+    public ResponseEntity<Void> removeSpecificSearchKeyword(@RequestAttribute Integer memberId,
                                                             @PathVariable String keyword) {
-        int memberId = tokenService.getMemberId(authorization);
         memberService.removeSearchKeyword(memberId, keyword);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/me/recent-search-history")
-    public ResponseEntity<Void> removeSpecificSearchKeyword(@RequestHeader String authorization) {
-        int memberId = tokenService.getMemberId(authorization);
+    public ResponseEntity<Void> removeSpecificSearchKeyword(@RequestAttribute Integer memberId) {
         memberService.clearRecentSearchKeyword(memberId);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/me")
-    public ResponseEntity<Void> deleteMember(@RequestHeader String authorization) {
-        int memberId = tokenService.getMemberId(authorization);
+    public ResponseEntity<Void> deleteMember(@RequestAttribute Integer memberId) {
         memberService.deleteMember(memberId);
         return ResponseEntity.ok().build();
     }

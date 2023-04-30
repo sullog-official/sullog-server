@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sullog.backend.auth.service.KakaoService;
@@ -11,9 +12,6 @@ import sullog.backend.member.entity.Member;
 import sullog.backend.member.entity.Token;
 import sullog.backend.auth.service.TokenService;
 import sullog.backend.member.service.MemberService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class AuthController {
@@ -29,9 +27,7 @@ public class AuthController {
     }
 
     @GetMapping("/token/refresh")
-    public ResponseEntity<Void> refreshAuth(HttpServletRequest request) {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        int memberId = tokenService.getMemberId(token);
+    public ResponseEntity<Void> refreshAuth(@RequestAttribute Integer memberId) {
         Token newToken = tokenService.generateToken(memberId, "USER");
 
         // response 생성
