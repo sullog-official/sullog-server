@@ -281,6 +281,7 @@ class RecordControllerTest {
                                 fieldWithPath("alcoholInfo").type(JsonFieldType.OBJECT).optional().description("전통주 정보"),
                                 fieldWithPath("alcoholInfo.brandName").description("전통주 브랜드 이름"),
                                 fieldWithPath("alcoholInfo.alcoholName").description("전통주 이름"),
+                                fieldWithPath("alcoholInfo.alcoholType").description("주종"),
                                 fieldWithPath("alcoholInfo.alcoholPercent").type(JsonFieldType.NUMBER).description("도수"),
                                 fieldWithPath("alcoholInfo.productionLocation").type(JsonFieldType.STRING).description("생산지 주소"),
                                 fieldWithPath("alcoholInfo.productionLatitude").type(JsonFieldType.NUMBER).description("생산지 위도"),

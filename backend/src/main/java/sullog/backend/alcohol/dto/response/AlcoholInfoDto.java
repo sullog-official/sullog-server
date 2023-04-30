@@ -11,6 +11,8 @@ public class AlcoholInfoDto {
 
     private String brandName;
 
+    private String alcoholType;
+
     private double alcoholPercent;
 
     private String productionLocation;
@@ -27,6 +29,10 @@ public class AlcoholInfoDto {
 
     public String getBrandName() {
         return brandName;
+    }
+
+    public String getAlcoholType() {
+        return alcoholType;
     }
 
     public double getAlcoholPercent() {
