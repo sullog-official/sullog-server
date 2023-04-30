@@ -118,8 +118,8 @@ public class RecordController {
     }
 
     @GetMapping("/me/statistics")
-    public ResponseEntity<Map<String, Integer>> getMyRecordStatistics(@RequestAttribute Integer memberId) {
-        Map<String, Integer> recordStatisticMap = recordStatisticService.getRecordStatistics(memberId);
-        return new ResponseEntity<>(recordStatisticMap, HttpStatus.OK);
+    public ResponseEntity<RecordStatistics> getMyRecordStatistics(@RequestAttribute Integer memberId) {
+        RecordStatistics recordStatistics = recordStatisticService.getRecordStatistics(memberId);
+        return new ResponseEntity<>(recordStatistics, HttpStatus.OK);
     }
 }
