@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -44,6 +45,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -115,6 +117,7 @@ class RecordControllerTest {
 
         when(imageUploadService.uploadImageList(any())).thenReturn(List.of("test1.jpg", "test2.jpg"));
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(recordService.saveRecord(any())).thenReturn(5);
 
         // when, then
         mockMvc.perform(multipart("/records")
@@ -146,7 +149,10 @@ class RecordControllerTest {
                                 fieldWithPath("textureScore").type(JsonFieldType.NUMBER).description("감촉점수 (1~5)"),
                                 fieldWithPath("description").type(JsonFieldType.STRING).description("상세 내용"),
                                 fieldWithPath("experienceDate").type(JsonFieldType.STRING).description("경험 날짜")
-                        ))
+                        )),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.LOCATION).description("방금 저장된 경험기록에 접근할 수 있는 url")
+                        )
                 ));
     }
 

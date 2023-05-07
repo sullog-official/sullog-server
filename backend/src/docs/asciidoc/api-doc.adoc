@@ -130,6 +130,7 @@ include::{snippets}/record/save-record/request-part-recordInfo-fields.adoc[]
 
 ==== Response
 include::{snippets}/record/save-record/http-response.adoc[]
+include::{snippets}/record/save-record/response-headers.adoc[]
 
 === 특정 사용자의 전통주 경험 조회
 ==== Request
