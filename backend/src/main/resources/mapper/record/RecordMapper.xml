@@ -4,7 +4,7 @@
 
 <mapper namespace="sullog.backend.record.mapper.RecordMapper">
 
-    <insert id="insertRecord" parameterType="sullog.backend.record.entity.Record">
+    <insert id="insertRecord" parameterType="sullog.backend.record.entity.Record" useGeneratedKeys="true" keyProperty="recordId">
         INSERT INTO record
         (
             member_id,
