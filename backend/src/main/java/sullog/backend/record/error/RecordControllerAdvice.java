@@ -1,18 +1,27 @@
 package sullog.backend.record.error;
 
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import sullog.backend.member.error.exception.MemberException;
+import sullog.backend.common.error.response.ErrorResponse;
+import sullog.backend.record.error.exception.ImageUploadException;
 import sullog.backend.record.error.exception.RecordException;
 
+@Slf4j
 @RestControllerAdvice
 public class RecordControllerAdvice {
 
     @ExceptionHandler(RecordException.class)
-    ResponseEntity<String> exceptionHandler(RecordException e) {
-        return new ResponseEntity<>(e.getErrorCode().toString(), HttpStatus.BAD_REQUEST);
+    ResponseEntity<ErrorResponse> recordExceptionHandler(RecordException e) {
+        log.error("RecordException 예외 발생", e);
+        return ErrorResponse.toResponseEntity(e);
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    ResponseEntity<ErrorResponse> imageUploadExceptionHandler(ImageUploadException e) {
+        log.error("ImageUploadException 예외 발생", e);
+        return ErrorResponse.toResponseEntity(e);
     }
 
 }

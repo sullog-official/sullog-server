@@ -1,11 +1,11 @@
 package sullog.backend.common.error;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import sullog.backend.common.error.exception.CommonException;
+import sullog.backend.common.error.exception.BusinessException;
+import sullog.backend.common.error.response.ErrorResponse;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -15,15 +15,15 @@ import java.io.StringWriter;
 public class CommonControllerAdvice {
 
     @ExceptionHandler(Exception.class)
-    ResponseEntity<String> exceptionHandler(Exception e) {
-        log.error("예외 발생", e);
-        return new ResponseEntity<>(getSystemErrorMessage(e), HttpStatus.BAD_REQUEST);
+    ResponseEntity<ErrorResponse> exceptionHandler(Exception e) {
+        log.error("미처리 예외 발생", e);
+        return ErrorResponse.toResponseEntity(e);
     }
 
-    @ExceptionHandler(CommonException.class)
-    ResponseEntity<String> commonExceptionHandler(CommonException e) {
-        log.error("예외 발생", e);
-        return new ResponseEntity<>(e.getErrorCode().toString(), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(BusinessException.class)
+    ResponseEntity<ErrorResponse> businessExceptionHandler(BusinessException e) {
+        log.error("비즈니스 예외 발생", e);
+        return ErrorResponse.toResponseEntity(e);
     }
 
     private String getSystemErrorMessage(Exception e) {
