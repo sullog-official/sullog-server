@@ -25,9 +25,9 @@ public class ErrorResponse {
         return new ResponseEntity<>(errorResponse, errorCode.getStatus());
     }
 
-    /** 사용자 미정의 예외 핸들링 */
+    /** 사용자 미정 예외 핸들링 */
     public static ResponseEntity<ErrorResponse> toResponseEntity(Exception e) {
-        ErrorCode errorCode = ErrorCode.UNKNOWN_ERROR;
+        ErrorCode errorCode = ErrorCode.SERVER_ERROR;
         ErrorResponse errorResponse = new ErrorResponse(errorCode.getCode(), errorCode.getMessage(), getSystemErrorMessage(e));
 
         return new ResponseEntity<>(errorResponse, errorCode.getStatus());
