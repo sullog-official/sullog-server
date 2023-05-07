@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // Common
-    UNKNOWN_ERROR(HttpStatus.BAD_REQUEST, "C001", "???"),
+    UNKNOWN_ERROR(HttpStatus.BAD_REQUEST, "C001", "Unknown Error"),
 
 
     // Member
@@ -15,13 +15,13 @@ public enum ErrorCode {
 
     private final HttpStatus status;
 
-    private final String errorCode;
+    private final String code;
 
     private final String message;
 
-    ErrorCode(HttpStatus status, String errorCode, String message) {
+    ErrorCode(HttpStatus status, String code, String message) {
         this.status = status;
-        this.errorCode = errorCode;
+        this.code = code;
         this.message = message;
     }
 
@@ -29,8 +29,8 @@ public enum ErrorCode {
         return status;
     }
 
-    public String getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
     public String getMessage() {
@@ -41,7 +41,7 @@ public enum ErrorCode {
     public String toString() {
         return "ErrorCode{" +
                 "status=" + status +
-                ", errorCode='" + errorCode + '\'' +
+                ", code='" + code + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }
