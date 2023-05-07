@@ -2,16 +2,16 @@ package sullog.backend.common.error.exception;
 
 import sullog.backend.common.error.ErrorCode;
 
-public class CommonException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
-    public CommonException(ErrorCode errorCode, String message) {
+    public BusinessException(ErrorCode errorCode, String message) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public CommonException(ErrorCode errorCode) {
+    public BusinessException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
