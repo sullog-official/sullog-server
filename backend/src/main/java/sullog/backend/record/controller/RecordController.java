@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
-import sullog.backend.auth.service.TokenService;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.response.*;
@@ -18,8 +18,8 @@ import sullog.backend.record.service.ImageUploadService;
 import sullog.backend.record.service.RecordService;
 import sullog.backend.record.service.RecordStatisticService;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,16 +39,21 @@ public class RecordController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveRecord(@RequestAttribute Integer memberId,
-                        @RequestPart(required = false) List<MultipartFile> photoList,
-                        @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
+    public ResponseEntity<URI> saveRecord(@RequestAttribute Integer memberId,
+                                             @RequestPart(required = false) List<MultipartFile> photoList,
+                                             @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
         // 이미지 저장
         List<String> photoPathList = imageUploadService.uploadImageList(photoList);
 
         // 경험기록 저장
-        recordService.saveRecord(requestDto.toEntity(memberId, photoPathList));
+        Integer savedRecordId = recordService.saveRecord(requestDto.toEntity(memberId, photoPathList));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        // 방금 저장된 기록에 접근할 수 있는 location 생성
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{recordId}")
+                .buildAndExpand(savedRecordId)
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/me")
