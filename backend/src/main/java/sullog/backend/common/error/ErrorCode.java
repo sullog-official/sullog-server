@@ -5,8 +5,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // Common
-    UNKNOWN_ERROR(HttpStatus.BAD_REQUEST, "C001", "Unknown Error"),
-    SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C002", "Server Error"),
+    UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "C001", "Unknown Error"),
 
 
     // Member
