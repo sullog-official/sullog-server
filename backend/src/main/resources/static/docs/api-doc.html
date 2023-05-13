@@ -549,6 +549,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">v7</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/7-67ee5d7dcbf04d6f807a51b0cc10f35e" class="bare">https://www.notion.so/shinwonse/7-67ee5d7dcbf04d6f807a51b0cc10f35e</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023-05-14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/8-37e8e2c77c2646cfba85b48d521c9369" class="bare">https://www.notion.so/shinwonse/8-37e8e2c77c2646cfba85b48d521c9369</a></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1038,7 +1043,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-04-30"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-05-14"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1140,9 +1145,28 @@ Content-Type: application/json
 <h4 id="_response_9">Response</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
+Location: http://localhost:8080/records/5</code></pre>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방금 저장된 경험기록에 접근할 수 있는 url</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -2191,7 +2215,7 @@ Content-Length: 172
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-30 23:20:48 +0900
+Last updated 2023-05-14 01:03:28 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
