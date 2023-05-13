@@ -34,6 +34,9 @@
 | 2023-04-30
 | v7
 | https://www.notion.so/shinwonse/7-67ee5d7dcbf04d6f807a51b0cc10f35e
+| 2023-05-14
+| v8
+| https://www.notion.so/shinwonse/8-37e8e2c77c2646cfba85b48d521c9369
 
 |===
 
