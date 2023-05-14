@@ -10,6 +10,7 @@ public enum ErrorCode {
     // Member
     MEMBER_UNKNOWN_ERROR(HttpStatus.BAD_REQUEST, "M001", "Member Unknown Error"),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M002", "Member Not Found Error"),
+    MEMBER_NOT_AUTHORIZED(HttpStatus.UNAUTHORIZED, "M003", "JWT Token Error"),
 
     // Record
     IMAGE_STORAGE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "R001", "Fail to Upload Image"),
