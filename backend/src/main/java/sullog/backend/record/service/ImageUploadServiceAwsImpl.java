@@ -10,7 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import sullog.backend.record.error.exception.ImageUploadException;
+import sullog.backend.common.error.ErrorCode;
+import sullog.backend.record.error.exception.RecordException;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class ImageUploadServiceAwsImpl implements ImageUploadService{
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (Exception e) {
             log.error("S3에 업로드 중 예외 발생", e);
-            throw new ImageUploadException("S3에 업로드 중 예외 발생"); // TODO common error 정의해서 던지기
+            throw new RecordException(ErrorCode.IMAGE_STORAGE_ERROR);
         }
     }
 
@@ -94,7 +95,7 @@ public class ImageUploadServiceAwsImpl implements ImageUploadService{
             case "png":
                 return "image/png";
             default:
-                throw new ImageUploadException("올바른 이미지가 아닙니다."); // TODO common error로 정의해서 처리
+                throw new RecordException(ErrorCode.IMAGE_FORMAT_ERROR);
         }
     }
 }
