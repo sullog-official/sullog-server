@@ -287,6 +287,7 @@ class RecordControllerTest {
 
                                 fieldWithPath("alcoholInfo").type(JsonFieldType.OBJECT).optional().description("전통주 정보"),
                                 fieldWithPath("alcoholInfo.brandName").description("전통주 브랜드 이름"),
+                                fieldWithPath("alcoholInfo.alcoholId").description("전통주 ID"),
                                 fieldWithPath("alcoholInfo.alcoholName").description("전통주 이름"),
                                 fieldWithPath("alcoholInfo.alcoholType").description("주종"),
                                 fieldWithPath("alcoholInfo.alcoholPercent").type(JsonFieldType.NUMBER).description("도수"),
@@ -317,6 +318,7 @@ class RecordControllerTest {
 
     private AlcoholInfoDto makeAlcoholInfoDto() {
         return AlcoholInfoDto.builder()
+                .alcoholId(1)
                 .alcoholName("전통주 샘플")
                 .alcoholTag("SOJU")
                 .alcoholPercent(10.0)
