@@ -7,6 +7,8 @@ import lombok.ToString;
 @ToString
 public class AlcoholInfoDto {
 
+    private Integer alcoholId;
+
     private String alcoholName;
 
     private String brandName;
@@ -55,5 +57,7 @@ public class AlcoholInfoDto {
         return alcoholTag;
     }
 
-
+    public Integer getAlcoholId() {
+        return alcoholId;
+    }
 }

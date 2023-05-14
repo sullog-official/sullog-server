@@ -108,6 +108,7 @@ public class AlcoholWithBrandDto {
 
     public AlcoholInfoDto toAlcoholInfoDto() {
         return AlcoholInfoDto.builder()
+                .alcoholId(alcoholId)
                 .alcoholName(alcoholName)
                 .alcoholType(alcoholType)
                 .alcoholPercent(alcoholPercent)

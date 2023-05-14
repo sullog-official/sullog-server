@@ -70,6 +70,7 @@ class AlcoholControllerTest {
     public void 샘플_주류_조회() throws Exception {
 
         AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
+                .alcoholId(1)
                 .alcoholName("전통주 샘플")
                 .alcoholType("기타")
                 .alcoholTag("{}")
@@ -97,6 +98,7 @@ class AlcoholControllerTest {
                                         parameterWithName("alcoholId").description("전통주 ID")
                                 ),
                                 responseFields( // response 필드 정보 입력
+                                        fieldWithPath("alcoholId").type(JsonFieldType.NUMBER).description("전통주 ID"),
                                         fieldWithPath("alcoholName").type(JsonFieldType.STRING).description("전통주 이름"),
                                         fieldWithPath("brandName").type(JsonFieldType.STRING).description("브랜드 이름"),
                                         fieldWithPath("alcoholType").type(JsonFieldType.STRING).description("주종"),
@@ -116,6 +118,7 @@ class AlcoholControllerTest {
     public void 키워드_커서_기반_전통주_조회() throws Exception {
         List<AlcoholInfoDto> alcoholInfoDtoList = new ArrayList<>();
         AlcoholInfoDto alcoholInfoDto = AlcoholInfoDto.builder()
+                .alcoholId(1)
                 .alcoholName("전통주 샘플")
                 .alcoholTag("{}")
                 .alcoholType("기타")
@@ -169,6 +172,7 @@ class AlcoholControllerTest {
                                 ),
                                 responseFields( // response 필드 정보 입력
                                         fieldWithPath("alcoholInfoDtoList").type(JsonFieldType.ARRAY).description("전통주 리스트"),
+                                        fieldWithPath("alcoholInfoDtoList[].alcoholId").type(JsonFieldType.NUMBER).description("전통주 ID"),
                                         fieldWithPath("alcoholInfoDtoList[].alcoholName").type(JsonFieldType.STRING).description("전통주 명"),
                                         fieldWithPath("alcoholInfoDtoList[].brandName").type(JsonFieldType.STRING).description("브랜드 명"),
                                         fieldWithPath("alcoholInfoDtoList[].alcoholType").type(JsonFieldType.STRING).description("주종"),
