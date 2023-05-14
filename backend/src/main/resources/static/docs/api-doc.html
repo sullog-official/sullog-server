@@ -930,10 +930,11 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 639
+Content-Length: 681
 
 {
   "alcoholInfoDtoList" : [ {
+    "alcoholId" : 1,
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
     "alcoholType" : "기타",
@@ -943,6 +944,7 @@ Content-Length: 639
     "productionLongitude" : 0.0,
     "alcoholTag" : "{}"
   }, {
+    "alcoholId" : 1,
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
     "alcoholType" : "기타",
@@ -997,9 +999,10 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 253
+Content-Length: 272
 
 {
+  "alcoholId" : 1,
   "alcoholName" : "전통주 샘플",
   "brandName" : "진로",
   "alcoholType" : "기타",
@@ -1329,7 +1332,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 820
+Content-Length: 841
 
 {
   "record" : {
@@ -1353,6 +1356,7 @@ Content-Length: 820
     "experienceDate" : "2022-03-04"
   },
   "alcoholInfo" : {
+    "alcoholId" : 1,
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
     "alcoholType" : null,
@@ -1463,6 +1467,11 @@ Content-Length: 820
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.brandName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">전통주 브랜드 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.alcoholId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 ID</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.alcoholName</code></p></td>
@@ -2215,7 +2224,7 @@ Content-Length: 172
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-14 01:03:28 +0900
+Last updated 2023-05-14 01:17:18 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
