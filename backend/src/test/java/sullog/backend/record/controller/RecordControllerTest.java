@@ -361,7 +361,7 @@ class RecordControllerTest {
                         preprocessResponse(prettyPrint()),
                         requestParameters( // path 파라미터 정보 입력
                                 parameterWithName("keyword").description("검색 키워드"),
-                                parameterWithName("cursor").description("마지막으로 조회한 경험기록 id(최초 조회 시 null)"),
+                                parameterWithName("cursor").description("마지막으로 조회한 경험기록 id. 최초 조회시에는 이 파라미터를 포함하지 않고, 두 번째 요청부터 포함해야 합니다."),
                                 parameterWithName("limit").description("한번에 조회해올 데이터 갯수")
                         ),
                         responseFields(
@@ -412,7 +412,7 @@ class RecordControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestParameters( // path 파라미터 정보 입력
-                                parameterWithName("cursor").description("마지막으로 조회한 경험기록 id(최초 조회 시 null)"),
+                                parameterWithName("cursor").description("마지막으로 조회한 경험기록 id. 최초 조회시에는 이 파라미터를 포함하지 않고, 두 번째 요청부터 포함해야 합니다."),
                                 parameterWithName("limit").description("한번에 조회해올 데이터 갯수")
                         ),
                         responseFields(
