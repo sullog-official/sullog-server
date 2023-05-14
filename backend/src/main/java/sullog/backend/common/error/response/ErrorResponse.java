@@ -45,4 +45,16 @@ public class ErrorResponse {
         e.printStackTrace(pw);
         return sw.toString();
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getSystemErrorMessage() {
+        return systemErrorMessage;
+    }
 }
