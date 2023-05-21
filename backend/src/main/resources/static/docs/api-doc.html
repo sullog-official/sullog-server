@@ -559,6 +559,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">v9</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/9-acbbdc183de94e75bbe11ca6cf39ab83" class="bare">https://www.notion.so/shinwonse/9-acbbdc183de94e75bbe11ca6cf39ab83</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023-05-21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">v10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.notion.so/shinwonse/10-23da35c1112f44808652f31a1da81120" class="bare">https://www.notion.so/shinwonse/10-23da35c1112f44808652f31a1da81120</a></p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -1051,7 +1056,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-05-14"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-05-22"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1154,7 +1159,13 @@ Content-Type: application/json
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
-Location: http://localhost:8080/records/5</code></pre>
+Location: http://localhost:8080/records/5
+Content-Type: application/json
+Content-Length: 20
+
+{
+  "recordId" : 5
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1172,6 +1183,27 @@ Location: http://localhost:8080/records/5</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Location</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">방금 저장된 경험기록에 접근할 수 있는 url</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방금 저장된 경험기록 id</p></td>
 </tr>
 </tbody>
 </table>
@@ -1546,7 +1578,7 @@ Host: localhost:8080</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cursor</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회한 경험기록 id(최초 조회 시 null)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회한 경험기록 id. 최초 조회시에는 이 파라미터를 포함하지 않고, 두 번째 요청부터 포함해야 합니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>limit</code></p></td>
@@ -1707,7 +1739,7 @@ Host: localhost:8080</code></pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>cursor</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회한 경험기록 id(최초 조회 시 null)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 조회한 경험기록 id. 최초 조회시에는 이 파라미터를 포함하지 않고, 두 번째 요청부터 포함해야 합니다.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>limit</code></p></td>
@@ -2229,7 +2261,7 @@ Content-Length: 172
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-14 23:43:06 +0900
+Last updated 2023-05-22 00:08:07 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
