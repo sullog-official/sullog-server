@@ -22,6 +22,9 @@ jobs:
   # This workflow contains a single job called "build" 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read 
+      packages: write
     
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -37,7 +40,7 @@ jobs:
     
     # gradle wrapper를 실행할 수 있도록 실행 권한 (+x)을 줍니다. ./gradlew를 실행하기 위함
     - name: Grant execute permission for gradlew
-      run: chmod +x ./gradlew
+      run:  chmod +x ./gradlew
       shell: bash
 
     # gradle wrapper를 통해 해당 프로젝트를 build
