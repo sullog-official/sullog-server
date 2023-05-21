@@ -87,12 +87,6 @@ jobs:
     - name: Show Current Time
       run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # (10)
       shell: bash
-
-    # Runs a single command using the runners shell 
-    - name: Clean temp directory
-      run: |
-        rm -rf *
-        cp -r $GITHUB_WORKSPACE . 
       
     - name: archive sullog 
       run: tar cvfz ./$PROJECT_NAME.tar.gz ./$PROJECT_DIRECTORY/*
