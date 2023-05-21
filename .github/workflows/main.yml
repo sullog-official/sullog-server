@@ -38,11 +38,17 @@ jobs:
         java-version: '17' 
         distribution: 'temurin'
     
+    - name: Check directory permissions
+      run: ls -l $PWD
+      
     # backend 디렉토리로 이동할 수 있도록 실행 권한 (+x) 추가
     - name: Grant execute permission to backend directory
       run:  chmod +x ./backend
       shell: bash
     
+    - name: Check directory permissions
+      run: ls -l $PWD
+      
     - name: Print current directory path
       run: echo $PWD
     
