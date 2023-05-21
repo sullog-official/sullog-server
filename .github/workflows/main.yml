@@ -1,0 +1,78 @@
+# This is a basic workflow to help you get started with Actions
+env:  
+  S3_BUCKET_NAME: sullog-s3
+  PROJECT_NAME: sullog
+  CODE_DEPLOY_APP_NAME: github-action-deploy
+  CODE_DEPLOY_GROUP_NAME: github-action-deploy-group
+
+name: DEPLOY
+
+# Controls when the workflow will run
+on:
+  # 지정한 branch에서 push/pull_request 에 해당하는 command가 수행되면 이 workflow가 동작 합니다. 
+  # 여기서는 간단히 main 브런치에서 push되면서 이 workflow가 실행 되도록 하겠습니다.
+  push:
+    branches: [ dev ] 
+ 
+  # 이부분은 위의 trigger가 없어도 수동으로 동작 할 수 있게끔 해주는 역할을 합니다.
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build" 
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: checkout release
+      uses: actions/checkout@v3
+    
+    # gradle wrapper를 실행할 수 있도록 실행 권한 (+x)을 줍니다. ./gradlew를 실행하기 위함
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew
+      shell: bash
+
+    # gradle wrapper를 통해 해당 프로젝트를 build
+    - name: Build with Gradle
+      run: ./gradlew clean build -x test
+      shell: bash  
+    
+    # github action은 utc 기준이어서, 시간 노출 시 kst로 노출하기 위한 설정(optional)
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2  # (9)
+      id: current-time
+      with:
+        format: YYYY-MM-DDTHH-mm-ss 
+        utcOffset: "+09:00"
+
+    - name: Show Current Time
+      run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # (10)
+      shell: bash
+
+    # Runs a single command using the runners shell 
+    - name: Clean temp directory
+      run: |
+        rm -rf *
+        cp -r $GITHUB_WORKSPACE . 
+      
+    - name: archive sullog 
+      run: tar cvfz ./$PROJECT_NAME.tar.gz *
+   
+    # aws에 해당 키 값으로 접속
+    - name: AWS configure credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+        aws-region: ap-northeast-2
+        
+    - name: upload to S3
+      run: aws s3 cp --region ap-northeast-2 ./$PROJECT_NAME.tar.gz s3://$S3_BUCKET_NAME/archive/
+      
+    - name: deploy with AWS codeDeploy
+      run: aws deploy create-deployment
+        --application-name $CODE_DEPLOY_APP_NAME
+        --deployment-config-name CodeDeployDefault.OneAtATime
+        --deployment-group-name $CODE_DEPLOY_GROUP_NAME
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=tgz,key=archive/$PROJECT_NAME.tar.gz
