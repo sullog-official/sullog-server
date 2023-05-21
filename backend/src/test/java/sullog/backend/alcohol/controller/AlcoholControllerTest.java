@@ -23,6 +23,8 @@ import sullog.backend.alcohol.dto.response.PagingInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.auth.service.TokenService;
+import sullog.backend.member.entity.Member;
+import sullog.backend.member.service.MemberService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,9 @@ class AlcoholControllerTest {
     private TokenService tokenService;
 
     @MockBean
+    private MemberService memberService;
+
+    @MockBean
     private AlcoholService alcoholService;
 
     @BeforeEach
@@ -81,7 +86,7 @@ class AlcoholControllerTest {
                 .brandName("진로")
                 .build();
 
-
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
         when(alcoholService.getAlcoholById(anyInt())).thenReturn(alcoholInfoDto);
 
         mockMvc.perform(
@@ -148,6 +153,7 @@ class AlcoholControllerTest {
 
         int memberId = 1;
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
         when(alcoholService.getAlcoholInfo(memberId, alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(

@@ -19,8 +19,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
+import sullog.backend.common.config.WebMvcConfig;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.auth.service.TokenService;
+import sullog.backend.member.entity.Member;
+import sullog.backend.member.service.MemberService;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.response.RecordStatistics;
 import sullog.backend.record.dto.table.AllRecordMetaWithAlcoholInfoDto;
@@ -81,6 +84,9 @@ class RecordControllerTest {
     @MockBean
     private TokenService tokenService;
 
+    @MockBean
+    private MemberService memberService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -117,6 +123,7 @@ class RecordControllerTest {
 
         when(imageUploadService.uploadImageList(any())).thenReturn(List.of("test1.jpg", "test2.jpg"));
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
         when(recordService.saveRecord(any())).thenReturn(5);
 
         // when, then
@@ -168,6 +175,7 @@ class RecordControllerTest {
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = makeMockingDBResponse();
         doReturn(recordMetaWithAlcoholInfoDtos).when(recordService).getRecordMetasByMemberId(memberId);
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
 
         // when, then
         mockMvc.perform(get("/records/me")
@@ -344,6 +352,7 @@ class RecordControllerTest {
 
         // mocking
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = makeMockingDBResponse().stream().limit(recordSearchParamDto.getLimit()).collect(Collectors.toList());
         when(recordService.getRecordMetasByCondition(eq(memberId), any())).thenReturn(recordMetaWithAlcoholInfoDtos);
 
@@ -397,6 +406,7 @@ class RecordControllerTest {
 
         // mocking
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
         List<AllRecordMetaWithAlcoholInfoDto> allRecordMetaWithAlcoholInfoDtoList = makeMockingDBResponse4All().stream().limit(recordSearchParamDto.getLimit()).collect(Collectors.toList());
         when(recordService.getRecordFeed(anyInt(), anyInt())).thenReturn(allRecordMetaWithAlcoholInfoDtoList);
 
@@ -457,6 +467,7 @@ class RecordControllerTest {
                 .build();
         doReturn(recordStatistics).when(recordStatisticService).getRecordStatistics(memberId);
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
 
         // when, then
         mockMvc.perform(get("/records/me/statistics")

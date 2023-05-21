@@ -21,6 +21,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete; // MockMvcBuilders 사용하면 pathParameters 이용 시 에러발생
 import sullog.backend.member.dto.response.RecentSearchHistoryDto;
+import sullog.backend.member.entity.Member;
 import sullog.backend.member.service.MemberService;
 import sullog.backend.auth.service.TokenService;
 
@@ -69,6 +70,7 @@ class MemberControllerTest {
         String accessToken = "sample_token";
 
         // when
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
         doReturn(memberId).when(tokenService).getMemberId(accessToken);
         doNothing().when(memberService).deleteMember(memberId);
 
@@ -92,6 +94,7 @@ class MemberControllerTest {
         // when
         doReturn(memberId).when(tokenService).getMemberId(accessToken);
         doNothing().when(memberService).deleteMember(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
 
         // then
         RecentSearchHistoryDto recentSearchHistoryDto = RecentSearchHistoryDto.builder()
@@ -131,6 +134,7 @@ class MemberControllerTest {
         // when
         doReturn(memberId).when(tokenService).getMemberId(accessToken);
         doNothing().when(memberService).removeSearchKeyword(memberId, keyword);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
 
         // then
         mockMvc.perform(
@@ -160,6 +164,7 @@ class MemberControllerTest {
         // when
         doReturn(memberId).when(tokenService).getMemberId(accessToken);
         doNothing().when(memberService).clearRecentSearchKeyword(memberId);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
 
         // then
         mockMvc.perform(

@@ -21,6 +21,7 @@ import sullog.backend.member.entity.Token;
 import sullog.backend.auth.service.TokenService;
 import sullog.backend.member.service.MemberService;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -66,6 +67,7 @@ class AuthControllerTest {
         // when
         when(tokenService.getMemberId(token)).thenReturn(memberId);
         when(tokenService.generateToken(memberId, "USER")).thenReturn(newToken);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
 
         // then
         this.mockMvc.perform(get("/token/refresh")
