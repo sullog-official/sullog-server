@@ -39,14 +39,26 @@ jobs:
         distribution: 'temurin'
     
     # backend 디렉토리로 이동할 수 있도록 실행 권한 (+x) 추가
-    - name: Grant execute permission for gradlew
+    - name: Grant execute permission to backend directory
       run:  chmod +x ./backend
       shell: bash
-      
+    
+    - name: Print current directory path
+      run: echo $PWD
+    
+    - name: Print current ls
+      run: echo $ls
+  
     # sullog-server 프로젝트 구조 상 backend 디렉토리 하위로 이동
     - name: Change Directory to backend
       run:  cd ./backend
     
+    - name: Print current directory path
+      run: echo $PWD
+      
+    - name: Print current ls
+      run: echo $ls
+      
     # gradle wrapper를 실행할 수 있도록 실행 권한 (+x)을 줍니다. ./gradlew를 실행하기 위함
     - name: Grant execute permission for gradlew
       run:  chmod +x ./gradlew
