@@ -2,6 +2,7 @@
 env:  
   S3_BUCKET_NAME: sullog-s3
   PROJECT_NAME: sullog
+  PROJECT_DIRECTORY: backend
   CODE_DEPLOY_APP_NAME: github-action-deploy
   CODE_DEPLOY_GROUP_NAME: github-action-deploy-group
 
@@ -67,17 +68,17 @@ jobs:
       
     # gradle wrapper를 실행할 수 있도록 실행 권한 (+x)을 줍니다. ./gradlew를 실행하기 위함
     - name: Grant execute permission for gradlew
-      run:  chmod +x ./gradlew
+      run:  chmod +x ./$PROJECT_DIRECTORY/gradlew
       shell: bash
 
     # gradle wrapper를 통해 해당 프로젝트를 build
     - name: Build with Gradle
-      run: ./gradlew clean build -x test
+      run: ./$PROJECT_DIRECTORY/gradlew clean build -x test
       shell: bash  
     
     # github action은 utc 기준이어서, 시간 노출 시 kst로 노출하기 위한 설정(optional)
     - name: Get current time
-      uses: 1466587594/get-current-time@v2  # (9)
+      uses: 1466587594/get-current-time@v2
       id: current-time
       with:
         format: YYYY-MM-DDTHH-mm-ss 
@@ -94,7 +95,7 @@ jobs:
         cp -r $GITHUB_WORKSPACE . 
       
     - name: archive sullog 
-      run: tar cvfz ./$PROJECT_NAME.tar.gz *
+      run: tar cvfz ./$PROJECT_NAME.tar.gz ./$PROJECT_DIRECTORY/*
    
     # aws에 해당 키 값으로 접속
     - name: AWS configure credentials
