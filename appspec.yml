@@ -3,4 +3,4 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/deploy/archive 
-    overwrite: yes
+    file_exists_behavior: OVERWRITE
