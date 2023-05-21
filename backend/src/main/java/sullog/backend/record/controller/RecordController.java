@@ -86,13 +86,18 @@ public class RecordController {
                                                                      RecordSearchParamDto recordSearchParamDto) {
        List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoList = recordService.getRecordMetasByCondition(memberId, recordSearchParamDto);
 
+        int newCursor = 0;
+        if (recordMetaWithAlcoholInfoList.size() > 0) {
+            newCursor = recordMetaWithAlcoholInfoList.get(recordMetaWithAlcoholInfoList.size() - 1).getRecordId();
+        }
+
         RecordMetaListWithPagingDto recordMetaListWithPagingDto = RecordMetaListWithPagingDto.builder()
                 .recordMetaList(recordMetaWithAlcoholInfoList.stream()
                         .map(RecordMetaWithAlcoholInfoDto::toResponseDto)
                         .collect(Collectors.toList())
                 )
                 .pagingInfo(PagingInfoDto.builder()
-                        .cursor(recordMetaWithAlcoholInfoList.get(recordMetaWithAlcoholInfoList.size() - 1).getRecordId())
+                        .cursor(newCursor)
                         .limit(recordSearchParamDto.getLimit())
                         .build()
                 )
