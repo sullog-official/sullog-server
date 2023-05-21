@@ -39,7 +39,7 @@ public class RecordController {
     }
 
     @PostMapping
-    public ResponseEntity<URI> saveRecord(@RequestAttribute Integer memberId,
+    public ResponseEntity<RecordSaveDto> saveRecord(@RequestAttribute Integer memberId,
                                              @RequestPart(required = false) List<MultipartFile> photoList,
                                              @RequestPart("recordInfo") RecordSaveRequestDto requestDto) {
         // 이미지 저장
@@ -53,7 +53,12 @@ public class RecordController {
                 .path("/{recordId}")
                 .buildAndExpand(savedRecordId)
                 .toUri();
-        return ResponseEntity.created(location).build();
+
+        RecordSaveDto responseBody = RecordSaveDto.builder()
+                .recordId(savedRecordId)
+                .build();
+
+        return ResponseEntity.created(location).body(responseBody);
     }
 
     @GetMapping("/me")
