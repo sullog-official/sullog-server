@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import sullog.backend.common.error.response.ErrorResponse;
-import sullog.backend.record.error.exception.ImageUploadException;
 import sullog.backend.record.error.exception.RecordException;
 
 @Slf4j
@@ -17,11 +16,4 @@ public class RecordControllerAdvice {
         log.error("RecordException 예외 발생", e);
         return ErrorResponse.toResponseEntity(e);
     }
-
-    @ExceptionHandler(ImageUploadException.class)
-    ResponseEntity<ErrorResponse> imageUploadExceptionHandler(ImageUploadException e) {
-        log.error("ImageUploadException 예외 발생", e);
-        return ErrorResponse.toResponseEntity(e);
-    }
-
 }

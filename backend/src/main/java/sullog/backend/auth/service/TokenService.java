@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
-import sullog.backend.member.entity.Member;
 import sullog.backend.member.entity.Token;
 import sullog.backend.member.service.MemberService;
 
@@ -95,8 +94,7 @@ public class TokenService implements InitializingBean {
 
     public Authentication getAuthentication(String token) {
         int memberId = getMemberId(token);
-        Member findMember = memberService.findMemberById(memberId);
-        return new UsernamePasswordAuthenticationToken(findMember, "",
+        return new UsernamePasswordAuthenticationToken(memberId, "",
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
