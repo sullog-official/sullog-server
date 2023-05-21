@@ -152,8 +152,11 @@ class RecordControllerTest {
                         )),
                         responseHeaders(
                                 headerWithName(HttpHeaders.LOCATION).description("방금 저장된 경험기록에 접근할 수 있는 url")
+                        ),
+                        responseFields(
+                                fieldWithPath("recordId").type(JsonFieldType.NUMBER).description("방금 저장된 경험기록 id"))
                         )
-                ));
+                );
     }
 
     @Test
