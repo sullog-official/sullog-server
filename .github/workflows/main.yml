@@ -27,6 +27,9 @@ jobs:
       packages: write
     
     steps:
+    - name: Print current directory path
+      run: echo $PWD
+      
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: checkout release
       uses: actions/checkout@v3
@@ -38,10 +41,15 @@ jobs:
         java-version: '17' 
         distribution: 'temurin'
   
+    - name: Print current directory path
+      run: echo $PWD
+      
     # sullog-server 프로젝트 구조 상 backend 디렉토리 하위로 이동
     - name: Change Directory to backend
       run:  cd ./backend
     
+    - name: Print current directory path
+      run: echo $PWD 
     # gradle wrapper를 실행할 수 있도록 실행 권한 (+x)을 줍니다. ./gradlew를 실행하기 위함
     - name: Grant execute permission for gradlew
       run:  chmod +x ./gradlew
