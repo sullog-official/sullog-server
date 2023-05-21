@@ -73,7 +73,7 @@ jobs:
 
     # gradle wrapper를 통해 해당 프로젝트를 build
     - name: Build with Gradle
-      run: ./$PROJECT_DIRECTORY/gradlew --project-dir=./$PROJECT_DIRECTORY clean build -x test
+      run: ./$PROJECT_DIRECTORY/gradlew --project-dir=./$PROJECT_DIRECTORY clean build
       shell: bash  
     
     # github action은 utc 기준이어서, 시간 노출 시 kst로 노출하기 위한 설정(optional)
