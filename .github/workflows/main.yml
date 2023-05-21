@@ -4,7 +4,7 @@ env:
   PROJECT_NAME: sullog
   PROJECT_DIRECTORY: backend
   CODE_DEPLOY_APP_NAME: github-action-deploy
-  CODE_DEPLOY_GROUP_NAME: github-action-code_deploy
+  CODE_DEPLOY_GROUP_NAME: github-action-deploy-group
 
 name: DEPLOY
 
