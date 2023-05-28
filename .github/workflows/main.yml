@@ -70,9 +70,6 @@ jobs:
         cd ../ && mkdir -p deploy
         mv before-deploy/before-deploy.zip deploy/$PROJECT_NAME.zip
       shell: bash
-      
-    - name: archive sullog 
-      run: tar cvfz ./$PROJECT_NAME.tar.gz ./$PROJECT_DIRECTORY/*
    
     # aws에 해당 키 값으로 접속
     - name: AWS configure credentials
