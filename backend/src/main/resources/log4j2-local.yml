@@ -2,11 +2,6 @@ Configuration:
   name: Default
   status: info
 
-  Properties:
-    Property:
-      name: log-path
-      value: "logs"
-
   Appenders:
     Console:
       name: Console_Appender
