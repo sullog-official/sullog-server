@@ -13,6 +13,6 @@ permissions:
 
 hooks:
   ApplicationStart:
-    - location: /home/ubuntu/deploy/wasControl/deploy.sh
+    - location: ../wasControl/deploy.sh
       timeout: 60
       runas: ubuntu
