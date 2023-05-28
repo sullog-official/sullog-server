@@ -16,3 +16,5 @@ hooks:
     - location: ../wasControl/deploy.sh
       timeout: 60
       runas: ubuntu
+      environment:
+        JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
