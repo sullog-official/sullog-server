@@ -1,4 +1,6 @@
 spring:
+  pid:
+    file: /home/ubuntu/deploy/sullog.pid
   datasource:
     hikari:
       max-lifetime: 600
