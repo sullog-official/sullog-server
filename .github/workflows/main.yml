@@ -83,7 +83,7 @@ jobs:
         aws-region: ap-northeast-2
         
     - name: upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./deploy/$PROJECT_NAME.tar.gz s3://$S3_BUCKET_NAME/archive/
+      run: aws s3 cp --region ap-northeast-2 ./deploy/$PROJECT_NAME.zip s3://$S3_BUCKET_NAME/archive/
       
     - name: deploy with AWS codeDeploy
       run: aws deploy create-deployment
