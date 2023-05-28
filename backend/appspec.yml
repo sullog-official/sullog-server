@@ -17,4 +17,4 @@ hooks:
       timeout: 60
       runas: ubuntu
       environment:
-        JASYPT_PASSWORD: ${{ secrets.JASYPT_PASSWORD }}
+        JASYPT_PASSWORD: !Ref jasypt-password
