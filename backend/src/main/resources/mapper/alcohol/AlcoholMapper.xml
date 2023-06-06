@@ -89,4 +89,31 @@
         LIMIT #{limit}
     </select>
 
+    <select id="selectAllAlcoholList" resultType="sullog.backend.alcohol.entity.Alcohol">
+        SELECT *
+        FROM alcohol
+    </select>
+
+    <update id="updateAlcohol" parameterType="sullog.backend.alcohol.entity.Alcohol">
+        UPDATE alcohol
+        SET
+            brand_id = #{brandId},
+            name = #{name},
+            alcohol_type = #{alcoholType},
+            alcohol_percent = #{alcoholPercent},
+            production_location = #{productionLocation},
+            production_latitude = #{productionLatitude},
+            production_longitude = #{productionLongitude},
+            alcohol_tag = #{alcoholTag}
+        WHERE alcohol_id = #{alcoholId}
+    </update>
+
+    <select id="selectFromNameAndLocationInfo" resultType="sullog.backend.alcohol.entity.Alcohol">
+        SELECT *
+        FROM alcohol
+        WHERE name = #{name}
+          AND production_latitude = #{lng}
+          AND production_longitude = #{lat}
+    </select>
+
 </mapper>

@@ -18,4 +18,11 @@ public interface AlcoholMapper {
             @Param("cursor") int cursor,
             @Param("limit") int limit) throws RuntimeException;
 
+    void updateAlcohol(Alcohol alcohol) throws RuntimeException;
+
+    List<Alcohol> selectAllAlcoholList() throws RuntimeException;
+
+    List<Alcohol> selectFromNameAndLocationInfo(@Param("name") String name,
+                                                @Param("lat") double lat,
+                                                @Param("lng") double lng) throws RuntimeException;
 }
