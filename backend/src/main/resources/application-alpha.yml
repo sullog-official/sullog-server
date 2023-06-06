@@ -1,6 +1,4 @@
 spring:
-  pid:
-    file: /home/ubuntu/deploy/sullog.pid
   config:
     import: "classpath:oauth-alpha.yml"
   datasource:
