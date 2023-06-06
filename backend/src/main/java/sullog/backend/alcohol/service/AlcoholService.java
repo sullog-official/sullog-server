@@ -22,11 +22,8 @@ public class AlcoholService {
 
     private final AlcoholMapper alcoholMapper;
 
-    private final MemberService memberService;
-
-    public AlcoholService(AlcoholMapper alcoholMapper, MemberService memberService) {
+    public AlcoholService(AlcoholMapper alcoholMapper) {
         this.alcoholMapper = alcoholMapper;
-        this.memberService = memberService;
     }
 
     public AlcoholInfoDto getAlcoholById(int alcoholId) {
@@ -34,7 +31,7 @@ public class AlcoholService {
         return alcoholWithBrandDto.toAlcoholInfoDto();
     }
 
-    public AlcoholInfoWithPagingDto getAlcoholInfo(int memberId, AlcoholSearchRequestDto alcoholSearchRequestDto) {
+    public AlcoholInfoWithPagingDto getAlcoholInfo(AlcoholSearchRequestDto alcoholSearchRequestDto) {
         List<AlcoholInfoDto> alcoholInfoDtoList = new ArrayList<>();
         List<AlcoholWithBrandDto> alcoholWithBrandDtoList = alcoholMapper.pagingSelectByKeyword(
                 alcoholSearchRequestDto.getKeyword(),
@@ -52,8 +49,6 @@ public class AlcoholService {
                 .cursor(cursor)
                 .limit(alcoholSearchRequestDto.getLimit())
                 .build();
-
-        memberService.updateRecentSearchWordList(memberId, alcoholSearchRequestDto.getKeyword());
 
         return AlcoholInfoWithPagingDto.builder()
                 .alcoholInfoDtoList(alcoholInfoDtoList)

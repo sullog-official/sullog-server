@@ -154,7 +154,7 @@ class AlcoholControllerTest {
         int memberId = 1;
         when(tokenService.getMemberId(anyString())).thenReturn(memberId);
         when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
-        when(alcoholService.getAlcoholInfo(memberId, alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
+        when(alcoholService.getAlcoholInfo(alcoholSearchRequestDto)).thenReturn(alcoholInfoWithPagingDto);
 
         mockMvc.perform(
                         get("/alcohols/search")

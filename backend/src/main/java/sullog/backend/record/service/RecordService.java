@@ -34,6 +34,8 @@ public class RecordService {
 
     public List<RecordMetaWithAlcoholInfoDto> getRecordMetasByCondition(int memberId, RecordSearchParamDto recordSearchParamDto) {
         List<RecordMetaWithAlcoholInfoDto> recordMetaWithAlcoholInfoDtos = recordMapper.selectRecordMetaByCondition(memberId, recordSearchParamDto);
+
+
         return recordMetaWithAlcoholInfoDtos;
     }
 

@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.dto.response.PagingInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
+import sullog.backend.member.service.MemberService;
 import sullog.backend.record.dto.RecordSaveRequestDto;
 import sullog.backend.record.dto.request.RecordSearchParamDto;
 import sullog.backend.record.dto.response.*;
@@ -30,12 +31,14 @@ public class RecordController {
     private final ImageUploadService imageUploadService;
     private final AlcoholService alcoholService;
     private final RecordStatisticService recordStatisticService;
+    private final MemberService memberService;
 
-    public RecordController(RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService, RecordStatisticService recordStatisticService) {
+    public RecordController(RecordService recordService, ImageUploadService imageUploadService, AlcoholService alcoholService, RecordStatisticService recordStatisticService, MemberService memberService) {
         this.recordService = recordService;
         this.imageUploadService = imageUploadService;
         this.alcoholService = alcoholService;
         this.recordStatisticService = recordStatisticService;
+        this.memberService = memberService;
     }
 
     @PostMapping
@@ -107,6 +110,8 @@ public class RecordController {
                         .build()
                 )
                 .build();
+
+        memberService.updateRecentSearchWordList(memberId, recordSearchParamDto.getKeyword());
 
         return new ResponseEntity<>(recordMetaListWithPagingDto, HttpStatus.OK);
     }
