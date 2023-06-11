@@ -36,6 +36,9 @@ public class ImageUploadServiceAwsImpl implements ImageUploadService{
     @Value("${cloud.aws.region.static}")
     private String region;
 
+    @Value("#{'${allow-image-format}'.split(',')}")
+    private List<String> allowedExtensions;
+
     @PostConstruct
     public void setS3Client() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -88,14 +91,10 @@ public class ImageUploadServiceAwsImpl implements ImageUploadService{
 
     private String getFileContentType(String fileName) {
         String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-        switch (ext) {
-            case "jpeg":
-                return "image/jpeg";
-            case "png":
-                return "image/png";
-            default:
-                throw new RecordException(ErrorCode.IMAGE_FORMAT_ERROR);
+        if (false == allowedExtensions.contains(ext)) {
+            throw new RecordException(ErrorCode.IMAGE_FORMAT_ERROR);
         }
+
+        return "image/"+ext;
     }
 }
