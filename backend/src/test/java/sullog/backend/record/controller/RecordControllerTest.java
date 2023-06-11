@@ -141,7 +141,7 @@ class RecordControllerTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestParts(List.of(
-                                partWithName("photoList").description("사용자가 업로드한 이미지 리스트(0 ~ 3장)").optional(),
+                                partWithName("photoList").description("사용자가 업로드한 이미지 리스트(0 ~ 3장) jpg,jpeg,png,heic 확장자만 허용").optional(),
                                 partWithName("recordInfo").description("사용자가 작성한 전통주 경험")
                         )),
                         requestPartFields("recordInfo", List.of(
