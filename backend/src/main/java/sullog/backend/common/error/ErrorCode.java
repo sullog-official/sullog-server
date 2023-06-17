@@ -14,7 +14,7 @@ public enum ErrorCode {
 
     // Record
     IMAGE_STORAGE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "R001", "Fail to Upload Image"),
-    IMAGE_FORMAT_ERROR(HttpStatus.BAD_REQUEST, "R002", "Invalid Image Format. jpeg, png Only Allowed")
+    IMAGE_FORMAT_ERROR(HttpStatus.BAD_REQUEST, "R002", "Invalid Image Format")
     ;
 
     private final HttpStatus status;

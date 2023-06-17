@@ -26,3 +26,5 @@ cloud:
       static: us-east-2
     stack:
       auto: false
+# 허용하는 이미지 확장자
+allow-image-format: "jpg,JPG,jpeg,JPEG,png,PNG,heic,HEIC"
