@@ -28,7 +28,7 @@ public class AlcoholController {
     @GetMapping("/search")
     public ResponseEntity<AlcoholInfoWithPagingDto> getAlcoholIdListWithKeywordAndCursor(@RequestAttribute Integer memberId,
                                                                                          AlcoholSearchRequestDto alcoholSearchRequestDto) {
-        return new ResponseEntity<>(alcoholService.getAlcoholInfo(memberId, alcoholSearchRequestDto), HttpStatus.OK);
+        return new ResponseEntity<>(alcoholService.getAlcoholInfo(alcoholSearchRequestDto), HttpStatus.OK);
     }
 
 }

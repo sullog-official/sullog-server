@@ -46,7 +46,8 @@
 
     <update id="updateSearchWordList">
         UPDATE member
-        SET search_word_list = #{searchWordList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler}
+        SET search_word_list = #{searchWordList, typeHandler=sullog.backend.common.mapper.typehandler.StringListTypeHandler},
+            updated_at = NOW()
         WHERE member_id = #{memberId}
     </update>
 
