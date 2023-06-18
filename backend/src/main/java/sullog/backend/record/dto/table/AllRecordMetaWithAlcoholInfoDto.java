@@ -19,7 +19,7 @@ public class AllRecordMetaWithAlcoholInfoDto {
     private String productionLocation;
     private Double productionLatitude;
     private Double productionLongitude;
-    private String alcoholTag;
+    private String alcoholType;
     private String brandName;
 
     public Integer getMemberId() {
@@ -62,8 +62,8 @@ public class AllRecordMetaWithAlcoholInfoDto {
         return productionLongitude;
     }
 
-    public String getAlcoholTag() {
-        return alcoholTag;
+    public String getAlcoholType() {
+        return alcoholType;
     }
 
     public AllRecordMetaWithAlcoholInfoDto(
@@ -76,7 +76,7 @@ public class AllRecordMetaWithAlcoholInfoDto {
             String productionLocation,
             Double productionLatitude,
             Double productionLongitude,
-            String alcoholTag,
+            String alcoholType,
             String brandName) {
         this.memberId = memberId;
         this.recordId = recordId;
@@ -87,7 +87,7 @@ public class AllRecordMetaWithAlcoholInfoDto {
         this.productionLocation = productionLocation;
         this.productionLatitude = productionLatitude;
         this.productionLongitude = productionLongitude;
-        this.alcoholTag = alcoholTag;
+        this.alcoholType = alcoholType;
         this.brandName = brandName;
     }
 
@@ -102,7 +102,7 @@ public class AllRecordMetaWithAlcoholInfoDto {
                 .productionLocation(productionLocation)
                 .productionLatitude(productionLatitude)
                 .productionLongitude(productionLongitude)
-                .alcoholTag(alcoholTag)
+                .alcoholType(alcoholType)
                 .brandName(brandName)
                 .build();
     }

@@ -43,7 +43,7 @@
         <result property="productionLocation" column="production_location"/>
         <result property="productionLatitude" column="production_latitude"/>
         <result property="productionLongitude" column="production_longitude"/>
-        <result property="alcoholTag" column="alcohol_tag"/>
+        <result property="alcoholType" column="alcohol_type"/>
         <result property="brandName" column="brand_name"/>
     </resultMap>
 
@@ -56,7 +56,7 @@
                a.production_location  AS production_location,
                a.production_latitude  AS production_latitude,
                a.production_longitude AS production_longitude,
-               a.alcohol_tag          AS alcohol_tag,
+               a.alcohol_type         AS alcohol_type,
                ab.name                AS brand_name
         FROM record AS r
         LEFT JOIN (SELECT alcohol_id,
@@ -65,7 +65,7 @@
                           production_location,
                           production_latitude,
                           production_longitude,
-                          alcohol_tag
+                          alcohol_type
                     FROM alcohol) AS a
             ON r.alcohol_id = a.alcohol_id
         LEFT JOIN alcohol_brand AS ab
@@ -114,7 +114,7 @@
                 a.production_location  AS production_location,
                 a.production_latitude  AS production_latitude,
                 a.production_longitude AS production_longitude,
-                a.alcohol_tag          AS alcohol_tag,
+                a.alcohol_type         AS alcohol_type,
                 ab.name                AS brand_name
         FROM record AS r
         LEFT JOIN (SELECT   alcohol_id,
@@ -123,7 +123,7 @@
                             production_location,
                             production_latitude,
                             production_longitude,
-                            alcohol_tag
+                            alcohol_type
                             FROM alcohol) AS a
             ON r.alcohol_id = a.alcohol_id
         LEFT JOIN alcohol_brand AS ab
@@ -155,7 +155,7 @@
         <result property="productionLocation" column="production_location"/>
         <result property="productionLatitude" column="production_latitude"/>
         <result property="productionLongitude" column="production_longitude"/>
-        <result property="alcoholTag" column="alcohol_tag"/>
+        <result property="alcoholType" column="alcohol_type"/>
         <result property="brandName" column="brand_name"/>
     </resultMap>
 
@@ -170,7 +170,7 @@
         a.production_location  AS production_location,
         a.production_latitude  AS production_latitude,
         a.production_longitude AS production_longitude,
-        a.alcohol_tag          AS alcohol_tag,
+        a.alcohol_type         AS alcohol_type,
         ab.name                AS brand_name
         FROM record AS r
         LEFT JOIN (
@@ -180,7 +180,7 @@
                     production_location,
                     production_latitude,
                     production_longitude,
-                    alcohol_tag
+                    alcohol_type
             FROM alcohol
         ) AS a
         ON r.alcohol_id = a.alcohol_id
