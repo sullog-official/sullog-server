@@ -1056,7 +1056,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-05-22"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-06-18"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1074,7 +1074,7 @@ Content-Type: application/json
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>photoList</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">사용자가 업로드한 이미지 리스트(0 ~ 3장)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자가 업로드한 이미지 리스트(0 ~ 3장) jpg,jpeg,png,heic 확장자만 허용</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordInfo</code></p></td>
@@ -1227,7 +1227,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 1061
+Content-Length: 1062
 
 [ {
   "recordId" : 1,
@@ -1238,7 +1238,7 @@ Content-Length: 1061
   "productionLocation" : "서울시 광진구 능동로 120",
   "productionLatitude" : 37.123456,
   "productionLongitude" : 126.789012,
-  "alcoholTag" : "SOJU",
+  "alcoholType" : "소주",
   "brandName" : "진로"
 }, {
   "recordId" : 2,
@@ -1249,7 +1249,7 @@ Content-Length: 1061
   "productionLocation" : "서울시 광진구 능동로 120",
   "productionLatitude" : 36.987654,
   "productionLongitude" : 127.012345,
-  "alcoholTag" : "FRUIT_WINE",
+  "alcoholType" : "와인",
   "brandName" : "진로"
 }, {
   "recordId" : 3,
@@ -1260,7 +1260,7 @@ Content-Length: 1061
   "productionLocation" : "서울시 광진구 능동로 120",
   "productionLatitude" : 35.123456,
   "productionLongitude" : 128.789012,
-  "alcoholTag" : "MAKGEOLLI",
+  "alcoholType" : "막걸리",
   "brandName" : "진로"
 } ]</code></pre>
 </div>
@@ -1320,9 +1320,9 @@ Content-Length: 1061
 <td class="tableblock halign-left valign-top"><p class="tableblock">전통주 생산지 경도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].alcoholTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].alcoholType</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 태그</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주종</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].brandName</code></p></td>
@@ -1396,12 +1396,12 @@ Content-Length: 841
     "alcoholId" : 1,
     "alcoholName" : "전통주 샘플",
     "brandName" : "진로",
-    "alcoholType" : null,
+    "alcoholType" : "약주",
     "alcoholPercent" : 10.0,
     "productionLocation" : "서울시 광진구",
     "productionLatitude" : 127.077794504202,
     "productionLongitude" : 37.54373496690244,
-    "alcoholTag" : "SOJU"
+    "alcoholTag" : ""
   }
 }</code></pre>
 </div>
@@ -1517,7 +1517,7 @@ Content-Length: 841
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>alcoholInfo.alcoholType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">주종</p></td>
 </tr>
 <tr>
@@ -1605,7 +1605,7 @@ Content-Length: 834
     "productionLocation" : "서울시 광진구 능동로 120",
     "productionLatitude" : 37.123456,
     "productionLongitude" : 126.789012,
-    "alcoholTag" : "SOJU",
+    "alcoholType" : "소주",
     "brandName" : "진로"
   }, {
     "recordId" : 2,
@@ -1616,7 +1616,7 @@ Content-Length: 834
     "productionLocation" : "서울시 광진구 능동로 120",
     "productionLatitude" : 36.987654,
     "productionLongitude" : 127.012345,
-    "alcoholTag" : "FRUIT_WINE",
+    "alcoholType" : "와인",
     "brandName" : "진로"
   } ],
   "pagingInfo" : {
@@ -1686,9 +1686,9 @@ Content-Length: 834
 <td class="tableblock halign-left valign-top"><p class="tableblock">전통주 생산지 경도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordMetaList[].alcoholTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordMetaList[].alcoholType</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 태그</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주종</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>recordMetaList[].brandName</code></p></td>
@@ -1754,7 +1754,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 877
+Content-Length: 880
 
 {
   "allRecordMetaList" : [ {
@@ -1767,7 +1767,7 @@ Content-Length: 877
     "productionLocation" : "서울시 광진구 능동로 120",
     "productionLatitude" : 37.123456,
     "productionLongitude" : 126.789012,
-    "alcoholTag" : "SOJU",
+    "alcoholType" : "소주",
     "brandName" : "진로"
   }, {
     "memberId" : 2,
@@ -1779,7 +1779,7 @@ Content-Length: 877
     "productionLocation" : "서울시 광진구 능동로 120",
     "productionLatitude" : 36.987654,
     "productionLongitude" : 127.012345,
-    "alcoholTag" : "FRUIT_WINE",
+    "alcoholType" : "막걸리",
     "brandName" : "진로"
   } ],
   "pagingInfo" : {
@@ -1854,9 +1854,9 @@ Content-Length: 877
 <td class="tableblock halign-left valign-top"><p class="tableblock">전통주 생산지 경도</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].alcoholTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].alcoholType</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전통주 태그</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주종</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>allRecordMetaList[].brandName</code></p></td>
@@ -2261,7 +2261,7 @@ Content-Length: 172
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-22 00:08:07 +0900
+Last updated 2023-06-06 20:01:19 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

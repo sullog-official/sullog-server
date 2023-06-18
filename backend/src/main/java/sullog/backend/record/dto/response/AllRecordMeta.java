@@ -14,7 +14,7 @@ public class AllRecordMeta {
     private String productionLocation; // 생산지 명
     private Double productionLatitude; // 전통주 생산지 위도
     private Double productionLongitude; // 전통주 생산지 경도
-    private String alcoholTag; // 전통주 태그
+    private String alcoholType; // 주종
     private String brandName; // 브랜드 이름
 
     public Integer getMemberId() {
@@ -53,8 +53,8 @@ public class AllRecordMeta {
         return productionLongitude;
     }
 
-    public String getAlcoholTag() {
-        return alcoholTag;
+    public String getAlcoholType() {
+        return alcoholType;
     }
 
     public String getBrandName() {

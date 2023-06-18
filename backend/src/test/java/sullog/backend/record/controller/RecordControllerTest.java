@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import sullog.backend.alcohol.dto.response.AlcoholInfoDto;
 import sullog.backend.alcohol.service.AlcoholService;
-import sullog.backend.common.config.WebMvcConfig;
 import sullog.backend.member.config.jwt.JwtAuthFilter;
 import sullog.backend.auth.service.TokenService;
 import sullog.backend.member.entity.Member;
@@ -194,7 +193,7 @@ class RecordControllerTest {
                 .andExpect(jsonPath("$[0].productionLocation", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLocation())))
                 .andExpect(jsonPath("$[0].productionLatitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLatitude())))
                 .andExpect(jsonPath("$[0].productionLongitude", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getProductionLongitude())))
-                .andExpect(jsonPath("$[0].alcoholTag", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getAlcoholTag())))
+                .andExpect(jsonPath("$[0].alcoholType", is(recordMetaWithAlcoholInfoDtos.get(0).toResponseDto().getAlcoholType())))
                 .andDo(document("record/get-records-by-memberId",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
@@ -207,7 +206,7 @@ class RecordControllerTest {
                                 fieldWithPath("[].productionLocation").description("전통주 생산지 명"),
                                 fieldWithPath("[].productionLatitude").description("전통주 생산지 위도"),
                                 fieldWithPath("[].productionLongitude").description("전통주 생산지 경도"),
-                                fieldWithPath("[].alcoholTag").description("전통주 태그"),
+                                fieldWithPath("[].alcoholType").description("주종"),
                                 fieldWithPath("[].brandName").description("브랜드 이름")
                         ))
                 );
@@ -223,7 +222,7 @@ class RecordControllerTest {
                 .productionLocation("서울시 광진구 능동로 120")
                 .productionLatitude(37.123456)
                 .productionLongitude(126.789012)
-                .alcoholTag("SOJU")
+                .alcoholType("소주")
                 .brandName("진로")
                 .build();
 
@@ -236,7 +235,7 @@ class RecordControllerTest {
                 .productionLocation("서울시 광진구 능동로 120")
                 .productionLatitude(36.987654)
                 .productionLongitude(127.012345)
-                .alcoholTag("FRUIT_WINE")
+                .alcoholType("와인")
                 .brandName("진로")
                 .build();
 
@@ -249,7 +248,7 @@ class RecordControllerTest {
                 .productionLocation("서울시 광진구 능동로 120")
                 .productionLatitude(35.123456)
                 .productionLongitude(128.789012)
-                .alcoholTag("MAKGEOLLI")
+                .alcoholType("막걸리")
                 .brandName("진로")
                 .build();
 
@@ -331,7 +330,8 @@ class RecordControllerTest {
         return AlcoholInfoDto.builder()
                 .alcoholId(1)
                 .alcoholName("전통주 샘플")
-                .alcoholTag("SOJU")
+                .alcoholTag("")
+                .alcoholType("약주")
                 .alcoholPercent(10.0)
                 .productionLocation("서울시 광진구")
                 .productionLongitude(37.54373496690244)
@@ -386,7 +386,7 @@ class RecordControllerTest {
                                 fieldWithPath("recordMetaList[].productionLocation").description("전통주 생산지 명"),
                                 fieldWithPath("recordMetaList[].productionLatitude").description("전통주 생산지 위도"),
                                 fieldWithPath("recordMetaList[].productionLongitude").description("전통주 생산지 경도"),
-                                fieldWithPath("recordMetaList[].alcoholTag").description("전통주 태그"),
+                                fieldWithPath("recordMetaList[].alcoholType").description("주종"),
                                 fieldWithPath("recordMetaList[].brandName").description("브랜드 이름"),
                                 fieldWithPath("pagingInfo").type(JsonFieldType.OBJECT).description("페이징 정보"),
                                 fieldWithPath("pagingInfo.cursor").type(JsonFieldType.NUMBER).description("마지막으로 조회한 경험기록 id(다음요청 시 그대로 전달)"),
@@ -439,7 +439,7 @@ class RecordControllerTest {
                                 fieldWithPath("allRecordMetaList[].productionLocation").description("전통주 생산지 명"),
                                 fieldWithPath("allRecordMetaList[].productionLatitude").description("전통주 생산지 위도"),
                                 fieldWithPath("allRecordMetaList[].productionLongitude").description("전통주 생산지 경도"),
-                                fieldWithPath("allRecordMetaList[].alcoholTag").description("전통주 태그"),
+                                fieldWithPath("allRecordMetaList[].alcoholType").description("주종"),
                                 fieldWithPath("allRecordMetaList[].brandName").description("브랜드 이름"),
                                 fieldWithPath("pagingInfo").type(JsonFieldType.OBJECT).description("페이징 정보"),
                                 fieldWithPath("pagingInfo.cursor").type(JsonFieldType.NUMBER).description("마지막으로 조회한 경험기록 id(다음요청 시 그대로 전달)"),
@@ -501,7 +501,7 @@ class RecordControllerTest {
                 .productionLocation("서울시 광진구 능동로 120")
                 .productionLatitude(37.123456)
                 .productionLongitude(126.789012)
-                .alcoholTag("SOJU")
+                .alcoholType("소주")
                 .brandName("진로")
                 .build();
 
@@ -515,7 +515,7 @@ class RecordControllerTest {
                 .productionLocation("서울시 광진구 능동로 120")
                 .productionLatitude(36.987654)
                 .productionLongitude(127.012345)
-                .alcoholTag("FRUIT_WINE")
+                .alcoholType("막걸리")
                 .brandName("진로")
                 .build();
 
@@ -529,7 +529,7 @@ class RecordControllerTest {
                 .productionLocation("서울시 광진구 능동로 120")
                 .productionLatitude(35.123456)
                 .productionLongitude(128.789012)
-                .alcoholTag("MAKGEOLLI")
+                .alcoholType("와인")
                 .brandName("진로")
                 .build();
 
