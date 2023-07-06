@@ -5,7 +5,8 @@ spring:
         registration:
           kakao:
             client-id: 209bdcaaebd1d90d002f358651d8ef4b
-            redirect-uri: http://localhost:3000/api/redirect/kakao
+#            redirect-uri: http://localhost:3000/api/redirect/kakao
+            redirect-uri: https://sullog-client.vercel.app/api/redirect/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
