@@ -29,4 +29,5 @@ logging:
   config: classpath:log4j2-alpha.yml
 
 # CORS 이슈 대응
-client-domains: "http://localhost:3000"
+client-domains: "https://sullog-client.vercel.app,https://sullog-dev.vercel.app"
+#client-domains: "http://localhost:3000"
