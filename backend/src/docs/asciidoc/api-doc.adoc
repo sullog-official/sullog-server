@@ -51,10 +51,10 @@
 |===
 | 환경 | domain
 
-| 개발서버
-| `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081`
+| 개발서버 (alpha)
+| `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8082`
 
-| Prod / 운영 서버
+| 운영서버 (live)
 | `https://api.sullog-server.click`
 |===
 
