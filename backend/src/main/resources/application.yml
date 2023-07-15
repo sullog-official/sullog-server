@@ -12,7 +12,7 @@ spring:
       - jwt
       - aws
       - mybatis
-    active: alpha   # local, alpha, live
+    active: live   # local, alpha, live
 server:
   port: 8082
 
