@@ -27,6 +27,9 @@ logging:
       connection: off
   config: classpath:log4j2-local.yml
 
+server:
+  port: 8082
+
 # CORS 이슈 대응
 client-domains: "http://localhost:3000"
 
