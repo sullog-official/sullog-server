@@ -23,13 +23,13 @@ public class Record extends BaseEntity {
 
     private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
 
-    private int starScore; // 별점(1~5)
+    private double starScore; // 별점(1~5)
 
-    private int scentScore; // 향 점수(1~5)
+    private double scentScore; // 향 점수(1~5)
 
-    private int tasteScore; // 맛점수 (1~5)
+    private double tasteScore; // 맛점수 (1~5)
 
-    private int textureScore; // 감촉점수 (1~5)
+    private double textureScore; // 감촉점수 (1~5)
 
     private String description; // 상세 내용
 
@@ -50,10 +50,10 @@ public class Record extends BaseEntity {
             List<String> photoPathList,
             AlcoholPercentFeeling alcoholPercentFeeling,
             List<FlavorDetail> flavorTagList,
-            int starScore,
-            int scentScore,
-            int tasteScore,
-            int textureScore,
+            double starScore,
+            double scentScore,
+            double tasteScore,
+            double textureScore,
             String description,
             LocalDate experienceDate) {
         super(createdAt, updatedAt, deletedAt);
@@ -83,7 +83,7 @@ public class Record extends BaseEntity {
         return recordId;
     }
 
-    public int getStarScore() {
+    public double getStarScore() {
         return starScore;
     }
 
@@ -99,15 +99,15 @@ public class Record extends BaseEntity {
         return flavorTagList;
     }
 
-    public int getScentScore() {
+    public double getScentScore() {
         return scentScore;
     }
 
-    public int getTasteScore() {
+    public double getTasteScore() {
         return tasteScore;
     }
 
-    public int getTextureScore() {
+    public double getTextureScore() {
         return textureScore;
     }
 

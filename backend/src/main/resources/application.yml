@@ -12,9 +12,9 @@ spring:
       - jwt
       - aws
       - mybatis
-    active: live   # local, alpha, live
+    active: alpha   # local, alpha, live
 server:
-  port: 8081
+  port: 8082
 
 # 허용하는 이미지 확장자
 allow-image-format: "jpg,JPG,jpeg,JPEG,png,PNG,heic,HEIC"

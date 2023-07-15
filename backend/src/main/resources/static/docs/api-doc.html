@@ -582,11 +582,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">개발서버</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081" class="bare">http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8081</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">개발서버 (alpha)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8082" class="bare">http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8082</a></code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Prod / 운영 서버</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">운영서버 (live)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="https://api.sullog-server.click" class="bare">https://api.sullog-server.click</a></code></p></td>
 </tr>
 </tbody>
@@ -1056,7 +1056,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-06-18"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5,"scentScore":3,"tasteScore":4,"textureScore":5,"description":"This is a test record.","experienceDate":"2023-07-15"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1124,22 +1124,22 @@ Content-Type: application/json
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>starScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">별점 (1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">별점 (0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>scentScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">향점수 (1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">향점수 (0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>tasteScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">맛점수 (1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">맛점수 (0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>textureScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">감촉점수 (1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">감촉점수 (0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
@@ -1369,7 +1369,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 841
+Content-Length: 849
 
 {
   "record" : {
@@ -1385,10 +1385,10 @@ Content-Length: 841
       "majorTag" : "DAIRY",
       "detailTag" : "BUTTER"
     } ],
-    "starScore" : 5,
-    "scentScore" : 4,
-    "tasteScore" : 3,
-    "textureScore" : 2,
+    "starScore" : 5.0,
+    "scentScore" : 4.0,
+    "tasteScore" : 3.0,
+    "textureScore" : 2.0,
     "description" : "This is a dummy data 1",
     "experienceDate" : "2022-03-04"
   },
@@ -1468,22 +1468,22 @@ Content-Length: 841
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.starScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">별점(1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">별점(0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.scentScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">향 점수(1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">향 점수(0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.tasteScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">맛점수 (1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">맛점수 (0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.textureScore</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">감촉점수 (1~5)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">감촉점수 (0.5~5.0)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record.description</code></p></td>
@@ -2261,7 +2261,7 @@ Content-Length: 172
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-06 20:01:19 +0900
+Last updated 2023-07-09 04:29:10 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
