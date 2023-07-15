@@ -28,6 +28,8 @@ logging:
       audit: off
       resultset: off
       connection: off
+server:
+  port: 8081
 
 # CORS 이슈 대응
 client-domains: "https://sullog-client.vercel.app,https://sullog-dev.vercel.app"
