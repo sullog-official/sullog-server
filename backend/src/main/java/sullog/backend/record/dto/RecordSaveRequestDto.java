@@ -16,13 +16,13 @@ public class RecordSaveRequestDto {
 
     private List<FlavorDetail> flavorTagList; // 상세 플레이버 태그
 
-    private Integer starScore; // 별점(1~5)
+    private Double starScore; // 별점(1~5)
 
-    private Integer scentScore; // 향점수(1~5)
+    private Double scentScore; // 향점수(1~5)
 
-    private Integer tasteScore; // 맛점수 (1~5)
+    private Double tasteScore; // 맛점수 (1~5)
 
-    private Integer textureScore; // 감촉점수 (1~5)
+    private Double textureScore; // 감촉점수 (1~5)
 
     private String description; // 상세 내용
 
@@ -35,10 +35,10 @@ public class RecordSaveRequestDto {
             Integer alcoholId,
             AlcoholPercentFeeling alcoholPercentFeeling,
             List<FlavorDetail> flavorTagList,
-            Integer starScore,
-            Integer scentScore,
-            Integer tasteScore,
-            Integer textureScore,
+            Double starScore,
+            Double scentScore,
+            Double tasteScore,
+            Double textureScore,
             String description,
             LocalDate experienceDate) {
         this.alcoholId = alcoholId;
@@ -64,19 +64,19 @@ public class RecordSaveRequestDto {
         return flavorTagList;
     }
 
-    public Integer getStarScore() {
+    public Double getStarScore() {
         return starScore;
     }
 
-    public Integer getScentScore() {
+    public Double getScentScore() {
         return scentScore;
     }
 
-    public Integer getTasteScore() {
+    public Double getTasteScore() {
         return tasteScore;
     }
 
-    public Integer getTextureScore() {
+    public Double getTextureScore() {
         return textureScore;
     }
 
