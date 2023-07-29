@@ -52,7 +52,7 @@
 | 환경 | domain
 
 | 개발서버 (alpha)
-| `http://ec2-13-124-179-45.ap-northeast-2.compute.amazonaws.com:8082`
+| `http://ec2-3-39-21-38.ap-northeast-2.compute.amazonaws.com:8082`
 
 | 운영서버 (live)
 | `https://api.sullog-server.click`
