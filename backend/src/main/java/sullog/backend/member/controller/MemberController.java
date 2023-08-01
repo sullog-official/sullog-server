@@ -1,5 +1,6 @@
 package sullog.backend.member.controller;
 
+import sullog.backend.member.dto.request.SearchKeywordDto;
 import sullog.backend.member.service.MemberService;
 import sullog.backend.auth.service.TokenService;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,13 @@ public class MemberController {
     @GetMapping("/me/recent-search-history")
     public ResponseEntity<RecentSearchHistoryDto> getRecentSearchHistory(@RequestAttribute Integer memberId) {
         return new ResponseEntity<>(memberService.getRecentSearchHistory(memberId), HttpStatus.OK);
+    }
+
+    @PostMapping("/me/recent-search-history")
+    public ResponseEntity<Void> updateSearchKeyword(@RequestAttribute Integer memberId,
+                                                    @RequestBody SearchKeywordDto searchKeywordDto) {
+        memberService.updateRecentSearchWordList(memberId, searchKeywordDto.getKeyword());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/me/recent-search-history/{keyword}")

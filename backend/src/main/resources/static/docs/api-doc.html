@@ -458,6 +458,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_최근_검색어_조회">최근 검색어 조회</a></li>
 <li><a href="#_최근_검색어_중_특정_검색어_제거">최근 검색어 중 특정 검색어 제거</a></li>
 <li><a href="#_최근_검색어_목록_초기화">최근 검색어 목록 초기화</a></li>
+<li><a href="#_최근_검색어_단건_저장">최근 검색어 단건 저장</a></li>
 <li><a href="#_회원_탈퇴">회원 탈퇴</a></li>
 </ul>
 </li>
@@ -853,14 +854,18 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_회원_탈퇴">회원 탈퇴</h3>
+<h3 id="_최근_검색어_단건_저장">최근 검색어 단건 저장</h3>
 <div class="sect3">
 <h4 id="_request_6">Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /members/me HTTP/1.1
-Authorization: sample_token
-Host: localhost:8080</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /members/me/recent-search-history HTTP/1.1
+Content-Type: application/json
+Content-Length: 40
+Authorization: Bearer accessToken
+Host: localhost:8080
+
+{"keyword":"최근 검색어 키워드"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -891,6 +896,45 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_회원_탈퇴">회원 탈퇴</h3>
+<div class="sect3">
+<h4 id="_request_7">Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /members/me HTTP/1.1
+Authorization: sample_token
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사용자의 access token</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_response_7">Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -899,7 +943,7 @@ Host: localhost:8080</code></pre>
 <div class="sect2">
 <h3 id="_키워드_기반_전통주_검색">키워드 기반 전통주 검색</h3>
 <div class="sect3">
-<h4 id="_request_7">Request</h4>
+<h4 id="_request_8">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /alcohols/search?keyword=keyword&amp;cursor=1&amp;limit=1 HTTP/1.1
@@ -935,7 +979,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_7">Response</h4>
+<h4 id="_response_8">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -976,7 +1020,7 @@ Content-Length: 681
 <div class="sect2">
 <h3 id="_전통주_id기반_전통주_단건_조회">전통주 id기반 전통주 단건 조회</h3>
 <div class="sect3">
-<h4 id="_request_8">Request</h4>
+<h4 id="_request_9">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /alcohols?alcoholId=1 HTTP/1.1
@@ -1004,7 +1048,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_8">Response</h4>
+<h4 id="_response_9">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1034,7 +1078,7 @@ Content-Length: 272
 <div class="sect2">
 <h3 id="_전통주_경험_저장">전통주 경험 저장</h3>
 <div class="sect3">
-<h4 id="_request_9">Request</h4>
+<h4 id="_request_10">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /records HTTP/1.1
@@ -1056,7 +1100,7 @@ test2
 Content-Disposition: form-data; name=recordInfo
 Content-Type: application/json
 
-{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5.0,"scentScore":3.0,"tasteScore":4.0,"textureScore":5.0,"description":"This is a test record.","experienceDate":"2023-07-29"}
+{"alcoholId":1,"alcoholPercentFeeling":"STRONG","flavorTagList":[{"majorTag":"FLOWER","detailTag":"CHRYSANTHEMUM"},{"majorTag":"DAIRY","detailTag":"BUTTER"}],"starScore":5.0,"scentScore":3.0,"tasteScore":4.0,"textureScore":5.0,"description":"This is a test record.","experienceDate":"2023-07-30"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
 </div>
 </div>
@@ -1155,7 +1199,7 @@ Content-Type: application/json
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_9">Response</h4>
+<h4 id="_response_10">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
@@ -1212,7 +1256,7 @@ Content-Length: 20
 <div class="sect2">
 <h3 id="_특정_사용자의_전통주_경험_조회">특정 사용자의 전통주 경험 조회</h3>
 <div class="sect3">
-<h4 id="_request_10">Request</h4>
+<h4 id="_request_11">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /records/me HTTP/1.1
@@ -1222,7 +1266,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_response_10">Response</h4>
+<h4 id="_response_11">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1336,7 +1380,7 @@ Content-Length: 1062
 <div class="sect2">
 <h3 id="_경험기록_id_기반_전통주_경험_단건_조회">경험기록 id 기반 전통주 경험 단건 조회</h3>
 <div class="sect3">
-<h4 id="_request_11">Request</h4>
+<h4 id="_request_12">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /records/1 HTTP/1.1
@@ -1364,7 +1408,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_11">Response</h4>
+<h4 id="_response_12">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1552,7 +1596,7 @@ Content-Length: 849
 <div class="sect2">
 <h3 id="_특정_사용자의_키워드_기반_경험기록_검색">특정 사용자의 키워드 기반 경험기록 검색</h3>
 <div class="sect3">
-<h4 id="_request_12">Request</h4>
+<h4 id="_request_13">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /records/me/search?cursor=1&amp;keyword=keyword&amp;limit=2 HTTP/1.1
@@ -1588,7 +1632,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_12">Response</h4>
+<h4 id="_response_13">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1717,7 +1761,7 @@ Content-Length: 834
 <div class="sect2">
 <h3 id="_경험_피드">경험 피드</h3>
 <div class="sect3">
-<h4 id="_request_13">Request</h4>
+<h4 id="_request_14">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /records?cursor=1&amp;limit=2 HTTP/1.1
@@ -1749,7 +1793,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_13">Response</h4>
+<h4 id="_response_14">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1885,7 +1929,7 @@ Content-Length: 880
 <div class="sect2">
 <h3 id="_사용자_경험_통계">사용자 경험 통계</h3>
 <div class="sect3">
-<h4 id="_request_14">Request</h4>
+<h4 id="_request_15">Request</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /records/me/statistics HTTP/1.1
@@ -1895,7 +1939,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_response_14">Response</h4>
+<h4 id="_response_15">Response</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -2261,7 +2305,7 @@ Content-Length: 172
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-07-29 14:21:25 +0900
+Last updated 2023-07-30 12:48:42 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

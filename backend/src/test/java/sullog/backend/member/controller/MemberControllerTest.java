@@ -1,5 +1,6 @@
 package sullog.backend.member.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,11 +21,14 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete; // MockMvcBuilders 사용하면 pathParameters 이용 시 에러발생
+
+import sullog.backend.member.dto.request.SearchKeywordDto;
 import sullog.backend.member.dto.response.RecentSearchHistoryDto;
 import sullog.backend.member.entity.Member;
 import sullog.backend.member.service.MemberService;
 import sullog.backend.auth.service.TokenService;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -36,6 +40,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
@@ -53,6 +58,9 @@ class MemberControllerTest {
 
     @MockBean
     private MemberService memberService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
@@ -175,6 +183,44 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andDo( // rest docs 문서 작성 시작
                         document("member/clear-specific-keywords",
+                                requestHeaders(
+                                        headerWithName(HttpHeaders.AUTHORIZATION).description("사용자의 access token")
+                                )
+                        )
+                )
+        ;
+    }
+
+    @Test
+    void 최근검색어키워드를_저장한다() throws Exception {
+
+        // given
+        String accessToken = "sample_token";
+        int memberId = 0;
+        String keyword = "최근 검색어 키워드";
+
+        SearchKeywordDto searchKeywordDto = SearchKeywordDto.builder()
+                .keyword(keyword)
+                .build();
+
+        // when
+        doReturn(memberId).when(tokenService).getMemberId(accessToken);
+        doNothing().when(memberService).updateRecentSearchWordList(memberId, keyword);
+        when(memberService.findMemberById(anyInt())).thenReturn(Member.builder().build());
+
+        // then
+        mockMvc.perform(
+                        post("/members/me/recent-search-history")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(searchKeywordDto).getBytes(StandardCharsets.UTF_8))
+                                .with(request -> {
+                                    request.addHeader("Authorization", "Bearer accessToken");
+                                    return request;
+                                })
+                )
+                .andExpect(status().isOk())
+                .andDo(
+                        document("member/save-search-keyword",
                                 requestHeaders(
                                         headerWithName(HttpHeaders.AUTHORIZATION).description("사용자의 access token")
                                 )

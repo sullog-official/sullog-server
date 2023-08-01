@@ -111,8 +111,6 @@ public class RecordController {
                 )
                 .build();
 
-        memberService.updateRecentSearchWordList(memberId, recordSearchParamDto.getKeyword());
-
         return new ResponseEntity<>(recordMetaListWithPagingDto, HttpStatus.OK);
     }
 
