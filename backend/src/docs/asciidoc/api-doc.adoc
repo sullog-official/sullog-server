@@ -104,6 +104,14 @@ include::{snippets}/member/clear-specific-keywords/request-headers.adoc[]
 ==== Response
 include::{snippets}/member/clear-specific-keywords/http-response.adoc[]
 
+=== 최근 검색어 단건 저장
+==== Request
+include::{snippets}/member/save-search-keyword/http-request.adoc[]
+include::{snippets}/member/save-search-keyword/request-headers.adoc[]
+
+==== Response
+include::{snippets}/member/save-search-keyword/http-response.adoc[]
+
 === 회원 탈퇴
 ==== Request
 include::{snippets}/member/delete-member/http-request.adoc[]
