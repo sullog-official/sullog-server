@@ -243,6 +243,5 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/git,intellij,java,gradle,macos,windows
 
-# security 정보
-application-oauth.yml
-application-jwt.yml
+# private key 파일
+resource/key/*
