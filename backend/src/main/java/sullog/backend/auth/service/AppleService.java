@@ -57,6 +57,11 @@ public class AppleService {
         this.privateKeyPath = privateKeyPath;
     }
 
+    public Member getAppleUserInfo(String code) throws JsonProcessingException {
+        String email = getEmailByCode(code);
+        return Member.ofRegisterMember(email, "");
+    }
+
     //https://d0lim.com/blog/2022/06/login-with-apple-workaround/ 에서 code 검증 방식
     public Member verifyUserInfo(String code, Member needVerifyMember) throws JsonProcessingException {
         String email = getEmailByCode(code);
@@ -118,13 +123,7 @@ public class AppleService {
 
         JsonNode payload = objectMapper.readTree(getPayload.toJSONObject().toJSONString());
         String email  = payload.get("email").asText();
-
-        // 애플 로그인 시 redirect uri로 전달받은 user객체 값 검증
-        if (false == needVerifyMember.getEmail().equals(email)) {
-            throw new BusinessException(ErrorCode.MEMBER_NOT_VERIFIED);
-        }
-
-        return needVerifyMember;
+        return email;
     }
 
     private String makeClientSecret(String clientId) {
