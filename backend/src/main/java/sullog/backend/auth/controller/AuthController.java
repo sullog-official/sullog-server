@@ -72,7 +72,15 @@ public class AuthController {
     public ResponseEntity<Void> appleLogin(@RequestBody AppleLoginRequestDto appleLoginRequestDto) throws JsonProcessingException {
         // 인가코드로 user정보 검증
         Member needVerifyMember = appleLoginRequestDto.authorizedMember();
-        Member verifiedMember = appleService.verifyUserInfo(appleLoginRequestDto.getCode(), needVerifyMember);
+        Member verifiedMember;
+
+        if (null == needVerifyMember) {
+            // 로그인 2회차 이상 케이스
+            verifiedMember = appleService.getAppleUserInfo(appleLoginRequestDto.getCode());
+        } else {
+            // 최초 로그인 케이스
+            verifiedMember = appleService.verifyUserInfo(appleLoginRequestDto.getCode(), needVerifyMember);
+        }
 
         // 회원가입 절차 진행
         memberService.registerMember(verifiedMember);
