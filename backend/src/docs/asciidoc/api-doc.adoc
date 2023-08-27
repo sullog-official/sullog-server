@@ -70,12 +70,23 @@ include::{snippets}/oauth2/request-kakao-login/request-parameters.adoc[]
 include::{snippets}/token-refresh/http-response.adoc[]
 include::{snippets}/token-refresh/response-headers.adoc[]
 
-=== 애플 로그인 요청
+=== 애플 로그인 요청(최초 가입)
 클라이언트에서 인가코드와 유저 정보를 넘겨주면, 인가코드 기반으로 유저정보를 검증하고 jwt토큰 반환
 
 ==== Request
-include::{snippets}/oauth2/request-apple-login/http-request.adoc[]
-include::{snippets}/oauth2/request-apple-login/request-fields.adoc[]
+include::{snippets}/oauth2/request-apple-login-register/http-request.adoc[]
+include::{snippets}/oauth2/request-apple-login-register/request-fields.adoc[]
+
+==== Response
+include::{snippets}/token-refresh/http-response.adoc[]
+include::{snippets}/token-refresh/response-headers.adoc[]
+
+=== 애플 로그인 요청(로그인 풀려서 로그인)
+클라이언트에서 인가코드를 넘겨주면, 인가코드 기반으로 유저정보를 조회해서 jwt토큰 반환
+
+==== Request
+include::{snippets}/oauth2/request-apple-login-after-register/http-request.adoc[]
+include::{snippets}/oauth2/request-apple-login-after-register/request-fields.adoc[]
 
 ==== Response
 include::{snippets}/token-refresh/http-response.adoc[]

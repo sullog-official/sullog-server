@@ -99,7 +99,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void 인가코드를_전달받으면_jwt토큰을_반환한다_카카오로그인() throws Exception {
+    void 인가코드_전달받으면_jwt토큰을_반환한다_카카오로그인() throws Exception {
         // given
         String code = "test_code";
         String accessToken = "test_accessToken";
@@ -130,7 +130,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void 인가코드를_전달받으면_jwt토큰을_반환한다_애플로그인() throws Exception {
+    void 인가코드와유저데이터를_전달받으면_jwt토큰을_반환한다_애플로그인_최초시도() throws Exception {
         // given
         String code = "test_code";
         Member member = Member.builder()
@@ -157,11 +157,48 @@ class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.AUTHORIZATION, newToken.getAccessToken()))
                 .andExpect(MockMvcResultMatchers.header().string("Refresh", newToken.getRefreshToken()))
-                .andDo(document("oauth2/request-apple-login",
+                .andDo(document("oauth2/request-apple-login-register",
                         requestFields(
                                 fieldWithPath("code").description("애플 인증 서버에서 발급해준 인가코드"),
                                 fieldWithPath("name").description("애플 인증 서버에서 넘겨준 user 필드의 name 값(LastName+FirstName)"),
                                 fieldWithPath("email").description("애플 인증 서버에서 넘겨준 user 필드의 email 값")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("The new access token"), // response-headers.adoc 파일에 추가
+                                headerWithName("Refresh").description("The new refresh token") // response-headers.adoc 파일에 추가
+                        )
+                ));
+    }
+
+    @Test
+    void 인가코드를_전달받으면_jwt토큰을_반환한다_애플로그인_2번째이상시도() throws Exception {
+        // given
+        String code = "test_code";
+        Member member = Member.builder()
+                .nickName("애플 계정에 등록된 이름")
+                .email("apple@email.com")
+                .build();
+        Token newToken = new Token("sample_access_token", "sample_refresh_token");
+        AppleLoginRequestDto appleLoginRequestDto = AppleLoginRequestDto.builder()
+                .code(code)
+                .build();
+
+        when(appleService.getAppleUserInfo(eq(code))).thenReturn(member);
+        when(memberService.findMemberByEmail(member.getEmail())).thenReturn(member);
+        when(tokenService.generateToken(member.getMemberId(), "USER")).thenReturn(newToken);
+
+        // when, then
+        this.mockMvc.perform(
+                        post("/apple")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(appleLoginRequestDto).getBytes(StandardCharsets.UTF_8)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.header().string(HttpHeaders.AUTHORIZATION, newToken.getAccessToken()))
+                .andExpect(MockMvcResultMatchers.header().string("Refresh", newToken.getRefreshToken()))
+                .andDo(document("oauth2/request-apple-login-after-register",
+                        requestFields(
+                                fieldWithPath("code").description("애플 인증 서버에서 발급해준 인가코드")
                         ),
                         responseHeaders(
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("The new access token"), // response-headers.adoc 파일에 추가
