@@ -59,6 +59,17 @@ public class AppleService {
 
     //https://d0lim.com/blog/2022/06/login-with-apple-workaround/ 에서 code 검증 방식
     public Member verifyUserInfo(String code, Member needVerifyMember) throws JsonProcessingException {
+        String email = getEmailByCode(code);
+
+        // 애플 로그인 시 redirect uri로 전달받은 user객체 값 검증
+        if (false == needVerifyMember.getEmail().equals(email)) {
+            throw new BusinessException(ErrorCode.MEMBER_NOT_VERIFIED);
+        }
+
+        return needVerifyMember;
+    }
+
+    private String getEmailByCode(String code) throws JsonProcessingException {
         // 애플 oauth2 정보 조회
         OAuth2ClientProperties.Registration appleRegistration = oAuth2ClientProperties.getRegistration().get("apple");
         OAuth2ClientProperties.Provider appleProvider = oAuth2ClientProperties.getProvider().get("apple");
