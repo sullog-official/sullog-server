@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.PrivateKey;
 import java.text.ParseException;
@@ -145,8 +146,8 @@ public class AppleService {
         PrivateKey privateKey;
         JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
         try {
-            ClassPathResource resource = new ClassPathResource(privateKeyPath);
-            String privateKeyString = new String(Files.readAllBytes(Paths.get(resource.getURI())));
+            Path path = Paths.get(privateKeyPath);
+            String privateKeyString = new String(Files.readAllBytes(path));
             Reader pemReader = new StringReader(privateKeyString);
             PEMParser pemParser = new PEMParser(pemReader);
             object = (PrivateKeyInfo) pemParser.readObject();

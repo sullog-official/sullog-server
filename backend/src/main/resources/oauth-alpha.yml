@@ -34,4 +34,4 @@ spring:
 
 # 애플 key path 정보
 apple:
-  key-path: ~/key/private.p8
+  key-path: /home/ubuntu/key/private.p8
