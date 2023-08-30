@@ -12,8 +12,13 @@ spring:
       - jwt
       - aws
       - mybatis
-    active: live   # local, alpha, live
+    active: local   # local, alpha, live
 
 
 # 허용하는 이미지 확장자
 allow-image-format: "jpg,JPG,jpeg,JPEG,png,PNG,heic,HEIC"
+
+# 애플로그인 관련 공통 정보
+apple:
+  key-id: ENC(ORo6z0J1KSyBrKlYyVJ+yorUTL0w//tE)
+  team-id: ENC(GTa1yuSegpc8cVuJpEGd6evUErK5Szsf)

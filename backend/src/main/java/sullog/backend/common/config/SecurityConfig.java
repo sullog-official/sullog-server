@@ -69,6 +69,7 @@ public class SecurityConfig {
                                 "/favicon.ico",
                                 "/docs/api-doc.html", // rest-docs 문서 url
                                 "/kakao", // 카카오 로그인 인가코드 전달받는 path
+                                "/apple", // 애플 로그인 인가코드 전달받는 path
                                 "/" //health-check end point
                     ).permitAll()
                     .anyRequest().authenticated()

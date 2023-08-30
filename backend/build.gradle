@@ -42,6 +42,10 @@ dependencies {
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15to18', version: '1.75'
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15to18
+    implementation group: 'org.bouncycastle', name: 'bcpkix-jdk15to18', version: '1.71'
 
     //oauth
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -51,6 +55,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation 'com.nimbusds:nimbus-jose-jwt:3.10'
 
     // S3 upload
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'

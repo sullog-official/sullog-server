@@ -12,9 +12,26 @@ spring:
             scope:
               - profile_nickname
               - account_email
+          apple:
+            client-id: sullogapp.sullog.com
+            redirect-uri: https://sullog-client.vercel.app/api/redirect/apple
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+            client-name: Apple
+            scope:
+              - account_email
         provider:
           kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            authorization-uri: https://kauth.kakao.com/oauth/authorize # 미사용
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+          apple:
+            authorization-uri: https://appleid.apple.com/auth/authorize # 미사용
+            token-uri: https://appleid.apple.com/auth/token
+            user-info-uri: https://appleid.apple.com/auth/token
+            user-name-attribute: id
+
+# 애플 key path 정보
+apple:
+  key-path: /key/private.p8
