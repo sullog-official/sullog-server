@@ -30,6 +30,15 @@ public class TokenService implements InitializingBean {
 
     private final MemberService memberService;
 
+    /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+    /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+    /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+    @Value("${super-user.user-token}")
+    private String TEST_USER_TOKEN;
+
+    @Value("${super-user.user-id}")
+    private String TEST_USER_ID;
+
     public TokenService(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInMilliseconds,
@@ -75,6 +84,13 @@ public class TokenService implements InitializingBean {
             return false;
         }
 
+        /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+        /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+        /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+        if (token.equals(TEST_USER_TOKEN)) {
+            return true;
+        }
+
         String value = token.substring(BEARER_PREFIX.length());
 
         try {
@@ -99,6 +115,12 @@ public class TokenService implements InitializingBean {
     }
 
     public int getMemberId(String token) {
+        /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+        /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+        /** TODO 개발용 인증 토큰 발급이므로 추후 반드시 삭제해야함 */
+        if (token.equals(TEST_USER_TOKEN)) {
+            return Integer.parseInt(TEST_USER_ID);
+        }
         String value = token.substring(BEARER_PREFIX.length());
         String subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(value).getBody().getSubject();
         return Integer.parseInt(subject);

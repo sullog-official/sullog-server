@@ -22,3 +22,7 @@ allow-image-format: "jpg,JPG,jpeg,JPEG,png,PNG,heic,HEIC"
 apple:
   key-id: ENC(ORo6z0J1KSyBrKlYyVJ+yorUTL0w//tE)
   team-id: ENC(GTa1yuSegpc8cVuJpEGd6evUErK5Szsf)
+
+super-user:
+  user-token: ENC(mdf8JBymXo6wARDFPuqsYewfqEInQvFv11rC7i6ZK09n6iYLvH8rpCB+qEY9CE6X)
+  user-id: ENC(MfxXeRccwQPcBKSdRt7D7g==)
